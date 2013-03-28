@@ -1,11 +1,17 @@
 #ifndef _GRAPH_VIEWER_H_
 #define _GRAPH_VIEWER_H_
 
-#ifdef __APPLE__
-#include <unistd.h>
-#else
+#ifdef WIN32
+#define WINDOWS
+#elif WIN64
+#define WINDOWS
+#endif
+
+#ifdef WINDOWS
 #include <winsock2.h>
 #include <Windows.h>
+#else
+#include <unistd.h>
 #endif
 
 #include <stdlib.h>
@@ -44,7 +50,7 @@ public:
     
     bool rearrange();
     
-#ifdef __APPLE__
+#ifndef WINDOWS
     pid_t procId;
 #endif
     

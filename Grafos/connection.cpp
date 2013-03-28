@@ -6,27 +6,7 @@ void myerror(string msg) {
 }
 
 Connection::Connection(int port) {
-#ifdef __APPLE__
-    struct sockaddr_in echoServAddr; /* Echo server address */
-    struct  hostent  *ptrh;
-    
-    /* Create a reliable, stream socket using TCP */
-    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-        myerror("socket() failed");
-    
-    /* Construct the server address structure */
-    memset(&echoServAddr, 0, sizeof(echoServAddr));     /* Zero out structure */
-    echoServAddr.sin_family      = AF_INET;             /* Internet address family */
-    echoServAddr.sin_port = htons(port);                /* Server port */
-    
-    ptrh = gethostbyname("localhost");
-    
-    memcpy(&echoServAddr.sin_addr, ptrh->h_addr, ptrh->h_length);
-    
-    /* Establish the connection to the echo server */
-    if (connect(sock, (struct sockaddr *) &echoServAddr, sizeof(echoServAddr)) < 0)
-        myerror("connect() failed");
-#else
+#ifdef WINDOWS
     WSADATA wsaData;
     int iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
     if (iResult != NO_ERROR)
@@ -50,11 +30,31 @@ Connection::Connection(int port) {
         printf("Client: connect() - Failed to connect.\n");
         WSACleanup();
     }
+#else
+    struct sockaddr_in echoServAddr; /* Echo server address */
+    struct  hostent  *ptrh;
+    
+    /* Create a reliable, stream socket using TCP */
+    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+        myerror("socket() failed");
+    
+    /* Construct the server address structure */
+    memset(&echoServAddr, 0, sizeof(echoServAddr));     /* Zero out structure */
+    echoServAddr.sin_family      = AF_INET;             /* Internet address family */
+    echoServAddr.sin_port = htons(port);                /* Server port */
+    
+    ptrh = gethostbyname("localhost");
+    
+    memcpy(&echoServAddr.sin_addr, ptrh->h_addr, ptrh->h_length);
+    
+    /* Establish the connection to the echo server */
+    if (connect(sock, (struct sockaddr *) &echoServAddr, sizeof(echoServAddr)) < 0)
+        myerror("connect() failed");
 #endif
 }
 
 bool Connection::sendMsg(string msg) {
-    int res = send(sock, msg.c_str(), msg.size(), 0);
+    long res = send(sock, msg.c_str(), msg.size(), 0);
     if (res < 0)
         myerror("Unable to send");
     string answer = readLine();

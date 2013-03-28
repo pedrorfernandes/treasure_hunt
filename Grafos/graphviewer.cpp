@@ -8,25 +8,7 @@ void GraphViewer::startup(int width, int height, bool dynamic, int port) {
     char cmd[256];
     sprintf(cmd, "java -jar GraphViewerController.jar --port %d", port);
     
-#ifdef __APPLE__
-    procId = 0;
-    if (!(procId = fork())) {
-        system(cmd);
-        kill(getppid(), SIGINT);
-        exit(0);
-    }
-    else {
-        usleep(2000000);
-        
-        con = new Connection(port);
-        
-        char buff[200];
-        sprintf(buff, "newGraph %d %d %s\n", width, height, (dynamic?"true":"false"));
-        string str(buff);
-        
-        con->sendMsg(str);
-    }
-#else
+#ifdef WINDOWS
     STARTUPINFO si;
     PROCESS_INFORMATION pi;
     ZeroMemory( &si, sizeof(si) );
@@ -59,6 +41,25 @@ void GraphViewer::startup(int width, int height, bool dynamic, int port) {
     sprintf(buff, "newGraph %d %d %s\n", width, height, (dynamic?"true":"false"));
     string str(buff);
     con->sendMsg(str);
+#else
+    procId = 0;
+    if (!(procId = fork())) {
+        system(cmd);
+        kill(getppid(), SIGINT);
+        exit(0);
+    }
+    else {
+        usleep(2000000);
+        
+        con = new Connection(port);
+        
+        char buff[200];
+        sprintf(buff, "newGraph %d %d %s\n", width, height, (dynamic?"true":"false"));
+        string str(buff);
+        
+        con->sendMsg(str);
+    }
+    
 #endif
 }
 

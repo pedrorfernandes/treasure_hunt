@@ -5,13 +5,19 @@
 #include <cstdlib>
 #include <cstring>
 
-#ifdef __APPLE__
+#ifdef WIN32
+#define WINDOWS
+#elif WIN64
+#define WINDOWS
+#endif
+
+#ifdef WINDOWS
+#include <winsock2.h>
+#else
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netdb.h>
-#else
-#include <winsock2.h>
 #endif
 
 #include <string>
@@ -26,9 +32,7 @@ public:
     bool sendMsg(string msg);
     string readLine();
 private:
-#ifdef linux
-    int sock;
-#elif __APPLE__
+#ifndef WINDOWS
     int sock;
 #else
     SOCKET sock;
