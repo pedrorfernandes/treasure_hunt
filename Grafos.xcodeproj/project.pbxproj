@@ -7,11 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EB310C0916FF874E002945EF /* Grafos.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = EB310C0816FF874E002945EF /* Grafos.1 */; };
 		EB310C1516FF87B4002945EF /* connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C0F16FF87B4002945EF /* connection.cpp */; };
 		EB310C1616FF87B4002945EF /* example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C1216FF87B4002945EF /* example.cpp */; };
 		EB310C1716FF87B4002945EF /* graphviewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C1316FF87B4002945EF /* graphviewer.cpp */; };
-		EB310C1916FF8CFF002945EF /* GraphViewerController.jar in Frameworks */ = {isa = PBXBuildFile; fileRef = EB310C1816FF8CFF002945EF /* GraphViewerController.jar */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -21,7 +19,6 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				EB310C0916FF874E002945EF /* Grafos.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -29,7 +26,6 @@
 
 /* Begin PBXFileReference section */
 		EB310C0316FF874E002945EF /* Grafos */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Grafos; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB310C0816FF874E002945EF /* Grafos.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Grafos.1; sourceTree = "<group>"; };
 		EB310C0F16FF87B4002945EF /* connection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = connection.cpp; sourceTree = "<group>"; };
 		EB310C1016FF87B4002945EF /* connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connection.h; sourceTree = "<group>"; };
 		EB310C1116FF87B4002945EF /* edgetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edgetype.h; sourceTree = "<group>"; };
@@ -37,6 +33,29 @@
 		EB310C1316FF87B4002945EF /* graphviewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphviewer.cpp; sourceTree = "<group>"; };
 		EB310C1416FF87B4002945EF /* graphviewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphviewer.h; sourceTree = "<group>"; };
 		EB310C1816FF8CFF002945EF /* GraphViewerController.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; path = GraphViewerController.jar; sourceTree = "<group>"; };
+		EB70077E1704FAE50066E51C /* cute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute.h; sourceTree = "<group>"; };
+		EB70077F1704FAE50066E51C /* cute_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_base.h; sourceTree = "<group>"; };
+		EB7007801704FAE50066E51C /* cute_counting_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_counting_listener.h; sourceTree = "<group>"; };
+		EB7007811704FAE50066E51C /* cute_demangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_demangle.h; sourceTree = "<group>"; };
+		EB7007821704FAE50066E51C /* cute_determine_library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_determine_library.h; sourceTree = "<group>"; };
+		EB7007831704FAE50066E51C /* cute_determine_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_determine_version.h; sourceTree = "<group>"; };
+		EB7007841704FAE50066E51C /* cute_equals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_equals.h; sourceTree = "<group>"; };
+		EB7007851704FAE50066E51C /* cute_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_listener.h; sourceTree = "<group>"; };
+		EB7007861704FAE50066E51C /* cute_repeated_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_repeated_test.h; sourceTree = "<group>"; };
+		EB7007871704FAE50066E51C /* cute_runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_runner.h; sourceTree = "<group>"; };
+		EB7007881704FAE50066E51C /* cute_suite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_suite.h; sourceTree = "<group>"; };
+		EB7007891704FAE50066E51C /* cute_suite_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_suite_test.h; sourceTree = "<group>"; };
+		EB70078A1704FAE50066E51C /* cute_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_test.h; sourceTree = "<group>"; };
+		EB70078B1704FAE50066E51C /* cute_test_incarnate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_test_incarnate.h; sourceTree = "<group>"; };
+		EB70078C1704FAE50066E51C /* cute_testmember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_testmember.h; sourceTree = "<group>"; };
+		EB70078D1704FAE50066E51C /* cute_throws.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_throws.h; sourceTree = "<group>"; };
+		EB70078E1704FAE50066E51C /* cute_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_version.h; sourceTree = "<group>"; };
+		EB70078F1704FAE50066E51C /* eclipse_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eclipse_listener.h; sourceTree = "<group>"; };
+		EB7007901704FAE50066E51C /* gpl.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gpl.txt; sourceTree = "<group>"; };
+		EB7007911704FAE50066E51C /* ide_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ide_listener.h; sourceTree = "<group>"; };
+		EB7007921704FAE50066E51C /* lgpl.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lgpl.txt; sourceTree = "<group>"; };
+		EB7007931704FAE50066E51C /* ostream_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ostream_listener.h; sourceTree = "<group>"; };
+		EB7007941704FAE50066E51C /* vstudio_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vstudio_listener.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +63,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB310C1916FF8CFF002945EF /* GraphViewerController.jar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +72,7 @@
 		EB310BFA16FF874E002945EF = {
 			isa = PBXGroup;
 			children = (
+				EB70077D1704FAE50066E51C /* cute */,
 				EB310C0516FF874E002945EF /* Grafos */,
 				EB310C0416FF874E002945EF /* Products */,
 			);
@@ -77,9 +96,38 @@
 				EB310C1216FF87B4002945EF /* example.cpp */,
 				EB310C1316FF87B4002945EF /* graphviewer.cpp */,
 				EB310C1416FF87B4002945EF /* graphviewer.h */,
-				EB310C0816FF874E002945EF /* Grafos.1 */,
 			);
 			path = Grafos;
+			sourceTree = "<group>";
+		};
+		EB70077D1704FAE50066E51C /* cute */ = {
+			isa = PBXGroup;
+			children = (
+				EB70077E1704FAE50066E51C /* cute.h */,
+				EB70077F1704FAE50066E51C /* cute_base.h */,
+				EB7007801704FAE50066E51C /* cute_counting_listener.h */,
+				EB7007811704FAE50066E51C /* cute_demangle.h */,
+				EB7007821704FAE50066E51C /* cute_determine_library.h */,
+				EB7007831704FAE50066E51C /* cute_determine_version.h */,
+				EB7007841704FAE50066E51C /* cute_equals.h */,
+				EB7007851704FAE50066E51C /* cute_listener.h */,
+				EB7007861704FAE50066E51C /* cute_repeated_test.h */,
+				EB7007871704FAE50066E51C /* cute_runner.h */,
+				EB7007881704FAE50066E51C /* cute_suite.h */,
+				EB7007891704FAE50066E51C /* cute_suite_test.h */,
+				EB70078A1704FAE50066E51C /* cute_test.h */,
+				EB70078B1704FAE50066E51C /* cute_test_incarnate.h */,
+				EB70078C1704FAE50066E51C /* cute_testmember.h */,
+				EB70078D1704FAE50066E51C /* cute_throws.h */,
+				EB70078E1704FAE50066E51C /* cute_version.h */,
+				EB70078F1704FAE50066E51C /* eclipse_listener.h */,
+				EB7007901704FAE50066E51C /* gpl.txt */,
+				EB7007911704FAE50066E51C /* ide_listener.h */,
+				EB7007921704FAE50066E51C /* lgpl.txt */,
+				EB7007931704FAE50066E51C /* ostream_listener.h */,
+				EB7007941704FAE50066E51C /* vstudio_listener.h */,
+			);
+			path = cute;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,7 +217,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/Cellar/boost/1.53.0/include;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -196,7 +245,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/Cellar/boost/1.53.0/include;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -205,7 +255,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = "";
 			};
 			name = Debug;
 		};
@@ -213,7 +266,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = "";
 			};
 			name = Release;
 		};
@@ -236,6 +292,7 @@
 				EB310C0E16FF874E002945EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
