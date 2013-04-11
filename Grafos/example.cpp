@@ -1,7 +1,7 @@
 #include <cstdio>
 #include "graphviewer.h"
 
-int main() {
+int example() {
   GraphViewer *gv = new GraphViewer(600, 600, true, 7772);
   
   gv->createWindow(600, 600);  
