@@ -1,23 +1,21 @@
-#ifndef _CONNECTION_
+﻿#ifndef _CONNECTION_
 #define _CONNECTION_
 
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 
-#ifdef WIN32
-#define WINDOWS
-#elif WIN64
-#define WINDOWS
+#ifdef __APPLE__
+#define linux
 #endif
 
-#ifdef WINDOWS
-#include <winsock2.h>
-#else
+#ifdef linux
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netdb.h>
+#else
+#include <winsock2.h>
 #endif
 
 #include <string>
@@ -26,16 +24,16 @@
 using namespace std;
 
 class Connection {
-public:
-    Connection(int port);
-    
-    bool sendMsg(string msg);
-    string readLine();
-private:
-#ifndef WINDOWS
-    int sock;
+ public:
+  Connection(short port);
+
+  bool sendMsg(string msg);
+  string readLine();
+ private: 
+#ifdef linux
+  int sock;
 #else
-    SOCKET sock;
+  SOCKET sock;
 #endif
 };
 
