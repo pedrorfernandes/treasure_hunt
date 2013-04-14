@@ -10,6 +10,11 @@
 		EB310C1516FF87B4002945EF /* connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C0F16FF87B4002945EF /* connection.cpp */; };
 		EB310C1616FF87B4002945EF /* example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C1216FF87B4002945EF /* example.cpp */; };
 		EB310C1716FF87B4002945EF /* graphviewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C1316FF87B4002945EF /* graphviewer.cpp */; };
+		EB47FEC9171B20D20052C62E /* treasureHunter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB47FEC7171B20D10052C62E /* treasureHunter.cpp */; };
+		EB47FECC171B234C0052C62E /* city.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB47FECA171B234C0052C62E /* city.cpp */; };
+		EB47FECF171B23E60052C62E /* director.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB47FECD171B23E60052C62E /* director.cpp */; };
+		EB47FED2171B24550052C62E /* graphBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB47FED0171B24550052C62E /* graphBuilder.cpp */; };
+		EB47FED5171B249C0052C62E /* interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB47FED3171B249C0052C62E /* interface.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +38,17 @@
 		EB310C1316FF87B4002945EF /* graphviewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphviewer.cpp; sourceTree = "<group>"; };
 		EB310C1416FF87B4002945EF /* graphviewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphviewer.h; sourceTree = "<group>"; };
 		EB310C1816FF8CFF002945EF /* GraphViewerController.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; path = GraphViewerController.jar; sourceTree = "<group>"; };
+		EB47FEC3171B1F530052C62E /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
+		EB47FEC7171B20D10052C62E /* treasureHunter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = treasureHunter.cpp; sourceTree = "<group>"; };
+		EB47FEC8171B20D20052C62E /* treasureHunter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = treasureHunter.h; sourceTree = "<group>"; };
+		EB47FECA171B234C0052C62E /* city.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = city.cpp; sourceTree = "<group>"; };
+		EB47FECB171B234C0052C62E /* city.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = city.h; sourceTree = "<group>"; };
+		EB47FECD171B23E60052C62E /* director.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = director.cpp; sourceTree = "<group>"; };
+		EB47FECE171B23E60052C62E /* director.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = director.h; sourceTree = "<group>"; };
+		EB47FED0171B24550052C62E /* graphBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphBuilder.cpp; sourceTree = "<group>"; };
+		EB47FED1171B24550052C62E /* graphBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphBuilder.h; sourceTree = "<group>"; };
+		EB47FED3171B249C0052C62E /* interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = interface.cpp; sourceTree = "<group>"; };
+		EB47FED4171B249C0052C62E /* interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
 		EB70077E1704FAE50066E51C /* cute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute.h; sourceTree = "<group>"; };
 		EB70077F1704FAE50066E51C /* cute_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_base.h; sourceTree = "<group>"; };
 		EB7007801704FAE50066E51C /* cute_counting_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_counting_listener.h; sourceTree = "<group>"; };
@@ -96,6 +112,17 @@
 				EB310C1216FF87B4002945EF /* example.cpp */,
 				EB310C1316FF87B4002945EF /* graphviewer.cpp */,
 				EB310C1416FF87B4002945EF /* graphviewer.h */,
+				EB47FEC3171B1F530052C62E /* Graph.h */,
+				EB47FEC7171B20D10052C62E /* treasureHunter.cpp */,
+				EB47FEC8171B20D20052C62E /* treasureHunter.h */,
+				EB47FECA171B234C0052C62E /* city.cpp */,
+				EB47FECB171B234C0052C62E /* city.h */,
+				EB47FECD171B23E60052C62E /* director.cpp */,
+				EB47FECE171B23E60052C62E /* director.h */,
+				EB47FED0171B24550052C62E /* graphBuilder.cpp */,
+				EB47FED1171B24550052C62E /* graphBuilder.h */,
+				EB47FED3171B249C0052C62E /* interface.cpp */,
+				EB47FED4171B249C0052C62E /* interface.h */,
 			);
 			path = Grafos;
 			sourceTree = "<group>";
@@ -184,6 +211,11 @@
 				EB310C1516FF87B4002945EF /* connection.cpp in Sources */,
 				EB310C1616FF87B4002945EF /* example.cpp in Sources */,
 				EB310C1716FF87B4002945EF /* graphviewer.cpp in Sources */,
+				EB47FEC9171B20D20052C62E /* treasureHunter.cpp in Sources */,
+				EB47FECC171B234C0052C62E /* city.cpp in Sources */,
+				EB47FECF171B23E60052C62E /* director.cpp in Sources */,
+				EB47FED2171B24550052C62E /* graphBuilder.cpp in Sources */,
+				EB47FED5171B249C0052C62E /* interface.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +245,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -241,6 +274,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
