@@ -38,7 +38,6 @@
 		EB310C1316FF87B4002945EF /* graphviewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphviewer.cpp; sourceTree = "<group>"; };
 		EB310C1416FF87B4002945EF /* graphviewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphviewer.h; sourceTree = "<group>"; };
 		EB310C1816FF8CFF002945EF /* GraphViewerController.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; path = GraphViewerController.jar; sourceTree = "<group>"; };
-		EB47FEC3171B1F530052C62E /* Graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Graph.h; sourceTree = "<group>"; };
 		EB47FEC7171B20D10052C62E /* treasureHunter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = treasureHunter.cpp; sourceTree = "<group>"; };
 		EB47FEC8171B20D20052C62E /* treasureHunter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = treasureHunter.h; sourceTree = "<group>"; };
 		EB47FECA171B234C0052C62E /* city.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = city.cpp; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 		EB47FED1171B24550052C62E /* graphBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphBuilder.h; sourceTree = "<group>"; };
 		EB47FED3171B249C0052C62E /* interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = interface.cpp; sourceTree = "<group>"; };
 		EB47FED4171B249C0052C62E /* interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
+		EB47FED6171B5FF80052C62E /* graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
 		EB70077E1704FAE50066E51C /* cute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute.h; sourceTree = "<group>"; };
 		EB70077F1704FAE50066E51C /* cute_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_base.h; sourceTree = "<group>"; };
 		EB7007801704FAE50066E51C /* cute_counting_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_counting_listener.h; sourceTree = "<group>"; };
@@ -112,7 +112,7 @@
 				EB310C1216FF87B4002945EF /* example.cpp */,
 				EB310C1316FF87B4002945EF /* graphviewer.cpp */,
 				EB310C1416FF87B4002945EF /* graphviewer.h */,
-				EB47FEC3171B1F530052C62E /* Graph.h */,
+				EB47FED6171B5FF80052C62E /* graph.h */,
 				EB47FEC7171B20D10052C62E /* treasureHunter.cpp */,
 				EB47FEC8171B20D20052C62E /* treasureHunter.h */,
 				EB47FECA171B234C0052C62E /* city.cpp */,

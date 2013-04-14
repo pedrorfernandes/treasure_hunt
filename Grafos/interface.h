@@ -13,10 +13,29 @@
 #ifndef _INTERFACE_H_
 #define _INTERFACE_H_
 
+#include "director.h"
+#include "graphviewer.h"
+#include "graphBuilder.h"
+
+/**
+ * The interface must do all the output and input operations and also handle the graphviewer API so that it correctly displays the current state of the map and the treasure hunter's progress.
+ */
 class Interface {
-    
+    Director * director; /**< The director that controls the journey */
+    GraphViewer * graphView; /**< The graph that will be displayed */
+    GraphBuilder * graphBuilder; /**< The builder in charge of creating graphs */
     
 public:
+    /**
+     * Creates a graph builder that generates the graph for the director and for displaying.
+     * Calls the main loop after initializing is done.
+     */
+    void init();
+    
+    /**
+     * Updates the game by receiving the next step from the director until the journey is done.
+     */
+    void mainLoop();
     
 };
 
