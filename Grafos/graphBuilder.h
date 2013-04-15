@@ -32,13 +32,13 @@ public:
      * Generates a graph from a templated file with city names, clues and roads.
      * @return True if load was successful, false otherwise.
      */
-    bool loadFromFile(string filename);
+    bool loadFromFile(string &filename);
     
     /**
      * Saves the current graph in a templated style to a file.
      * @return True if saving to file was successful, false otherwise.
      */
-    bool saveToFile(string filename);
+    bool saveToFile(string &filename);
     
     /**
      * Adds a city to the graph.
@@ -55,7 +55,7 @@ public:
      * @param isDirected If true you can only travel from city1 to city2 on this road.
      * @return False if an error occurred, true if ok.
      */
-    bool connect(City * city1, City * city2, double distance, bool isDirected);
+    bool connect(City * city1, City * city2, const double &distance, const bool &isDirected);
     
     /**
      * Creates a treasure hunter in the specified city.
@@ -69,7 +69,7 @@ public:
      * @param numberOfCities The number of created cities.
      * @param numberOfRoads The number of roads created.
      */
-    void createGraph(unsigned int numberOfCities, unsigned int numberOfRoads);
+    void createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads);
 
 };
 

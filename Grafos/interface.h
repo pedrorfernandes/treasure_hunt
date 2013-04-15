@@ -33,6 +33,11 @@ public:
     void init();
     
     /**
+     * The menu that displays options to the user. Options include building a new map and starting a journey.
+     */
+    void menu();
+    
+    /**
      * Updates the game by receiving the next step from the director until the journey is done.
      */
     void mainLoop();
