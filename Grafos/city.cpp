@@ -16,4 +16,17 @@ int City::numberOfCities = 0;
 
 City::City(string name): hasTreasure(false){
     this->name = name;
+    numberOfCities++;
+    identifier = numberOfCities;
+}
+
+int City::getID() const{
+    return identifier;
+}
+
+bool City::operator == (const City &c2) const{
+    if (this->name == c2.name)
+        return true;
+    else
+        return false;
 }

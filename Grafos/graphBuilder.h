@@ -17,15 +17,21 @@
 #include "treasureHunter.h"
 #include "graphviewer.h"
 #include "city.h"
+#include "edgetype.h"
+#include "road.h"
+
+#define ROAD_COLOR "orange"
+#define CITY_COLOR "red"
 
 /**
  * The graph builder class reads the vertexes and edges from a file or generates it's own graph.
  * Besides building a graph internally it must also build the graph that has to be displayed.
  */
 class GraphBuilder {
-    Graph<City *> * graph; /**< The graph that's being built */
+    Graph<City> * graph; /**< The graph that's being built */
     TreasureHunter * treasureHunter; /**< The hunter with it's starting point. */
     GraphViewer * graphView; /**< The graph to be displayed */
+    vector<Road *> roads;
     
 public:
     /**
@@ -50,7 +56,7 @@ public:
      * @param city The new city.
      * @return False if an error occurred, true if ok.
      */
-    bool addCity(City * city);
+    bool addCity(City &city);
 
     /**
      * Adds an road (edge) between two cities.
@@ -60,14 +66,14 @@ public:
      * @param isDirected If true you can only travel from city1 to city2 on this road.
      * @return False if an error occurred, true if ok.
      */
-    bool connect(City * city1, City * city2, const double &distance, const bool &isDirected);
+    bool connect(City &city1, City &city2, const double &distance, const bool &isDirected);
     
     /**
      * Creates a treasure hunter in the specified city.
      * @param city The starting point.
      * @return False if the city doesn't exist, true otherwise.
      */
-    bool spawnTreasureHunter(City * city);
+    bool spawnTreasureHunter(City &city);
     
     /**
      * Randomly generates a graph with cities and a hero following the specified conditions.

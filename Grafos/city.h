@@ -22,9 +22,9 @@ using namespace std;
  * The city is a location that the treasure hunter can travel to. It may contain a list of clues to the treasure.
  */
 class City {
-    string name; /**< The city name. */
+    string name; /**< The city name. It must be unique.*/
     vector<City *> clues; /**< A set of clues that indicate cities that might have the treasure */
-    int identifier; /** The city ID is unique. */
+    int identifier; /** The city ID */
     static int numberOfCities; /** The total number of cities */
 public:
     /**
@@ -48,6 +48,11 @@ public:
      * @param clues The clues to possible treasure locations.
      */
     City(string name, const bool hasTreasure, vector<City *> clues);
+    
+    /**
+     * @return Returns the city identifier.
+     */
+    int getID() const;
     
     /**
      * Removes a given clue from a city
