@@ -17,12 +17,21 @@ TreasureHunter::TreasureHunter(City* startingCity) {
 	foundTreasure = false;
 }
 
+City* TreasureHunter::getCurrentCity() const {
+	return currentCity;
+}
+
 void TreasureHunter::moveTo(City* nextCity) {
 	currentCity->removeClue(nextCity);
 	currentCity = nextCity;
 	usedClues.push(nextCity);
 	if(currentCity->hasTreasure)
 		foundTreasure = true;
+}
+
+void TreasureHunter::stepBack() {
+	currentCity = usedClues.top();
+	usedClues.pop();
 }
 
 vector<City*> TreasureHunter::getClues() {

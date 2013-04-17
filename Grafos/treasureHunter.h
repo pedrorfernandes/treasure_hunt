@@ -37,6 +37,11 @@ public:
     TreasureHunter(City * startingCity);
     
     /**
+     * @return Returns the hunter's current position (city).
+     */
+    City* getCurrentCity() const;
+
+    /**
      * Moves the hero to his next location.
      * Marks the clue in the previous city as read.
      * If the city has the treasure, the hunter has found it.
@@ -44,6 +49,11 @@ public:
      * @return Void
      */
     void moveTo(City * nextCity);
+
+    /**
+     * Moves the hero back to the previous city.
+     */
+    void stepBack();
 
     /**
      * Gathers all the possible steps the hero can travel to.
