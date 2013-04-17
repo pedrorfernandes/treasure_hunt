@@ -22,9 +22,10 @@
  */
 class Interface {
     Director * director; /**< The director that controls the journey */
-    GraphViewer * graphView; /**< The graph that will be displayed */
-    GraphBuilder * graphBuilder; /**< The builder in charge of creating graphs */
+    GraphViewer * view; /**< The graph that will be displayed */
+    GraphBuilder * builder; /**< The builder in charge of creating graphs */
     vector<City *> cities;
+    vector<Road *> roads;
     
 public:
     /**

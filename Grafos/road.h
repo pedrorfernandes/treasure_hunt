@@ -22,7 +22,7 @@ class Road{
     static int numberOfRoads;
 public:
     Road(City * city1, City * city2);
-    int getID();
+    int getID() const;
 };
 
 #endif

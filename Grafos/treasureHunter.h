@@ -16,9 +16,10 @@
 #include <vector>
 #include <stack>
 
+#include "city.h"
+
 using namespace std;
 
-class City;
 
 /**
  * The treasure hunter represents the main "character". He travels from city to city in search for clues to the treasure until he finds it.

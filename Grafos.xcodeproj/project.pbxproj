@@ -15,6 +15,7 @@
 		EB47FECF171B23E60052C62E /* director.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB47FECD171B23E60052C62E /* director.cpp */; };
 		EB47FED2171B24550052C62E /* graphBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB47FED0171B24550052C62E /* graphBuilder.cpp */; };
 		EB47FED5171B249C0052C62E /* interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB47FED3171B249C0052C62E /* interface.cpp */; };
+		EB8AE4F0171F0637006325BD /* road.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB8AE4EE171F0637006325BD /* road.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -72,6 +73,8 @@
 		EB7007921704FAE50066E51C /* lgpl.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lgpl.txt; sourceTree = "<group>"; };
 		EB7007931704FAE50066E51C /* ostream_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ostream_listener.h; sourceTree = "<group>"; };
 		EB7007941704FAE50066E51C /* vstudio_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vstudio_listener.h; sourceTree = "<group>"; };
+		EB8AE4EE171F0637006325BD /* road.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = road.cpp; sourceTree = "<group>"; };
+		EB8AE4EF171F0637006325BD /* road.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = road.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +126,8 @@
 				EB47FED1171B24550052C62E /* graphBuilder.h */,
 				EB47FED3171B249C0052C62E /* interface.cpp */,
 				EB47FED4171B249C0052C62E /* interface.h */,
+				EB8AE4EE171F0637006325BD /* road.cpp */,
+				EB8AE4EF171F0637006325BD /* road.h */,
 			);
 			path = Grafos;
 			sourceTree = "<group>";
@@ -216,6 +221,7 @@
 				EB47FECF171B23E60052C62E /* director.cpp in Sources */,
 				EB47FED2171B24550052C62E /* graphBuilder.cpp in Sources */,
 				EB47FED5171B249C0052C62E /* interface.cpp in Sources */,
+				EB8AE4F0171F0637006325BD /* road.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

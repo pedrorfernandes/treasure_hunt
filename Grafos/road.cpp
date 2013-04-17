@@ -20,3 +20,7 @@ Road::Road(City * city1, City * city2){
     numberOfRoads++;
     identification = numberOfRoads;
 }
+
+int Road::getID() const{
+    return identification;
+}

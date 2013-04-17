@@ -20,10 +20,13 @@
 #include "edgetype.h"
 #include "road.h"
 
+#define WIDTH 600
+#define HEIGHT 600
+#define BACKGROUND "map.png"
 #define ROAD_COLOR "orange"
 #define CITY_COLOR "red"
 #define HERO_COLOR "blue"
-
+#define ROAD_THICKNESS 7
 /**
  * The graph builder class reads the vertexes and edges from a file or generates it's own graph.
  * Besides building a graph internally it must also build the graph that has to be displayed.
@@ -31,7 +34,7 @@
 class GraphBuilder {
     Graph<City> * graph; /**< The graph that's being built */
     TreasureHunter * treasureHunter; /**< The hunter with it's starting point. */
-    GraphViewer * graphView; /**< The graph to be displayed */
+    GraphViewer * view; /**< The graph to be displayed */
     vector<Road *> roads;
     
 public:
@@ -39,6 +42,11 @@ public:
      * Initializes a new graph and graphView
      */
     GraphBuilder();
+    
+    /**
+     * @return The pointer to the graph viewer
+     */
+    GraphViewer * getGraphViewer() const;
     
     /**
      * Generates a graph from a templated file with city names, clues and roads.

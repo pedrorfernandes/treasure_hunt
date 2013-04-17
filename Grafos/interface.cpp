@@ -13,9 +13,22 @@
 #include "interface.h"
 
 Interface::Interface(){
-    graphBuilder = new GraphBuilder();
+    builder = new GraphBuilder();
 }
 
 void Interface::init(){
+    // basic tests
+    City c1("Porto");
+    City c2("Lisboa");
+    City c3("Coimbra");
+    builder->addCity(c1);
+    builder->addCity(c2);
+    builder->addCity(c3);
+    builder->connect(c1, c3, 10, false);
+    builder->connect(c3, c2, 300, false);
+    builder->spawnTreasureHunter(c1);
+    
+    view = builder->getGraphViewer();
+    view->rearrange();
     
 }

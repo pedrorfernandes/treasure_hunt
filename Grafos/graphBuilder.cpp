@@ -14,7 +14,15 @@
 
 GraphBuilder::GraphBuilder() {
     graph = new Graph<City>();
-    graphView = new GraphViewer(600, 600, true);
+    view = new GraphViewer(WIDTH, HEIGHT, true);
+    view->setBackground(BACKGROUND);
+    view->createWindow(WIDTH, HEIGHT);
+    view->defineEdgeColor(ROAD_COLOR);
+    view->defineVertexColor(CITY_COLOR);
+}
+
+GraphViewer * GraphBuilder::getGraphViewer() const{
+    return view;
 }
 
 bool GraphBuilder::loadFromFile(string &filename){
@@ -26,28 +34,35 @@ bool GraphBuilder::saveToFile(string &filename){
 }
 
 bool GraphBuilder::addCity(City &city){
-    graph->addVertex(city);
-    graphView->addNode( city.getID() );
-    graphView->setVertexLabel( city.getID(), city.getName() );
-    graphView->setVertexColor(city.getID(), CITY_COLOR);
+    if ( !graph->addVertex(city) ) return false;
+    if ( !view->addNode(city.getID()) ) return false;
+    view->setVertexLabel( city.getID(), city.getName() );
     return true;
 }
 
 bool GraphBuilder::connect(City &city1, City &city2, const double &distance, const bool &isDirected){
+    
+    Road * road = new Road(&city1, &city2);
+    roads.push_back(road);
     if (isDirected){
-        graph->addEdge(city1, city2, distance);
-        Road * road = new Road(&city1, &city2);
-        roads.push_back(road);
-        graphView->addEdge(road->getID(), city1.getID(), city2.getID(), EdgeType::DIRECTED);
-        //graphView->setEdgeLabel(road->getID(), "");
-        graphView->setEdgeColor(road->getID(), ROAD_COLOR);
-        //graphView->setEdgeThickness(road->getID(), 5);
+        if ( !graph->addEdge(city1, city2, distance) ) return false;
+        if ( !view->addEdge(road->getID(), city1.getID(), city2.getID(), EdgeType::DIRECTED) ) return false;
+
+    } else {
+        if ( !graph->addEdge(city1, city2, distance) ) return false;
+        if ( !graph->addEdge(city2, city1, distance) ) return false;
+        if ( !view->addEdge(road->getID(), city1.getID(), city2.getID(), EdgeType::UNDIRECTED) ) return false;
     }
+    
+    view->setEdgeThickness(road->getID(), ROAD_THICKNESS);
+    view->setEdgeWeight(road->getID(), (int)distance);
+    
     return true;
 }
 
 bool GraphBuilder::spawnTreasureHunter(City &city){
     treasureHunter = new TreasureHunter(&city);
-    graphView->setVertexColor(city.getID(), HERO_COLOR);
+    view->setVertexColor(city.getID(), HERO_COLOR);    
+    return true;
 }
 
