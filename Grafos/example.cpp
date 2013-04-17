@@ -2,8 +2,9 @@
 #include "interface.h"
 
 int main() {
-    Interface * interface = new Interface();
-    interface->init();
+    Interface* i = new Interface();
+    i->init();
+    getchar();
     return 0;
     /*
   GraphViewer *gv = new GraphViewer(600, 600, true, 7772);
