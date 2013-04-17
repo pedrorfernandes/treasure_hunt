@@ -11,3 +11,22 @@
 //
 
 #include "graphBuilder.h"
+
+GraphBuilder::GraphBuilder() {
+    graph = new Graph<City *>();
+    graphView = new GraphViewer(600, 600, true);
+}
+
+bool GraphBuilder::loadFromFile(string &filename){
+    
+}
+
+bool GraphBuilder::saveToFile(string &filename){
+    
+}
+
+bool GraphBuilder::addCity(City * city){
+    graph->addVertex(city);
+    return true;
+}
+

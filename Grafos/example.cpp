@@ -1,7 +1,11 @@
 #include <cstdio>
-#include "graphviewer.h"
+#include "interface.h"
 
 int main() {
+    Interface * interface = new Interface();
+    interface->init();
+    return 0;
+    /*
   GraphViewer *gv = new GraphViewer(600, 600, true, 7772);
   
   gv->createWindow(600, 600);  
@@ -51,4 +55,5 @@ int main() {
   getchar();
 
   return 0;
+     */
 }

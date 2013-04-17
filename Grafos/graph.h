@@ -439,7 +439,7 @@ vector<T> Graph<T>::topologicalOrder() {
 
 	//verificar se é um DAG
 	if( getNumCycles() > 0 ) {
-		cout << "Ordenacao Impossivel!" << endl;
+		//cout << "Ordenacao Impossivel!" << endl;
 		return res;
 	}
 
@@ -680,7 +680,7 @@ int Graph<T>::edgeCost(int vOrigIndex, int vDestIndex)
 	return INT_INFINITY;
 }
 
-
+/*
 void printSquareArray(int ** arr, unsigned int size)
 {
 	for(unsigned int k = 0; k < size; k++)
@@ -707,6 +707,7 @@ void printSquareArray(int ** arr, unsigned int size)
 		cout << endl;
 	}
 }
+ */
 
 
 template<class T>

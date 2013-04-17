@@ -27,6 +27,11 @@ class Interface {
     
 public:
     /**
+     * Initializes a new interface
+     */
+    Interface();
+    
+    /**
      * Creates a graph builder that generates the graph for the director and for displaying.
      * Calls the main loop after initializing is done.
      */

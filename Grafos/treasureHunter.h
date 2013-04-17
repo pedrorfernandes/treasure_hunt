@@ -14,6 +14,7 @@
 #define _TREASURE_HUNTER_H_
 
 #include <vector>
+#include <stack>
 
 using namespace std;
 
@@ -24,9 +25,8 @@ class City;
  */
 class TreasureHunter {
     City * currentCity; /**< The current location of the treasure hunter. */
-    City * latestVisitedCity; /**< The last current location of the treasure hunter. */
+    stack<City *> usedClues; /**< The last current location of the treasure hunter. */
     bool foundTreasure; /**< True when the treasure hunter ends his quest. */
-    vector<City *> visited; /**< Contains all the cities that the hunter has traveled to. */
     
 public:
     /**
@@ -37,6 +37,7 @@ public:
     
     /**
      * Moves the hero to his next location.
+     * Marks the clue in the previous city as read.
      * If the city has the treasure, the hunter has found it.
      * @param nextCity The city where the hunter travels next.
      * @return Void
@@ -45,7 +46,7 @@ public:
 
     /**
      * Gathers all the possible steps the hero can travel to.
-     * These steps are the current city clues minus the locations already traveled to.
+     * These steps are the current city clues.
      * If there are no clues in the current city, returns an empty vector.
      * @return A vector containing all possible cities the hunter should visit.
      */

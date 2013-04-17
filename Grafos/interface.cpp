@@ -11,3 +11,11 @@
 //
 
 #include "interface.h"
+
+Interface::Interface(){
+    graphBuilder = new GraphBuilder();
+}
+
+void Interface::init(){
+    
+}

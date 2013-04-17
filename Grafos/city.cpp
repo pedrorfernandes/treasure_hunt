@@ -11,3 +11,9 @@
 //
 
 #include "city.h"
+
+int City::numberOfCities = 0;
+
+City::City(string name): hasTreasure(false){
+    this->name = name;
+}

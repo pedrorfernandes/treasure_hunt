@@ -29,6 +29,11 @@ class GraphBuilder {
     
 public:
     /**
+     * Initializes a new graph and graphView
+     */
+    GraphBuilder();
+    
+    /**
      * Generates a graph from a templated file with city names, clues and roads.
      * @return True if load was successful, false otherwise.
      */
