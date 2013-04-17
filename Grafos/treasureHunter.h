@@ -50,7 +50,7 @@ public:
      * If there are no clues in the current city, returns an empty vector.
      * @return A vector containing all possible cities the hunter should visit.
      */
-    vector<City *> getNextSteps();
+    vector<City *> getClues();
 
 };
 

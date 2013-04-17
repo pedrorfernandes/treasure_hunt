@@ -11,3 +11,20 @@
 //
 
 #include "treasureHunter.h"
+
+TreasureHunter::TreasureHunter(City* startingCity) {
+	currentCity = startingCity;
+	foundTreasure = false;
+}
+
+void TreasureHunter::moveTo(City* nextCity) {
+	currentCity->removeClue(nextCity);
+	currentCity = nextCity;
+	usedClues.push(nextCity);
+	if(currentCity->hasTreasure)
+		foundTreasure = true;
+}
+
+vector<City*> TreasureHunter::getClues() {
+	return currentCity->getClues();
+}
