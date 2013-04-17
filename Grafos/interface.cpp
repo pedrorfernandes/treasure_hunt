@@ -18,6 +18,7 @@ Interface::Interface(){
 
 void Interface::init(){
     // basic tests
+    
     City c1("Porto");
     City c2("Lisboa");
     City c3("Coimbra");
@@ -27,7 +28,10 @@ void Interface::init(){
     builder->connect(c1, c3, 10, false);
     builder->connect(c3, c2, 300, false);
     builder->spawnTreasureHunter(c1);
-    
+     /*
+    string filename = "map.txt";
+    builder->loadFromFile(filename);
+    */
     view = builder->getGraphViewer();
     view->rearrange();
     

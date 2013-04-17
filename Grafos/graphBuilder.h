@@ -13,6 +13,10 @@
 #ifndef _GRAPH_BUILDER_H_
 #define _GRAPH_BUILDER_H_
 
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
 #include "graph.h"
 #include "treasureHunter.h"
 #include "graphviewer.h"
@@ -27,6 +31,14 @@
 #define CITY_COLOR "red"
 #define HERO_COLOR "blue"
 #define ROAD_THICKNESS 7
+
+#define EQUALS '='
+#define SEPARATOR ','
+#define CITY "CITY"
+#define ROAD "ROAD"
+#define CLUE "CLUE"
+#define HUNTER "HUNTER"
+
 /**
  * The graph builder class reads the vertexes and edges from a file or generates it's own graph.
  * Besides building a graph internally it must also build the graph that has to be displayed.
@@ -36,6 +48,7 @@ class GraphBuilder {
     TreasureHunter * treasureHunter; /**< The hunter with it's starting point. */
     GraphViewer * view; /**< The graph to be displayed */
     vector<Road *> roads;
+    vector<City *> cities;
     
 public:
     /**
@@ -49,16 +62,23 @@ public:
     GraphViewer * getGraphViewer() const;
     
     /**
+     * Finds a city created by the builder specified by name.
+     * @param cityName The name of the city to find.
+     * @return Pointer to a created city. Null if it doesn't exist.
+     */
+    City * getCity(const string cityName) const;
+    
+    /**
      * Generates a graph from a templated file with city names, clues and roads.
      * @return True if load was successful, false otherwise.
      */
-    bool loadFromFile(string &filename);
+    bool loadFromFile(const string &filename);
     
     /**
      * Saves the current graph in a templated style to a file.
      * @return True if saving to file was successful, false otherwise.
      */
-    bool saveToFile(string &filename);
+    bool saveToFile(const string &filename);
     
     /**
      * Adds a city to the graph.

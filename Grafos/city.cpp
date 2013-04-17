@@ -32,6 +32,10 @@ vector<City*> City::getClues() const {
 	return clues;
 }
 
+void City::setClues(vector<City *> clues){
+    this->clues = clues;
+}
+
 City::City(string name, const bool hasTreasure):hasTreasure(hasTreasure) {
 	this->name = name;
 	numberOfCities++;

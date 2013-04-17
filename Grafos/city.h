@@ -41,6 +41,12 @@ public:
 	 * @return Returns the city's unused clues
 	 */
 	vector<City *> getClues() const;
+    
+    /**
+     * Sets clues to other cities.
+     * @param The new set of clues.
+     */
+    void setClues(vector<City *> clues);
 
 	/**
 	 * @return Returns the city identifier.
