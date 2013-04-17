@@ -22,6 +22,7 @@
 
 #define ROAD_COLOR "orange"
 #define CITY_COLOR "red"
+#define HERO_COLOR "blue"
 
 /**
  * The graph builder class reads the vertexes and edges from a file or generates it's own graph.

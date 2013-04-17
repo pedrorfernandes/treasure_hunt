@@ -27,7 +27,8 @@ bool GraphBuilder::saveToFile(string &filename){
 
 bool GraphBuilder::addCity(City &city){
     graph->addVertex(city);
-    graphView->addNode(city.getID());
+    graphView->addNode( city.getID() );
+    graphView->setVertexLabel( city.getID(), city.getName() );
     graphView->setVertexColor(city.getID(), CITY_COLOR);
     return true;
 }
@@ -45,7 +46,8 @@ bool GraphBuilder::connect(City &city1, City &city2, const double &distance, con
     return true;
 }
 
-bool spawnTreasureHunter(City &city){
-    // new treasurehunter
+bool GraphBuilder::spawnTreasureHunter(City &city){
+    treasureHunter = new TreasureHunter(&city);
+    graphView->setVertexColor(city.getID(), HERO_COLOR);
 }
 
