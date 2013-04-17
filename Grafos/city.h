@@ -33,6 +33,11 @@ public:
 	City(string name);
 
 	/**
+	 * @return Returns the city's name
+	 */
+	string getName() const;
+
+	/**
 	 * @return Returns the city's unused clues
 	 */
 	vector<City *> getClues() const;
