@@ -212,7 +212,7 @@ bool Graph<T>::addVertex(const T &in) {
 	typename vector<Vertex<T>*>::iterator it= vertexSet.begin();
 	typename vector<Vertex<T>*>::iterator ite= vertexSet.end();
 	for (; it!=ite; it++)
-		if ((*it)->info == in) return false;
+		if ( (*(*it)->info) == in ) return false;
 	Vertex<T> *v1 = new Vertex<T>(in);
 	vertexSet.push_back(v1);
 	return true;
@@ -223,7 +223,7 @@ bool Graph<T>::removeVertex(const T &in) {
 	typename vector<Vertex<T>*>::iterator it= vertexSet.begin();
 	typename vector<Vertex<T>*>::iterator ite= vertexSet.end();
 	for (; it!=ite; it++) {
-		if ((*it)->info == in) {
+		if ( (*(*it)->info) == in ) {
 			Vertex<T> * v= *it;
 			vertexSet.erase(it);
 			typename vector<Vertex<T>*>::iterator it1= vertexSet.begin();
@@ -251,9 +251,9 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
 	int found=0;
 	Vertex<T> *vS, *vD;
 	while (found!=2 && it!=ite ) {
-		if ( (*it)->info == sourc )
+		if ( (*(*it)->info) == sourc )
 			{ vS=*it; found++;}
-		if ( (*it)->info == dest )
+		if ( (*(*it)->info) == dest )
 			{ vD=*it; found++;}
 		it ++;
 	}
@@ -271,9 +271,9 @@ bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
 	int found=0;
 	Vertex<T> *vS, *vD;
 	while (found!=2 && it!=ite ) {
-		if ( (*it)->info == sourc )
+		if ( (*(*it)->info) == sourc )
 			{ vS=*it; found++;}
-		if ( (*it)->info == dest )
+		if ( (*(*it)->info) == dest )
 			{ vD=*it; found++;}
 		it ++;
 	}
@@ -378,7 +378,7 @@ int Graph<T>::maxNewChildren(Vertex<T> *v, T &inf) const {
 template <class T>
 Vertex<T>* Graph<T>::getVertex(const T &v) const {
 	for(unsigned int i = 0; i < vertexSet.size(); i++)
-		if (vertexSet[i]->info == v) return vertexSet[i];
+		if ( *(vertexSet[i]->info) == v ) return vertexSet[i];
 	return NULL;
 }
 
@@ -490,7 +490,7 @@ vector<T> Graph<T>::getPath(const T &origin, const T &dest){
 	Vertex<T>* v = getVertex(dest);
 
 	buffer.push_front(v->info);
-	while ( v->path != NULL &&  v->path->info != origin) {
+	while ( v->path != NULL &&  *(v->path->info) != origin ) {
 		v = v->path;
 		buffer.push_front(v->info);
 	}
@@ -506,6 +506,7 @@ vector<T> Graph<T>::getPath(const T &origin, const T &dest){
 	return res;
 }
 
+// TODO
 template<class T>
 vector<T> Graph<T>::getfloydWarshallPath(const T &origin, const T &dest){
 
@@ -513,9 +514,9 @@ vector<T> Graph<T>::getfloydWarshallPath(const T &origin, const T &dest){
 
 	for(unsigned int i = 0; i < vertexSet.size(); i++)
 	{
-		if(vertexSet[i]->info == origin)
+		if( *(vertexSet[i]->info) == origin)
 			originIndex = i;
-		if(vertexSet[i]->info == dest)
+		if( *(vertexSet[i]->info) == dest)
 			destinationIndex = i;
 
 		if(originIndex != -1 && destinationIndex != -1)

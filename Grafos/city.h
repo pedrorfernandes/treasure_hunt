@@ -82,7 +82,7 @@ public:
 	 * @param c2 The other city for comparison.
 	 * @return True if the cities have the same name.
 	 */
-	bool operator == (const City &c2) const;
+	bool operator == (const City *c2) const;
 
 	/**
 	 * Outputs the city name

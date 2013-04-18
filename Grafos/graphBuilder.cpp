@@ -13,7 +13,7 @@
 #include "graphBuilder.h"
 
 GraphBuilder::GraphBuilder() {
-    graph = new Graph<City>();
+    graph = new Graph<City *>();
     view = new GraphViewer(WIDTH, HEIGHT, true);
     view->setBackground(BACKGROUND);
     view->createWindow(WIDTH, HEIGHT);
@@ -54,7 +54,7 @@ bool GraphBuilder::loadFromFile(const string &filename){
                 if (treasure == "1") hasTreasure = true;
                 City * city = new City(cityName, hasTreasure);
                 cities.push_back(city);
-                addCity(*city);
+                addCity(city);
             }
             
             if( object == ROAD )
@@ -71,7 +71,7 @@ bool GraphBuilder::loadFromFile(const string &filename){
                 city2 = getCity(city2Name);
                 if (directed == "1") isDirected = true;
                 if (city1 != NULL & city2 != NULL) {
-                    connect(*city1, *city2, atof(distance.c_str()), isDirected);
+                    connect(city1, city2, atof(distance.c_str()), isDirected);
                 }
             }
             
@@ -95,7 +95,7 @@ bool GraphBuilder::loadFromFile(const string &filename){
                 string cityName; City * city;
                 getline(iss, cityName, SEPARATOR);
                 city = getCity(cityName);
-                spawnTreasureHunter(*city);
+                spawnTreasureHunter(city);
             }
         }
     }
@@ -106,25 +106,25 @@ bool GraphBuilder::saveToFile(const string &filename){
     
 }
 
-bool GraphBuilder::addCity(City &city){
+bool GraphBuilder::addCity(City * city){
     if ( !graph->addVertex(city) ) return false;
-    if ( !view->addNode(city.getID()) ) return false;
-    view->setVertexLabel( city.getID(), city.getName() );
+    if ( !view->addNode(city->getID()) ) return false;
+    view->setVertexLabel( city->getID(), city->getName() );
     return true;
 }
 
-bool GraphBuilder::connect(City &city1, City &city2, const double &distance, const bool &isDirected){
+bool GraphBuilder::connect(City * city1, City * city2, const double &distance, const bool &isDirected){
     
-    Road * road = new Road(&city1, &city2);
+    Road * road = new Road(city1, city2);
     roads.push_back(road);
     if (isDirected){
         if ( !graph->addEdge(city1, city2, distance) ) return false;
-        if ( !view->addEdge(road->getID(), city1.getID(), city2.getID(), EdgeType::DIRECTED) ) return false;
+        if ( !view->addEdge(road->getID(), city1->getID(), city2->getID(), EdgeType::DIRECTED) ) return false;
 
     } else {
         if ( !graph->addEdge(city1, city2, distance) ) return false;
         if ( !graph->addEdge(city2, city1, distance) ) return false;
-        if ( !view->addEdge(road->getID(), city1.getID(), city2.getID(), EdgeType::UNDIRECTED) ) return false;
+        if ( !view->addEdge(road->getID(), city1->getID(), city2->getID(), EdgeType::UNDIRECTED) ) return false;
     }
     
     view->setEdgeThickness(road->getID(), ROAD_THICKNESS);
@@ -133,9 +133,9 @@ bool GraphBuilder::connect(City &city1, City &city2, const double &distance, con
     return true;
 }
 
-bool GraphBuilder::spawnTreasureHunter(City &city){
-    treasureHunter = new TreasureHunter(&city);
-    view->setVertexColor(city.getID(), HERO_COLOR);    
+bool GraphBuilder::spawnTreasureHunter(City * city){
+    treasureHunter = new TreasureHunter(city);
+    view->setVertexColor(city->getID(), HERO_COLOR);
     return true;
 }
 
