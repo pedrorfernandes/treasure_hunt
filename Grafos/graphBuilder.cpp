@@ -52,9 +52,7 @@ bool GraphBuilder::loadFromFile(const string &filename){
                 getline(iss, cityName, SEPARATOR);
                 getline(iss, treasure, SEPARATOR);
                 if (treasure == "1") hasTreasure = true;
-                City * city = new City(cityName, hasTreasure);
-                cities.push_back(city);
-                addCity(city);
+                addCity(cityName, hasTreasure);
             }
             
             if( object == ROAD )
@@ -70,7 +68,7 @@ bool GraphBuilder::loadFromFile(const string &filename){
                 city1 = getCity(city1Name);
                 city2 = getCity(city2Name);
                 if (directed == "1") isDirected = true;
-                if (city1 != NULL && city2 != NULL) {
+                if (city1 != NULL & city2 != NULL) {
                     connect(city1, city2, atof(distance.c_str()), isDirected);
                 }
             }
@@ -135,9 +133,11 @@ bool GraphBuilder::saveToFile(const string &filename){
     return true;
 }
 
-bool GraphBuilder::addCity(City * city){
+bool GraphBuilder::addCity(string cityName, bool hasTreasure){
+    City * city = new City(cityName, hasTreasure);
     if ( !graph->addVertex(city) ) return false;
     if ( !view->addNode(city->getID()) ) return false;
+    cities.push_back(city);
     view->setVertexLabel( city->getID(), city->getName() );
     return true;
 }
@@ -145,7 +145,6 @@ bool GraphBuilder::addCity(City * city){
 bool GraphBuilder::connect(City * city1, City * city2, const double &distance, const bool &isDirected){
     
     Road * road = new Road(city1, city2, distance, isDirected);
-    roads.push_back(road);
     if (isDirected){
         if ( !graph->addEdge(city1, city2, distance) ) return false;
         if ( !view->addEdge(road->getID(), city1->getID(), city2->getID(), EdgeType::DIRECTED) ) return false;
@@ -156,6 +155,7 @@ bool GraphBuilder::connect(City * city1, City * city2, const double &distance, c
         if ( !view->addEdge(road->getID(), city1->getID(), city2->getID(), EdgeType::UNDIRECTED) ) return false;
     }
     
+    roads.push_back(road);
     view->setEdgeThickness(road->getID(), ROAD_THICKNESS);
     view->setEdgeWeight(road->getID(), (int)distance);
     

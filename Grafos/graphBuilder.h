@@ -84,10 +84,11 @@ public:
     
     /**
      * Adds a city to the graph.
-     * @param city The new city.
+     * @param cityName The name of the new city.
+     * @param hasTreasure If the new city has treasure.
      * @return False if an error occurred, true if ok.
      */
-    bool addCity(City * city);
+    bool addCity(string cityName, bool hasTreasure);
 
     /**
      * Adds an road (edge) between two cities.
