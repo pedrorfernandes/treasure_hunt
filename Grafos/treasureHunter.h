@@ -49,12 +49,17 @@ public:
 
     /**
      * Moves the treasure hunter to his next location.
-     * Marks the clue in the previous city as read.
      * If the city has the treasure, the hunter has found it.
      * @param nextCity The city where the hunter travels next.
      * @return Void
      */
     void moveTo(City * nextCity);
+
+    /**
+     * Removes the given city from the clues in the hunter's current location.
+     * @param cityClue The clue to be removed.
+     */
+    void removeClue(City* cityClue);
 
     /**
      * Moves the treasure hunter back to the previous city.

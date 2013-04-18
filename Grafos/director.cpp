@@ -24,7 +24,7 @@ bool Director::calculateNextPath() {
 			return false;
 
 		stack<City*> buffer;
-		while(*currentCity != *returnCity) {
+		while(currentCity != returnCity) {
 			currentCity = treasureHunter->getLastCity();
 			buffer.push(currentCity);
 		}
@@ -61,5 +61,13 @@ bool Director::calculateNextPath() {
 }
 
 City* Director::nextStep() {
+	City* nextCity = currentPath.top();
+	treasureHunter->moveTo(nextCity);
+	currentPath.pop();
 
+	if(currentPath.empty() && !nextCity->hasTreasure)
+		if(!calculateNextPath())
+			return NULL;
+
+	return nextCity;
 }

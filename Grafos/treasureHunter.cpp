@@ -28,11 +28,15 @@ City * TreasureHunter::getLastCity() {
 }
 
 void TreasureHunter::moveTo(City* nextCity) {
-	currentCity->removeClue(nextCity);
+	stepHistory.push(nextCity);
 	currentCity = nextCity;
-	usedClues.push(nextCity);
+
 	if(currentCity->hasTreasure)
 		foundTreasure = true;
+}
+
+void TreasureHunter::removeClue(City* cityClue) {
+	currentCity->removeClue(cityClue);
 }
 
 void TreasureHunter::stepBack() {
