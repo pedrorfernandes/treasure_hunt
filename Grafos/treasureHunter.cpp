@@ -17,6 +17,10 @@ TreasureHunter::TreasureHunter(City* startingCity) {
 	foundTreasure = false;
 }
 
+City * TreasureHunter::getCurrentCity() const{
+    return currentCity;
+}
+
 void TreasureHunter::moveTo(City* nextCity) {
 	currentCity->removeClue(nextCity);
 	currentCity = nextCity;

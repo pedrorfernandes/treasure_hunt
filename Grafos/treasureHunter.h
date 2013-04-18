@@ -37,6 +37,11 @@ public:
     TreasureHunter(City * startingCity);
     
     /**
+     * @return The treasure hunter's current location.
+     */
+    City * getCurrentCity() const;
+    
+    /**
      * Moves the hero to his next location.
      * Marks the clue in the previous city as read.
      * If the city has the treasure, the hunter has found it.

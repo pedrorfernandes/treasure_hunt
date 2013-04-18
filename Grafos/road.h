@@ -18,11 +18,16 @@ class City;
 class Road{
     City * city1;
     City * city2;
+    double distance;
     int identification;
     static int numberOfRoads;
 public:
-    Road(City * city1, City * city2);
+    Road(City * city1, City * city2, const double & distance, const bool &isDirected);
     int getID() const;
+    const bool isDirected;
+    City * getCity1() const;
+    City * getCity2() const;
+    double getDistance() const;
 };
 
 #endif

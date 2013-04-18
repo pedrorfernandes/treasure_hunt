@@ -21,6 +21,9 @@ void Interface::init(){
     string filename = "map.txt";
     builder->loadFromFile(filename);
     
+    string save = "teste.txt";
+    builder->saveToFile(save);
+    
     view = builder->getGraphViewer();
     view->rearrange();
     

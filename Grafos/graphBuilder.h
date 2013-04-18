@@ -16,6 +16,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
 #include "graph.h"
 #include "treasureHunter.h"
@@ -38,6 +39,7 @@
 #define ROAD "ROAD"
 #define CLUE "CLUE"
 #define HUNTER "HUNTER"
+#define PRECISION 3
 
 /**
  * The graph builder class reads the vertexes and edges from a file or generates it's own graph.

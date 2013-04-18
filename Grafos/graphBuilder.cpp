@@ -103,7 +103,36 @@ bool GraphBuilder::loadFromFile(const string &filename){
 }
 
 bool GraphBuilder::saveToFile(const string &filename){
-    
+    ofstream file;
+    file.open(filename.c_str(), fstream::trunc);
+    vector<City *>::iterator cityItr;
+    vector<Road *>::iterator roadItr;
+    for (cityItr = cities.begin(); cityItr != cities.end(); ++cityItr) {
+        file << CITY << EQUALS << (*cityItr)->getName() << SEPARATOR;
+        file << noboolalpha << (*cityItr)->hasTreasure << endl;
+    }
+    for (roadItr = roads.begin(); roadItr != roads.end(); ++roadItr) {
+        file << ROAD << EQUALS << (*roadItr)->getCity1()->getName() << SEPARATOR;
+        file << (*roadItr)->getCity2()->getName() << SEPARATOR;
+        file << setprecision(PRECISION) << (*roadItr)->getDistance() << SEPARATOR;
+        file << noboolalpha << (*roadItr)->isDirected << endl;
+    }
+    for (cityItr = cities.begin(); cityItr != cities.end(); ++cityItr) {
+        if ( (*cityItr)->getClues().size() != 0 ){
+            file << CLUE << EQUALS << (*cityItr)->getName() << SEPARATOR;
+            vector<City *> clues = (*cityItr)->getClues();
+            vector<City *>::iterator clueItr = clues.begin();
+            while (clueItr != clues.end()) {
+                file << (*clueItr)->getName();
+                ++clueItr;
+                if (clueItr != clues.end() )
+                    file << SEPARATOR;
+            }
+            file << endl;
+        }
+    }
+    file << HUNTER << EQUALS << treasureHunter->getCurrentCity()->getName() << endl;
+    return true;
 }
 
 bool GraphBuilder::addCity(City * city){
@@ -115,7 +144,7 @@ bool GraphBuilder::addCity(City * city){
 
 bool GraphBuilder::connect(City * city1, City * city2, const double &distance, const bool &isDirected){
     
-    Road * road = new Road(city1, city2);
+    Road * road = new Road(city1, city2, distance, isDirected);
     roads.push_back(road);
     if (isDirected){
         if ( !graph->addEdge(city1, city2, distance) ) return false;
