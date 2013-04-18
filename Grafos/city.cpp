@@ -32,6 +32,10 @@ vector<City*> City::getClues() const {
 	return clues;
 }
 
+void City::setClues(vector<City *> clues){
+    this->clues = clues;
+}
+
 City::City(string name, const bool hasTreasure):hasTreasure(hasTreasure) {
 	this->name = name;
 	numberOfCities++;
@@ -57,8 +61,15 @@ bool City::removeClue(City* city) {
 	return false;
 }
 
-bool City::operator == (const City &c2) const{
-	if (this->name == c2.name)
+bool City::operator == (const City *c2) const{
+	if (this->name == c2->name)
+		return true;
+	else
+		return false;
+}
+
+bool City::operator != (const City *c2) const{
+	if (this->name != c2->name)
 		return true;
 	else
 		return false;

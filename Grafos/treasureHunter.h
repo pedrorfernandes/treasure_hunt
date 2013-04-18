@@ -26,7 +26,8 @@ using namespace std;
  */
 class TreasureHunter {
     City * currentCity; /**< The current location of the treasure hunter. */
-    stack<City *> usedClues; /**< The last current location of the treasure hunter. */
+    stack<City *> stepHistory; /**< The steps given by the treasure hunter until the current location. */
+    stack<City *> usedClues; /**< The cities where the treasure hunter used clues. */
     bool foundTreasure; /**< True when the treasure hunter ends his quest. */
     
 public:
@@ -37,12 +38,17 @@ public:
     TreasureHunter(City * startingCity);
     
     /**
-     * @return Returns the hunter's current position (city).
+     * @return Returns the hunter's current location (city).
      */
     City* getCurrentCity() const;
+    
+    /**
+     * @return Returns the hunter's last location.
+     */
+    City * getLastCity();
 
     /**
-     * Moves the hero to his next location.
+     * Moves the treasure hunter to his next location.
      * Marks the clue in the previous city as read.
      * If the city has the treasure, the hunter has found it.
      * @param nextCity The city where the hunter travels next.
@@ -51,17 +57,31 @@ public:
     void moveTo(City * nextCity);
 
     /**
-     * Moves the hero back to the previous city.
+     * Moves the treasure hunter back to the previous city.
      */
     void stepBack();
 
     /**
-     * Gathers all the possible steps the hero can travel to.
-     * These steps are the current city clues.
+     * The clues represent possible cities for the treasure hunter to travel to.
+     * Returns all the clues in the treasure hunter's current location.
      * If there are no clues in the current city, returns an empty vector.
      * @return A vector containing all possible cities the hunter should visit.
      */
     vector<City *> getClues();
+
+    /**
+     * If the treasure hunter's current city has available clues, adds it to the used clues vector
+     * and returns a vector with those clues.
+     * @return A vector containing the cities the treasure hunter should visit.
+     */
+    vector<City *> readClues();
+
+    /**
+     * Removes the last city from where clues were read and returns it.
+     * @return The last city where clues were read from by the treasure hunter, NULL if its already at the beggining.
+     */
+    City* getReturnCity();
+
 
 };
 

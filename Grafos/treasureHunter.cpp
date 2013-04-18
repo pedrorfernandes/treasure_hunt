@@ -17,8 +17,14 @@ TreasureHunter::TreasureHunter(City* startingCity) {
 	foundTreasure = false;
 }
 
-City* TreasureHunter::getCurrentCity() const {
+City * TreasureHunter::getCurrentCity() const {
 	return currentCity;
+}
+
+City * TreasureHunter::getLastCity() {
+	City* lastCity = stepHistory.top();
+	stepHistory.pop();
+	return lastCity;
 }
 
 void TreasureHunter::moveTo(City* nextCity) {
@@ -30,10 +36,25 @@ void TreasureHunter::moveTo(City* nextCity) {
 }
 
 void TreasureHunter::stepBack() {
-	currentCity = usedClues.top();
-	usedClues.pop();
+	currentCity = stepHistory.top();
+	stepHistory.pop();
+}
+
+vector<City *> TreasureHunter::readClues() {
+	vector<City *> clues = getClues();
+
+	if(!clues.empty())
+		usedClues.push(currentCity);
+
+	return clues;
 }
 
 vector<City*> TreasureHunter::getClues() {
 	return currentCity->getClues();
+}
+
+City* TreasureHunter::getReturnCity() {
+	City* returnCity = usedClues.top();
+	usedClues.pop();
+	return returnCity;
 }

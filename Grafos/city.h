@@ -43,6 +43,12 @@ public:
 	vector<City *> getClues() const;
 
 	/**
+	 * Sets clues to other cities.
+	 * @param The new set of clues.
+	 */
+	void setClues(vector<City *> clues);
+
+	/**
 	 * @return Returns the city identifier.
 	 */
 	int getID() const;
@@ -76,7 +82,14 @@ public:
 	 * @param c2 The other city for comparison.
 	 * @return True if the cities have the same name.
 	 */
-	bool operator == (const City &c2) const;
+	bool operator == (const City *c2) const;
+
+	/**
+	 * Checks if two cities are different.
+	 * @param c2 The other city for comparison.
+	 * @return True if the cities have different names.
+	 */
+	bool operator != (const City *c2) const;
 
 	/**
 	 * Outputs the city name
