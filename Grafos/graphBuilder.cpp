@@ -166,6 +166,7 @@ bool GraphBuilder::addCity(string cityName, bool hasTreasure, int x, int y){
     if ( !view->addNode(city->getID(), city->getX(), city->getY()) ) return false;
     cities.push_back(city);
     view->setVertexLabel( city->getID(), city->getName() );
+    if (city->hasTreasure) view->setVertexColor(city->getID(), TREASURE_COLOR);
     return true;
 }
 

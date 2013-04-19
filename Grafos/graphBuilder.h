@@ -31,6 +31,7 @@
 #define ROAD_COLOR "orange"
 #define CITY_COLOR "red"
 #define HUNTER_COLOR "blue"
+#define TREASURE_COLOR "green"
 #define ROAD_THICKNESS 7
 
 #define EQUALS '='

@@ -52,6 +52,8 @@ public:
      */
     City * nextStep();
     
+    bool updatePath();
+    
 };
 
 #endif 

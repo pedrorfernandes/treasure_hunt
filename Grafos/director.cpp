@@ -16,21 +16,27 @@ Director::Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktr
     this->treasureHunter = hunter;
     this->graph = graph;
     this->backtracking = isBacktracking;
+    calculateNextPath();
 }
 
 bool Director::calculateNextPath() {
 	City* currentCity = treasureHunter->getCurrentCity();
 	vector<City*> currentCityClues = treasureHunter->readClues();
+    
+    // if the hunter isn't backtracking, quest ends here.
+    if (currentCityClues.empty() && !backtracking )
+        return false;
 
 	//In case backtracking is enabled, if the hunter's current city doesn't have valid clues and there is no treasure in it
 	//The hunter should just go back to the last city where he read clues and use a different clue
 	if(backtracking && currentCityClues.empty() && !currentCity->hasTreasure) {
 		City* returnCity = treasureHunter->getReturnCity();
+        treasureHunter->setDestination(returnCity);
 		if(returnCity == NULL)
 			return false;
 
 		stack<City*> buffer;
-		while(currentCity != returnCity) {
+		while( (*currentCity) != returnCity) {
 			currentCity = treasureHunter->getLastCity();
 			buffer.push(currentCity);
 		}
@@ -44,7 +50,7 @@ bool Director::calculateNextPath() {
 	}
 
 	graph->dijkstraShortestPath(currentCity);
-
+    
 	City* closestClue = currentCityClues[0];
 	double shortestDist = graph->getVertex(currentCityClues[0])->getDist();
 
@@ -57,6 +63,7 @@ bool Director::calculateNextPath() {
 
 	vector<City*> shortestPath = graph->getPath(currentCity, closestClue);
     treasureHunter->setDestination(closestClue);
+    currentCity->removeClue(closestClue);
 
 	if(shortestPath.empty())
 		return false;
@@ -71,10 +78,11 @@ City* Director::nextStep() {
 	City* nextCity = currentPath.top();
 	treasureHunter->moveTo(nextCity);
 	currentPath.pop();
-
-	if(currentPath.empty() && !nextCity->hasTreasure)
-		if(!calculateNextPath())
-			return NULL;
-
 	return nextCity;
+}
+
+bool Director::updatePath() {
+    if(currentPath.empty() && !treasureHunter->getCurrentCity()->hasTreasure)
+		return calculateNextPath();
+    return true;
 }

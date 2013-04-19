@@ -31,7 +31,7 @@ void Interface::init(){
     this->roads = builder->getRoads();
     this->treasureHunter = builder->getTreasureHunter();
     
-    director = new Director(treasureHunter, builder->getGraph(), false);
+    director = new Director(treasureHunter, builder->getGraph(), true);
     
     getchar();
     mainLoop();
@@ -39,21 +39,21 @@ void Interface::init(){
 
 void Interface::mainLoop(){
     while ( !treasureHunter->foundTreasure ) {
-        if ( director->calculateNextPath() == false ){
+        City * nextCity;
+        City * destination;
+        director->nextStep();
+        nextCity = treasureHunter->getCurrentCity();
+        destination = treasureHunter->getDestination();
+        view->setVertexColor(treasureHunter->getLastCity()->getID(), CITY_COLOR);
+        cout << "The hunter is headed to " << destination->getName() << "!" <<  endl;
+        cout << "Hunter moved to " << nextCity->getName() << endl;
+        view->setVertexColor(nextCity->getID(), HUNTER_COLOR);
+        view->rearrange();
+        if (! director->updatePath() ){
             cout << "No path to take! Quest over." << endl;
             return;
         }
-        City * destination = treasureHunter->getDestination();
-        cout << "The hunter is headed to " << destination->getName() << "!" <<  endl;
-        City * nextCity;
-        do {
-            nextCity = director->nextStep();
-            view->setVertexColor(treasureHunter->getLastCity()->getID(), CITY_COLOR);
-            cout << "Hunter moved to " << nextCity->getName() << endl;
-            view->setVertexColor(nextCity->getID(), HUNTER_COLOR);
-            view->rearrange();
-            getchar();
-        } while ( (*nextCity) != destination);
+        getchar();
     }
     cout << "The hero found the treasure! Hurrah!" << endl;
     return;
