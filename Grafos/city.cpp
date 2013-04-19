@@ -14,10 +14,12 @@
 
 int City::numberOfCities = 0;
 
-City::City(string name): hasTreasure(false){
+City::City(string name, int x, int y): hasTreasure(false){
 	this->name = name;
 	numberOfCities++;
 	identifier = numberOfCities;
+    this->x = x;
+    this->y = y;
 }
 
 string City::getName() const {
@@ -36,17 +38,29 @@ void City::setClues(vector<City *> clues){
     this->clues = clues;
 }
 
-City::City(string name, const bool hasTreasure):hasTreasure(hasTreasure) {
+int City::getX() const{
+    return x;
+}
+
+int City::getY() const{
+    return y;
+}
+
+City::City(string name, const bool hasTreasure, int x, int y):hasTreasure(hasTreasure) {
 	this->name = name;
 	numberOfCities++;
 	identifier = numberOfCities;
+    this->x = x;
+    this->y = y;
 }
 
-City::City(string name, const bool hasTreasure, vector<City*> clues):hasTreasure(hasTreasure) {
+City::City(string name, const bool hasTreasure, vector<City*> clues, int x, int y):hasTreasure(hasTreasure) {
 	this->name = name;
 	this->clues = clues;
 	numberOfCities++;
 	identifier = numberOfCities;
+    this->x = x;
+    this->y = y;
 }
 
 bool City::removeClue(City* city) {

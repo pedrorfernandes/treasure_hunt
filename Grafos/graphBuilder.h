@@ -84,6 +84,11 @@ public:
     vector<City *> getCities() const;
     
     /**
+     * @return The distance between two cities.
+     */
+    static double getDistance(City * city1, City * city2);
+    
+    /**
      * Finds a city created by the builder specified by name.
      * @param cityName The name of the city to find.
      * @return Pointer to a created city. Null if it doesn't exist.
@@ -106,19 +111,20 @@ public:
      * Adds a city to the graph.
      * @param cityName The name of the new city.
      * @param hasTreasure If the new city has treasure.
+     * @param x The X coordinates of the new city.
+     * @param y The Y coordinates of the new city.
      * @return False if an error occurred, true if ok.
      */
-    bool addCity(string cityName, bool hasTreasure);
+    bool addCity(string cityName, bool hasTreasure, int x, int y);
 
     /**
      * Adds an road (edge) between two cities.
      * @param city1 The first city.
      * @param city2 The second city.
-     * @param distance The distance between the two cities.
      * @param isDirected If true you can only travel from city1 to city2 on this road.
      * @return False if an error occurred, true if ok.
      */
-    bool connect(City * city1, City * city2, const double &distance, const bool &isDirected);
+    bool connect(City * city1, City * city2, const bool &isDirected);
     
     /**
      * Creates a treasure hunter in the specified city.

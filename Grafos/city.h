@@ -24,13 +24,18 @@ using namespace std;
 class City {
 	string name; /**< The city name. It must be unique.*/
 	vector<City *> clues; /**< A set of clues that indicate cities that might have the treasure */
-	int identifier; /** The city ID */
-	static int numberOfCities; /** The total number of cities */
+	int identifier; /**< The city ID */
+	static int numberOfCities; /**< The total number of cities */
+    int x; /**< The X coordinates of the city. */
+    int y; /**< The Y coordinates of the city. */
 public:
 	/**
-	 * Creates a new city
+	 * Creates a new city with no treasure.
+     * @param name The city name.
+     * @param x The X coordinates of the new city.
+     * @param y The Y coordinates of the new city.
 	 */
-	City(string name);
+	City(string name, int x, int y);
 
 	/**
 	 * @return Returns the city's name
@@ -52,6 +57,16 @@ public:
 	 * @return Returns the city identifier.
 	 */
 	int getID() const;
+    
+    /**
+     * @return The X coordinates of the city.
+     */
+    int getX() const;
+    
+    /**
+     * @return The Y coordinates of the city.
+     */
+    int getY() const;
 
 	const bool hasTreasure; /**< Determines if the city has the treasure or not */
 
@@ -59,16 +74,20 @@ public:
 	 * Creates a city with no clues
 	 * @param name The city name.
 	 * @param hasTreasure True if the city has a treasure, false if it's a dead end.
+     * @param x The X coordinates of the new city.
+     * @param y The Y coordinates of the new city.
 	 */
-	City(string name, const bool hasTreasure);
+	City(string name, const bool hasTreasure, int x, int y);
 
 	/**
 	 * Creates a city with clues to find the treasure.
 	 * @param name The city name.
 	 * @param hasTreasure True if the city has a treasure.
 	 * @param clues The clues to possible treasure locations.
+     * @param x The X coordinates of the new city.
+     * @param y The Y coordinates of the new city.
 	 */
-	City(string name, const bool hasTreasure, vector<City *> clues);
+	City(string name, const bool hasTreasure, vector<City *> clues, int x, int y);
 
 	/**
 	 * Removes a given clue from a city

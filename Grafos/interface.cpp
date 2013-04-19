@@ -25,7 +25,7 @@ void Interface::init(){
     builder->saveToFile(save);
     
     view = builder->getGraphViewer();
-    view->rearrange();
+    //view->rearrange();
     
     this->cities = builder->getCities();
     this->roads = builder->getRoads();

@@ -14,7 +14,7 @@
 
 GraphBuilder::GraphBuilder() {
     graph = new Graph<City *>();
-    view = new GraphViewer(WIDTH, HEIGHT, true);
+    view = new GraphViewer(WIDTH, HEIGHT, false);
     view->setBackground(BACKGROUND);
     view->createWindow(WIDTH, HEIGHT);
     view->defineEdgeColor(ROAD_COLOR);
@@ -50,6 +50,12 @@ City * GraphBuilder::getCity(const string cityName) const{
     return NULL;
 }
 
+double GraphBuilder::getDistance(City * city1, City * city2){
+    int x1 = city1->getX(); int x2 = city2->getX();
+    int y1 = city1->getY(); int y2 = city2->getY();
+    return sqrt(abs( (x2-x1)*(x2-x1) ) + abs( (y2-y1)*(y2-y1) ) );
+}
+
 bool GraphBuilder::loadFromFile(const string &filename){
     ifstream file;
     file.open(filename.c_str());
@@ -65,27 +71,30 @@ bool GraphBuilder::loadFromFile(const string &filename){
             {
                 string cityName; string treasure;
                 bool hasTreasure = false;
+                int x, y; string xStr, yStr;
                 getline(iss, cityName, SEPARATOR);
                 getline(iss, treasure, SEPARATOR);
                 if (treasure == "1") hasTreasure = true;
-                addCity(cityName, hasTreasure);
+                getline(iss, xStr, SEPARATOR);
+                getline(iss, yStr, SEPARATOR);
+                x = atoi(xStr.c_str());
+                y = atoi(yStr.c_str());
+                addCity(cityName, hasTreasure, x, y);
             }
             
             if( object == ROAD )
             {
                 string city1Name; string city2Name;
                 City * city1; City * city2;
-                string distance;
                 string directed; bool isDirected = false;
                 getline(iss, city1Name, SEPARATOR);
                 getline(iss, city2Name, SEPARATOR);
-                getline(iss, distance, SEPARATOR);
                 getline(iss, directed, SEPARATOR);
                 city1 = getCity(city1Name);
                 city2 = getCity(city2Name);
                 if (directed == "1") isDirected = true;
                 if (city1 != NULL && city2 != NULL) {
-                    connect(city1, city2, atof(distance.c_str()), isDirected);
+                    connect(city1, city2, isDirected);
                 }
             }
             
@@ -123,12 +132,13 @@ bool GraphBuilder::saveToFile(const string &filename){
     vector<Road *>::iterator roadItr;
     for (cityItr = cities.begin(); cityItr != cities.end(); ++cityItr) {
         file << CITY << EQUALS << (*cityItr)->getName() << SEPARATOR;
-        file << noboolalpha << (*cityItr)->hasTreasure << endl;
+        file << noboolalpha << (*cityItr)->hasTreasure << SEPARATOR;
+        file << (*cityItr)->getX() << SEPARATOR;
+        file << (*cityItr)->getY() << endl;
     }
     for (roadItr = roads.begin(); roadItr != roads.end(); ++roadItr) {
         file << ROAD << EQUALS << (*roadItr)->getCity1()->getName() << SEPARATOR;
         file << (*roadItr)->getCity2()->getName() << SEPARATOR;
-        file << setprecision(PRECISION) << (*roadItr)->getDistance() << SEPARATOR;
         file << noboolalpha << (*roadItr)->isDirected << endl;
     }
     for (cityItr = cities.begin(); cityItr != cities.end(); ++cityItr) {
@@ -149,18 +159,21 @@ bool GraphBuilder::saveToFile(const string &filename){
     return true;
 }
 
-bool GraphBuilder::addCity(string cityName, bool hasTreasure){
-    City * city = new City(cityName, hasTreasure);
+bool GraphBuilder::addCity(string cityName, bool hasTreasure, int x, int y){
+    City * city = new City(cityName, hasTreasure, x, y);
     if ( !graph->addVertex(city) ) return false;
-    if ( !view->addNode(city->getID()) ) return false;
+    //if ( !view->addNode(city->getID()) ) return false;
+    if ( !view->addNode(city->getID(), city->getX(), city->getY()) ) return false;
     cities.push_back(city);
     view->setVertexLabel( city->getID(), city->getName() );
     return true;
 }
 
-bool GraphBuilder::connect(City * city1, City * city2, const double &distance, const bool &isDirected){
-    
+bool GraphBuilder::connect(City * city1, City * city2, const bool &isDirected){
+
+    double distance = getDistance(city1, city2);
     Road * road = new Road(city1, city2, distance, isDirected);
+
     if (isDirected){
         if ( !graph->addEdge(city1, city2, distance) ) return false;
         if ( !view->addEdge(road->getID(), city1->getID(), city2->getID(), EdgeType::DIRECTED) ) return false;
