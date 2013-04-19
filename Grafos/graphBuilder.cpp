@@ -25,6 +25,22 @@ GraphViewer * GraphBuilder::getGraphViewer() const{
     return view;
 }
 
+Graph<City *> * GraphBuilder::getGraph() const{
+    return graph;
+}
+
+TreasureHunter * GraphBuilder::getTreasureHunter() const{
+    return treasureHunter;
+}
+
+vector<Road *> GraphBuilder::getRoads() const{
+    return roads;
+}
+
+vector<City *> GraphBuilder::getCities() const{
+    return cities;
+}
+
 City * GraphBuilder::getCity(const string cityName) const{
     vector<City *>::const_iterator it;
     for(it = cities.begin() ; it != cities.end(); ++it){
@@ -68,7 +84,7 @@ bool GraphBuilder::loadFromFile(const string &filename){
                 city1 = getCity(city1Name);
                 city2 = getCity(city2Name);
                 if (directed == "1") isDirected = true;
-                if (city1 != NULL & city2 != NULL) {
+                if (city1 != NULL && city2 != NULL) {
                     connect(city1, city2, atof(distance.c_str()), isDirected);
                 }
             }
@@ -164,7 +180,7 @@ bool GraphBuilder::connect(City * city1, City * city2, const double &distance, c
 
 bool GraphBuilder::spawnTreasureHunter(City * city){
     treasureHunter = new TreasureHunter(city);
-    view->setVertexColor(city->getID(), HERO_COLOR);
+    view->setVertexColor(city->getID(), HUNTER_COLOR);
     return true;
 }
 

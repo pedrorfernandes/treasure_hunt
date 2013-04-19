@@ -26,11 +26,13 @@ using namespace std;
  */
 class TreasureHunter {
     City * currentCity; /**< The current location of the treasure hunter. */
+    City * lastCity; /**< The current location of the treasure hunter. */
     stack<City *> stepHistory; /**< The steps given by the treasure hunter until the current location. */
     stack<City *> usedClues; /**< The cities where the treasure hunter used clues. */
-    bool foundTreasure; /**< True when the treasure hunter ends his quest. */
+    City * destination; /**< The hunter's current destination. */
     
 public:
+    bool foundTreasure; /**< True when the treasure hunter ends his quest. */
     /**
      * Treasure Hunter constructor.
      * @param startingCity The city where the hunter starts his quest.
@@ -46,6 +48,17 @@ public:
      * @return Returns the hunter's last location.
      */
     City * getLastCity();
+    
+    /**
+     * Sets the hunter's current destination.
+     * @param destination The new destination.
+     */
+    void setDestination(City * destination);
+    
+    /**
+     * @return The hunter's current destination.
+     */
+    City * getDestination() const;
 
     /**
      * Moves the treasure hunter to his next location.

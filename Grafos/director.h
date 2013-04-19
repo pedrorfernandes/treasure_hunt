@@ -29,6 +29,14 @@ class Director {
     
 public:
     /**
+     * Creates a new director.
+     * @param hunter The treasure hunter.
+     * @param graph The pre-made graph.
+     * @param isBacktracking If the algorithm uses backtracking.
+     */
+    Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktracking);
+    
+    /**
      * This function must get the hunter's next location choices and determines which is the closest.
      * It takes into account the type of the graph so that it can optimize and choose the best algorithm to do this task.
      * The generated path is stacked into the currentPath variable.

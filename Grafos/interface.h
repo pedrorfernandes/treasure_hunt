@@ -26,6 +26,7 @@ class Interface {
     GraphBuilder * builder; /**< The builder in charge of creating graphs */
     vector<City *> cities;
     vector<Road *> roads;
+    TreasureHunter * treasureHunter;
     
 public:
     /**

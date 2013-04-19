@@ -45,7 +45,7 @@ public:
 	T getInfo() const;
 	void setInfo(T info);
 
-	int getDist() const;
+	double getDist() const;
 	int getIndegree() const;
 
 	bool operator<(const Vertex<T> vertex);
@@ -97,7 +97,7 @@ T Vertex<T>::getInfo() const {
 }
 
 template <class T>
-int Vertex<T>::getDist() const {
+double Vertex<T>::getDist() const {
 	return this->dist;
 }
 

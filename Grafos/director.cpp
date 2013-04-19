@@ -12,6 +12,12 @@
 
 #include "director.h"
 
+Director::Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktracking){
+    this->treasureHunter = hunter;
+    this->graph = graph;
+    this->backtracking = isBacktracking;
+}
+
 bool Director::calculateNextPath() {
 	City* currentCity = treasureHunter->getCurrentCity();
 	vector<City*> currentCityClues = treasureHunter->readClues();
@@ -50,17 +56,18 @@ bool Director::calculateNextPath() {
 	}
 
 	vector<City*> shortestPath = graph->getPath(currentCity, closestClue);
+    treasureHunter->setDestination(closestClue);
 
 	if(shortestPath.empty())
 		return false;
 
-	for(unsigned int i = shortestPath.size() - 1; i >= 0; i--)
+	for(int i = (int)shortestPath.size() - 1; i >= 1; i--)
 		currentPath.push(shortestPath[i]);
 
 	return true;
 }
 
-City* Director::nextStep() {
+City* Director::nextStep() {    
 	City* nextCity = currentPath.top();
 	treasureHunter->moveTo(nextCity);
 	currentPath.pop();

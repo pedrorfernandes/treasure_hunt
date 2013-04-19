@@ -30,7 +30,7 @@
 #define BACKGROUND "map.png"
 #define ROAD_COLOR "orange"
 #define CITY_COLOR "red"
-#define HERO_COLOR "blue"
+#define HUNTER_COLOR "blue"
 #define ROAD_THICKNESS 7
 
 #define EQUALS '='
@@ -59,9 +59,29 @@ public:
     GraphBuilder();
     
     /**
-     * @return The pointer to the graph viewer
+     * @return The pointer to the graph viewer.
      */
     GraphViewer * getGraphViewer() const;
+    
+    /**
+     * @return The pointer to the graph.
+     */
+    Graph<City *> * getGraph() const;
+    
+    /**
+     * @return The pointer to the treasure hunter.
+     */
+    TreasureHunter * getTreasureHunter() const;
+    
+    /**
+     * @return The roads vector.
+     */
+    vector<Road *> getRoads() const;
+    
+    /**
+     * @return The cities vector.
+     */
+    vector<City *> getCities() const;
     
     /**
      * Finds a city created by the builder specified by name.

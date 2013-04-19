@@ -14,7 +14,9 @@
 
 TreasureHunter::TreasureHunter(City* startingCity) {
 	currentCity = startingCity;
+    lastCity = startingCity;
 	foundTreasure = false;
+    destination = NULL;
 }
 
 City * TreasureHunter::getCurrentCity() const {
@@ -22,13 +24,21 @@ City * TreasureHunter::getCurrentCity() const {
 }
 
 City * TreasureHunter::getLastCity() {
-	City* lastCity = stepHistory.top();
+	lastCity = stepHistory.top();
 	stepHistory.pop();
 	return lastCity;
 }
 
+void TreasureHunter::setDestination(City * destination){
+    this->destination = destination;
+}
+
+City * TreasureHunter::getDestination() const{
+    return destination;
+}
+
 void TreasureHunter::moveTo(City* nextCity) {
-	stepHistory.push(nextCity);
+	stepHistory.push(currentCity);
 	currentCity = nextCity;
 
 	if(currentCity->hasTreasure)
