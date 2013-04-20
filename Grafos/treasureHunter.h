@@ -30,6 +30,7 @@ class TreasureHunter {
     stack<City *> stepHistory; /**< The steps given by the treasure hunter until the current location. */
     stack<City *> usedClues; /**< The cities where the treasure hunter used clues. */
     City * destination; /**< The hunter's current destination. */
+    bool backtracking; /**< True when the treasure hunter is going back on this steps. */
     
 public:
     bool foundTreasure; /**< True when the treasure hunter ends his quest. */
@@ -50,6 +51,12 @@ public:
     City * getLastCity();
     
     /**
+     * Removes the last city in the hunter's step history and returns it.
+     * @return The last city in the hunter's step history.
+     */
+    City * stepBackHistory();
+
+    /**
      * Sets the hunter's current destination.
      * @param destination The new destination.
      */
@@ -59,6 +66,16 @@ public:
      * @return The hunter's current destination.
      */
     City * getDestination() const;
+
+    /**
+     * @return True if the hunter is going back on his steps
+     */
+    bool isBacktracking() const;
+
+    /**
+     * Sets backtracking to true or false.
+     */
+    void setBacktracking(bool val);
 
     /**
      * Moves the treasure hunter to his next location.

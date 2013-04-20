@@ -26,8 +26,8 @@ class Director {
     Graph<City *> * graph; /**< The graph containing all the cities and roads. Can be interpreted as a map. */
     stack<City *> currentPath; /**< The current path the hunter must take. If it's empty, the hero stops in the current city. */
     bool backtracking; /**< If true, when the hero reaches a dead end (city with no clues), he goes back to the latest visited city. If false, the journey ends in the dead end. */
-    
 public:
+    queue<string> outputs;
     /**
      * Creates a new director.
      * @param hunter The treasure hunter.
