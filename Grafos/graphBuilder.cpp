@@ -173,6 +173,9 @@ bool GraphBuilder::addCity(string cityName, bool hasTreasure, int x, int y){
 bool GraphBuilder::connect(City * city1, City * city2, const bool &isDirected){
 
     double distance = getDistance(city1, city2);
+    if ( roadExists(city1, city2) ) {
+        return false;
+    }
     Road * road = new Road(city1, city2, distance, isDirected);
 
     if (isDirected){
@@ -196,5 +199,93 @@ bool GraphBuilder::spawnTreasureHunter(City * city){
     treasureHunter = new TreasureHunter(city);
     view->setVertexColor(city->getID(), HUNTER_COLOR);
     return true;
+}
+
+bool GraphBuilder::roadExists(City * city1, City* city2){
+    vector<Road *>::iterator roadItr;
+    for (roadItr = roads.begin(); roadItr != roads.end(); ++roadItr) {
+        if ( ( (*(*roadItr)->getCity1()) == city1 && (*(*roadItr)->getCity2()) == city2 )
+          || ( (*(*roadItr)->getCity2()) == city1 && (*(*roadItr)->getCity1()) == city2 ) ){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool compare (pair<City*, double> i, pair<City*, double> j) {
+    return (i.second < j.second);
+}
+
+#define INTERVAL 5
+
+void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &numberOfClues){
+    // create a vector containing all possible x and y coordinates avaiable
+    vector<int> x; vector<int> y;
+    for (int i = INTERVAL; i < WIDTH-INTERVAL; i+=INTERVAL) {
+        x.push_back(i);
+    }
+    for (int i = INTERVAL; i < HEIGHT-INTERVAL; i+=INTERVAL) {
+        y.push_back(i);
+    }
+    
+    // shuffle those coordinates
+    srand((unsigned)time(0));
+    random_shuffle(x.begin(), x.end());
+    random_shuffle(y.begin(), y.end());
+    
+    int maxInWidth = WIDTH/INTERVAL - 2;
+    int maxInHeight = HEIGHT/INTERVAL - 2;
+    int max = numberOfCities;
+    if (maxInHeight < max)
+        max = maxInHeight;
+    if (maxInWidth < max)
+        max = maxInWidth;
+    
+    // from the shuffled coordinates, pick the first options and create cities
+    for (int i = 0; i < max; ++i) {
+        char numberStr[10];
+        sprintf(numberStr, "%d", i);
+        if (i == max-1)
+            addCity(string(numberStr), true, x.at(i), y.at(i));
+        else
+            addCity(string(numberStr), false, x.at(i), y.at(i));
+        if (i == 0)
+            spawnTreasureHunter( getCity(string(numberStr)) );
+    }
+    
+    // now for creating roads
+    int createdRoads = 0;
+    vector<City *>::iterator cityItr;
+    vector<City *>::iterator neighbourItr;
+    for (cityItr = cities.begin(); cityItr != cities.end(); ++cityItr) {
+        
+        // in each city, calculate every distance to every other city
+        vector<pair<City*, double> > distances;
+        for (neighbourItr = cities.begin(); neighbourItr != cities.end(); ++neighbourItr) {
+            double dist = getDistance((*cityItr), (*neighbourItr));
+            if (dist != 0)
+                distances.push_back(pair<City*, double>((*neighbourItr), dist) );
+        }
+        
+        // sort the distances so we can get the closest cities first
+        sort(distances.begin(), distances.end(), compare);
+        int counter = numberOfRoads/numberOfCities;
+        int i = 0;
+        vector<City *> connectedCities = graph->getVertex(*cityItr)->getEdges();
+        while (counter > 0 && createdRoads < numberOfRoads) {
+            // only connect to a new city if the current city roads
+            // aren't connected to a city that is connected to the new city
+            for (int j = 0; j < connectedCities.size(); ++j) {
+                if ( roadExists(connectedCities.at(j), distances.at(i).first) )
+                    i++;
+                    continue;
+            }
+            if (connect(*cityItr, distances.at(i).first, false) ){
+                counter--;
+            }
+            i++;
+        }
+    }
+    
 }
 

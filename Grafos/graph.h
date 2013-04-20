@@ -51,7 +51,21 @@ public:
 	bool operator<(const Vertex<T> vertex);
 
 	Vertex* path;
+    
+    vector<T> getEdges() ;
 };
+
+template <class T>
+vector<T> Vertex<T>::getEdges() {
+    typename vector<Edge<T> >::iterator it= adj.begin();
+	typename vector<Edge<T> >::iterator ite= adj.end();
+    vector<T> edges;
+	while (it!=ite) {
+		edges.push_back( it->dest->info );
+        ++it;
+	}
+    return edges;
+}
 
 
 template <class T>

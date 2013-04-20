@@ -18,6 +18,13 @@
 #include <sstream>
 #include <iomanip>
 
+// includes for the random graph
+#include <algorithm>    
+#include <ctime>    
+#include <cstdlib>
+#include <string>
+#include <set>
+
 #include "graph.h"
 #include "treasureHunter.h"
 #include "graphviewer.h"
@@ -25,14 +32,14 @@
 #include "edgetype.h"
 #include "road.h"
 
-#define WIDTH 600
-#define HEIGHT 600
+#define WIDTH 1000
+#define HEIGHT 1000
 #define BACKGROUND "map.png"
 #define ROAD_COLOR "orange"
 #define CITY_COLOR "red"
 #define HUNTER_COLOR "blue"
 #define TREASURE_COLOR "green"
-#define ROAD_THICKNESS 7
+#define ROAD_THICKNESS 5
 
 #define EQUALS '='
 #define SEPARATOR ','
@@ -138,8 +145,11 @@ public:
      * Randomly generates a graph with cities and a hero following the specified conditions.
      * @param numberOfCities The number of created cities.
      * @param numberOfRoads The number of roads created.
+     * @param numberOfClues The number of clues created.
      */
-    void createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads);
+    void createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &numberOfClues);
+    
+    bool roadExists(City * city1, City* city2);
 
 };
 

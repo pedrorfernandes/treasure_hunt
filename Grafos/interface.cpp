@@ -18,14 +18,18 @@ Interface::Interface(){
 
 void Interface::init(){
 	// basic tests
+    /*
 	string filename = "map.txt";
 	builder->loadFromFile(filename);
-
-	string save = "teste.txt";
+     */
+    
+    builder->createGraph(500, 1000, 50);
+    string save = "teste.txt";
 	builder->saveToFile(save);
 
 	view = builder->getGraphViewer();
-	//view->rearrange();
+	view->rearrange();
+    exit(0);
 
 	this->cities = builder->getCities();
 	this->roads = builder->getRoads();
