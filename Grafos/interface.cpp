@@ -23,7 +23,7 @@ void Interface::init(){
 	builder->loadFromFile(filename);
      */
     
-    builder->createGraph(10, 10, 50);
+    builder->createGraph(10, 12, 50);
     string save = "teste.txt";
 	builder->saveToFile(save);
 

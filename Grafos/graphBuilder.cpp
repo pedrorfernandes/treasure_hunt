@@ -291,7 +291,6 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
         }
         //vector<City *> connectedCities;
         while (counter > 0 && createdRoads < numberOfRoads) {
-            view->rearrange();
             /*
             // this will incentive the connection to more distant cities
             if (roadsPerCity > 1){
