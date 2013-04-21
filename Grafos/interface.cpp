@@ -23,7 +23,7 @@ void Interface::init(){
 	builder->loadFromFile(filename);
      */
     
-    builder->createGraph(10, 12, 50);
+    builder->createGraph(10, 20, 10);
     string save = "teste.txt";
 	builder->saveToFile(save);
 
@@ -33,7 +33,6 @@ void Interface::init(){
 	this->cities = builder->getCities();
 	this->roads = builder->getRoads();
 	this->treasureHunter = builder->getTreasureHunter();
-    exit(0);
 
 	director = new Director(treasureHunter, builder->getGraph(), true);
 

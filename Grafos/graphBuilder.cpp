@@ -241,16 +241,22 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     if (maxInWidth < max)
         max = maxInWidth;
     
+    City * treasure;
+    City * hunter;
     // from the shuffled coordinates, pick the first options and create cities
     for (int i = 0; i < max; ++i) {
         char numberStr[10];
         sprintf(numberStr, "%d", i);
-        if (i == max-1)
+        if (i == max-1){
             addCity(string(numberStr), true, x.at(i), y.at(i));
+            treasure = getCity(string(numberStr));
+        }
         else
             addCity(string(numberStr), false, x.at(i), y.at(i));
-        if (i == 0)
+        if (i == 0){
             spawnTreasureHunter( getCity(string(numberStr)) );
+            hunter = treasureHunter->getCurrentCity();
+        }
     }
     
     // now for creating roads
@@ -316,7 +322,30 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
         }
     }
     
+    // to generate the clues we must create a trail for the hunter
+    int cluesGenerated = 0;
+    // distances don't matter, the more the hunter moves, the better
+    graph->unweightedShortestPath(hunter);
+    vector<City*> trail = graph->getPath(hunter, treasure);
     
+    for (int i = 1; i < trail.size(); ++i) {
+        int random = rand() % numberOfCities;
+        // we put a clue from A to B and B to C
+        // A and C belong to the trail, B is random
+        trail.at(i-1)->addClue(cities.at(random) );
+        cities.at(random)->addClue(trail.at(i) );
+        cluesGenerated+=2;
+    }
+    
+    // the city containing the treasure must point clue to itself
+    (* (trail.end()-1) )->addClue(* (trail.end()-1) );
+    
+    while (cluesGenerated < numberOfClues) {
+        int random1 = rand() % numberOfCities;
+        int random2 = rand() % numberOfCities;
+        if ( cities.at(random1)->addClue(cities.at(random2)) )
+            cluesGenerated++;
+    }
     
 }
 

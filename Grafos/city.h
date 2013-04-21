@@ -52,6 +52,13 @@ public:
 	 * @param The new set of clues.
 	 */
 	void setClues(vector<City *> clues);
+    
+    /**
+     * Adds a clue to the city.
+     * @param clue The new clue.
+     * @return True if the clue was added. False if it already exists.
+     */
+    bool addClue(City * clue);
 
 	/**
 	 * @return Returns the city identifier.

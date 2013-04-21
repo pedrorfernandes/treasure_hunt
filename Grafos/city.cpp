@@ -38,6 +38,23 @@ void City::setClues(vector<City *> clues){
     this->clues = clues;
 }
 
+bool City::addClue(City * clue){
+    // there can only be clues to the same city
+    // if it has the treasure
+    if ( (*this) == clue && !this->hasTreasure )
+        return false;
+    
+    vector<City*>::iterator it = clues.begin();
+    
+	for(; it != clues.end(); it++)
+		if((*it) == clue) {
+			return false;
+		}
+    
+    clues.push_back(clue);
+	return true;
+}
+
 int City::getX() const{
     return x;
 }
