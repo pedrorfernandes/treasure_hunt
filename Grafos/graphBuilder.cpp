@@ -118,7 +118,8 @@ bool GraphBuilder::loadFromFile(const string &filename){
                 string cityName; City * city;
                 getline(iss, cityName, SEPARATOR);
                 city = getCity(cityName);
-                spawnTreasureHunter(city);
+                if (city != NULL)
+                    spawnTreasureHunter(city);
             }
         }
     }
@@ -218,7 +219,7 @@ bool compare (pair<City*, double> i, pair<City*, double> j) {
 
 #define INTERVAL 3
 
-void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &numberOfClues){
+void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &minNumberOfClues){
     // create a vector containing all possible x and y coordinates avaiable
     vector<int> x; vector<int> y;
     for (int i = INTERVAL; i < WIDTH-INTERVAL; i+=INTERVAL) {
@@ -329,11 +330,13 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     vector<City*> trail = graph->getPath(hunter, treasure);
     
     for (int i = 1; i < trail.size(); ++i) {
-        int random = rand() % numberOfCities;
-        // we put a clue from A to B and B to C
-        // A and C belong to the trail, B is random
-        trail.at(i-1)->addClue(cities.at(random) );
-        cities.at(random)->addClue(trail.at(i) );
+        int random1 = rand() % numberOfCities;
+        int random2 = rand() % numberOfCities;
+        // we put a clue from A to B and B to C and C to D
+        // A and D belong to the trail, B and C are random
+        trail.at(i-1)->addClue(cities.at(random1) );
+        cities.at(random2)->addClue(cities.at(random2));
+        cities.at(random2)->addClue(trail.at(i) );
         cluesGenerated+=2;
     }
     
@@ -341,9 +344,10 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     (* (trail.end()-1) )->addClue(* (trail.end()-1) );
     int treasureLocation = treasure->getID();
     
-    while (cluesGenerated < numberOfClues) {
+    while (cluesGenerated < minNumberOfClues) {
         int random1 = rand() % numberOfCities;
         int random2 = rand() % numberOfCities;
+        // there shall only be one clue pointing to the treasure
         if (random2 == treasureLocation )
             random2 = rand() % numberOfCities;
         if ( cities.at(random1)->addClue(cities.at(random2)) )

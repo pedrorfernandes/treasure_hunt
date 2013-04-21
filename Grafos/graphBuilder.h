@@ -147,7 +147,7 @@ public:
      * @param numberOfRoads The number of roads created.
      * @param numberOfClues The number of clues created.
      */
-    void createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &numberOfClues);
+    void createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &minNumberOfClues);
     
     bool roadExists(City * city1, City* city2);
 
