@@ -197,8 +197,20 @@ public:
 	int edgeCost(int vOrigIndex, int vDestIndex);
 	vector<T> getfloydWarshallPath(const T &origin, const T &dest);
 	void getfloydWarshallPathAux(int index1, int index2, vector<T> & res);
+    
+    vector<T> getUnconnectedEdges(const T &s);
 };
 
+template <class T>
+vector<T> Graph<T>::getUnconnectedEdges(const T &s){
+    unweightedShortestPath(s);
+    vector<T> unreachable;
+    for (int i = 0; i < vertexSet.size(); ++i) {
+        if ( vertexSet.at(i)->path == NULL )
+            unreachable.push_back(vertexSet.at(i)->info);
+    }
+    return unreachable;
+}
 
 template <class T>
 int Graph<T>::getNumVertex() const {

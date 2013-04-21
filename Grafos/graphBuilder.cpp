@@ -50,7 +50,7 @@ City * GraphBuilder::getCity(const string cityName) const{
     return NULL;
 }
 
-double GraphBuilder::getDistance(City * city1, City * city2){
+inline double GraphBuilder::getDistance(City * city1, City * city2){
     int x1 = city1->getX(); int x2 = city2->getX();
     int y1 = city1->getY(); int y2 = city2->getY();
     return sqrt(abs( (x2-x1)*(x2-x1) ) + abs( (y2-y1)*(y2-y1) ) );
@@ -216,7 +216,7 @@ bool compare (pair<City*, double> i, pair<City*, double> j) {
     return (i.second < j.second);
 }
 
-#define INTERVAL 5
+#define INTERVAL 3
 
 void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &numberOfClues){
     // create a vector containing all possible x and y coordinates avaiable
@@ -257,35 +257,67 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     int createdRoads = 0;
     vector<City *>::iterator cityItr;
     vector<City *>::iterator neighbourItr;
+    int roadsPerCity = numberOfRoads/numberOfCities;
+    int roadsLeft = numberOfRoads % numberOfCities;
     for (cityItr = cities.begin(); cityItr != cities.end(); ++cityItr) {
         
-        // in each city, calculate every distance to every other city
+        vector<City *> possibleConnections;
+        if (roadsPerCity == 1 && roadsLeft == 0){
+            // in each city, calculate distance to every unreachable city
+            possibleConnections = graph->getUnconnectedEdges(*cityItr);
+            if (possibleConnections.size() == 1)
+                possibleConnections = cities;
+        } else
+            // in each city, calculate distance to every other city
+            possibleConnections = cities;
+        
         vector<pair<City*, double> > distances;
-        for (neighbourItr = cities.begin(); neighbourItr != cities.end(); ++neighbourItr) {
+        for (neighbourItr = possibleConnections.begin(); neighbourItr != possibleConnections.end(); ++neighbourItr) {
             double dist = getDistance((*cityItr), (*neighbourItr));
             if (dist != 0)
                 distances.push_back(pair<City*, double>((*neighbourItr), dist) );
         }
+ 
+        if (distances.size() == 0)
+            continue;
         
         // sort the distances so we can get the closest cities first
         sort(distances.begin(), distances.end(), compare);
-        int counter = numberOfRoads/numberOfCities;
+        
         int i = 0;
-        vector<City *> connectedCities = graph->getVertex(*cityItr)->getEdges();
+        int counter = roadsPerCity;
+        if (roadsLeft > 0){
+            counter++; roadsLeft--;
+        }
+        //vector<City *> connectedCities;
         while (counter > 0 && createdRoads < numberOfRoads) {
-            // only connect to a new city if the current city roads
-            // aren't connected to a city that is connected to the new city
-            for (int j = 0; j < connectedCities.size(); ++j) {
-                if ( roadExists(connectedCities.at(j), distances.at(i).first) )
-                    i++;
-                    continue;
+            view->rearrange();
+            /*
+            // this will incentive the connection to more distant cities
+            if (roadsPerCity > 1){
+                vector<City *> connectedCities = graph->getVertex(*cityItr)->getEdges();
+                // only create a road to a new city if the current city roads
+                // aren't connected to a city that is connected to the new city
+                for (int j = 0; j < connectedCities.size(); ++j) {
+                    if ( roadExists(connectedCities.at(j), distances.at(i).first) ){
+                        i++;
+                        continue;
+                    }
+                }
             }
+             */
+            if (i >= distances.size() ){
+                break;
+            }
+            
             if (connect(*cityItr, distances.at(i).first, false) ){
                 counter--;
             }
             i++;
         }
     }
+    
+    
     
 }
 
