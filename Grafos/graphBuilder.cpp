@@ -339,10 +339,13 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     
     // the city containing the treasure must point clue to itself
     (* (trail.end()-1) )->addClue(* (trail.end()-1) );
+    int treasureLocation = treasure->getID();
     
     while (cluesGenerated < numberOfClues) {
         int random1 = rand() % numberOfCities;
         int random2 = rand() % numberOfCities;
+        if (random2 == treasureLocation )
+            random2 = rand() % numberOfCities;
         if ( cities.at(random1)->addClue(cities.at(random2)) )
             cluesGenerated++;
     }
