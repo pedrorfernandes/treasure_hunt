@@ -217,7 +217,7 @@ bool compare (pair<City*, double> i, pair<City*, double> j) {
     return (i.second < j.second);
 }
 
-#define INTERVAL 3
+#define INTERVAL 2
 
 void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &minNumberOfClues){
     // create a vector containing all possible x and y coordinates avaiable
@@ -330,12 +330,12 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     vector<City*> trail = graph->getPath(hunter, treasure);
     
     for (int i = 1; i < trail.size(); ++i) {
-        int random1 = rand() % numberOfCities;
-        int random2 = rand() % numberOfCities;
+        int random1 = rand() % max;
+        int random2 = rand() % max;
         // we put a clue from A to B and B to C and C to D
         // A and D belong to the trail, B and C are random
         trail.at(i-1)->addClue(cities.at(random1) );
-        cities.at(random2)->addClue(cities.at(random2));
+        cities.at(random1)->addClue(cities.at(random2));
         cities.at(random2)->addClue(trail.at(i) );
         cluesGenerated+=2;
     }
@@ -345,11 +345,11 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     int treasureLocation = treasure->getID();
     
     while (cluesGenerated < minNumberOfClues) {
-        int random1 = rand() % numberOfCities;
-        int random2 = rand() % numberOfCities;
+        int random1 = rand() % max;
+        int random2 = rand() % max;
         // there shall only be one clue pointing to the treasure
         if (random2 == treasureLocation )
-            random2 = rand() % numberOfCities;
+            random2 = rand() % max;
         if ( cities.at(random1)->addClue(cities.at(random2)) )
             cluesGenerated++;
     }
