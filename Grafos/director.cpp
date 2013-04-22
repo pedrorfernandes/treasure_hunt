@@ -59,7 +59,13 @@ bool Director::calculateNextPath() {
 		return true;
 	}
 
+    unsigned long time = 0;
+    startTimer();
 	graph->dijkstraShortestPath(currentCity);
+    time = stopTimer();
+    stringstream performance;
+    performance << "Dijkstra performance: " << time << " microseconds.";
+    events.push( performance.str() );
 
 	City* closestClue = currentCityClues[0];
 	double shortestDist = graph->getVertex(currentCityClues[0])->getDist();
@@ -107,4 +113,21 @@ bool Director::updatePath() {
 		}
 
 	return true;
+}
+
+void Director::startTimer() {    
+    gettimeofday(&clockStart, NULL);
+    return;
+}
+
+unsigned long Director::stopTimer(){
+    unsigned long mtime, seconds, useconds;
+    
+    gettimeofday(&clockEnd, NULL);
+    
+    seconds  = clockEnd.tv_sec  - clockStart.tv_sec;
+    useconds = clockEnd.tv_usec - clockStart.tv_usec;
+    
+    mtime = ((seconds) * 1000000 + useconds) + 0.5;
+    return mtime;
 }

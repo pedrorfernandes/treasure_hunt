@@ -17,12 +17,19 @@
 #include "graph.h"
 #include <stack>
 
+#include <sstream>
+
 #define NO_CLUES "No clues nor treasure here, maybe we should have picked a better clue... Let's go back!\n"
 #define STUCK_AT_START "Guess we are back to the starting point and we have nowhere to go...\n"
 #define BACKTRACK_TO_DESTINATION "Heading back to " + returnCity->getName() + "!\n"
 #define DESTINATION "Heading towards " + closestClue->getName() + "!\n"
 #define NO_PATH "No path to take! Quest over.\n"
 #define ARRIVED_AT_A_CITY "Arrived at " + nextCity->getName() + "!"
+
+// TODO WINDOWS DEFINES!!!
+#include <sys/time.h>
+#include <stdio.h>
+#include <unistd.h>
 
 /**
  * The director is the main engine class. It stores the graph holding all the cities and the treasure hunter.
@@ -33,6 +40,8 @@ class Director {
     Graph<City *> * graph; /**< The graph containing all the cities and roads. Can be interpreted as a map. */
     stack<City *> currentPath; /**< The current path the hunter must take. If it's empty, the hero stops in the current city. */
     bool backtracking; /**< If true, when the hero reaches a dead end (city with no clues), he goes back to the latest visited city. If false, the journey ends in the dead end. */
+    
+    struct timeval clockStart, clockEnd;
 public:
     queue<string> events;
     /**
@@ -61,7 +70,10 @@ public:
     
     bool updatePath();
     
+    void startTimer();
     
+    unsigned long stopTimer();
+
     
 };
 
