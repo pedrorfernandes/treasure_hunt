@@ -205,7 +205,7 @@ template <class T>
 vector<T> Graph<T>::getUnconnectedEdges(const T &s){
     unweightedShortestPath(s);
     vector<T> unreachable;
-    for (int i = 0; i < vertexSet.size(); ++i) {
+    for (unsigned int i = 0; i < vertexSet.size(); ++i) {
         if ( vertexSet.at(i)->path == NULL )
             unreachable.push_back(vertexSet.at(i)->info);
     }
