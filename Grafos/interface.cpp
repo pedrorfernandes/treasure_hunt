@@ -46,27 +46,27 @@ void Interface::mainLoop(){
 		City * nextCity;
 		City * destination;
 		if ( director->nextStep() == NULL ){
-            while ( !director->outputs.empty() ) {
-                cout << director->outputs.front() << endl;
-                director->outputs.pop();
+            while ( !director->events.empty() ) {
+                cout << director->events.front() << endl;
+                director->events.pop();
             }
             return;
         }
 		nextCity = treasureHunter->getCurrentCity();
 		destination = treasureHunter->getDestination();
 		view->setVertexColor(treasureHunter->getLastCity()->getID(), CITY_COLOR);
-		while(!director->outputs.empty()) {
-            while ( !director->outputs.empty() ) {
-                cout << director->outputs.front() << endl;
-                director->outputs.pop();
+		while(!director->events.empty()) {
+            while ( !director->events.empty() ) {
+                cout << director->events.front() << endl;
+                director->events.pop();
             }
 		}
 		view->setVertexColor(nextCity->getID(), HUNTER_COLOR);
 		view->rearrange();
 		if (!director->updatePath() ){
-            while ( !director->outputs.empty() ) {
-                cout << director->outputs.front() << endl;
-                director->outputs.pop();
+            while ( !director->events.empty() ) {
+                cout << director->events.front() << endl;
+                director->events.pop();
             }
 			return;
 		}

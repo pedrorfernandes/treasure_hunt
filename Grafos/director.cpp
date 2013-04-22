@@ -36,14 +36,14 @@ bool Director::calculateNextPath() {
 		City* returnCity = treasureHunter->getReturnCity();
 
 		if(returnCity == NULL) {
-			outputs.push(STUCK_AT_START);
+			events.push(STUCK_AT_START);
 			return false;
 		}
         
-        outputs.push(NO_CLUES);
+        events.push(NO_CLUES);
 
 		treasureHunter->setDestination(returnCity);
-		outputs.push(BACKTRACK_TO_DESTINATION);
+		events.push(BACKTRACK_TO_DESTINATION);
 
 		stack<City*> buffer;
 		while( (*currentCity) != returnCity) {
@@ -73,7 +73,7 @@ bool Director::calculateNextPath() {
 
 	vector<City*> shortestPath = graph->getPath(currentCity, closestClue);
 	treasureHunter->setDestination(closestClue);
-	outputs.push(DESTINATION);
+	events.push(DESTINATION);
 	currentCity->removeClue(closestClue);
 
 	if(shortestPath.empty())
@@ -91,7 +91,7 @@ City* Director::nextStep() {
         nextCity = currentPath.top();
         currentPath.pop();
         treasureHunter->moveTo(nextCity);
-        outputs.push(ARRIVED_AT_A_CITY);
+        events.push(ARRIVED_AT_A_CITY);
     }
 	return nextCity;
 }
@@ -102,7 +102,7 @@ bool Director::updatePath() {
 
 	if(currentPath.empty() && !treasureHunter->getCurrentCity()->hasTreasure)
 		if(!calculateNextPath()) {
-			outputs.push(NO_PATH);
+			events.push(NO_PATH);
 			return false;
 		}
 
