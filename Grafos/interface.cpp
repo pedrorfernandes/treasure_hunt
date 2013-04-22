@@ -23,7 +23,7 @@ void Interface::init(){
 	builder->loadFromFile(filename);
      */
     
-    builder->createGraph(1000, 1000, 1000);
+    builder->createGraph(100, 100, 100);
     string save = "teste.txt";
 	builder->saveToFile(save);
 
@@ -36,6 +36,10 @@ void Interface::init(){
 
 	director = new Director(treasureHunter, builder->getGraph(), true);
 
+    cout << director->events.front() << endl;
+    director->events.pop();
+
+    
     cout << "Press enter for each step of the journey!" << endl;
 	cin.get();
 	mainLoop();

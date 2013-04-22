@@ -58,13 +58,19 @@ bool Director::calculateNextPath() {
 
 		return true;
 	}
-
+    
     unsigned long time = 0;
     startTimer();
-	graph->dijkstraShortestPath(currentCity);
+    graph->dijkstraShortestPath(currentCity);
     time = stopTimer();
     stringstream performance;
-    performance << "Dijkstra performance: " << time << " microseconds.";
+    unsigned long average1 = checkPerformance(currentCity, DIJKSTRA);
+    unsigned long average2 = checkPerformance(currentCity, BELLMAN_FORD);
+    //unsigned long average3 = checkPerformance(currentCity, FLOYD_WARSHALL);
+
+    performance << "Dijkstra performance: " << average1 << " microseconds." << endl;
+    performance << "Bellman performance: " << average2 << " microseconds." << endl;
+    //performance << "Floyd performance: " << average3 << " microseconds.";
     events.push( performance.str() );
 
 	City* closestClue = currentCityClues[0];
@@ -130,4 +136,42 @@ unsigned long Director::stopTimer(){
     
     mtime = ((seconds) * 1000000 + useconds) + 0.5;
     return mtime;
+}
+
+unsigned long Director::checkPerformance(City * start, int algorithm){
+    unsigned long time = 0;
+    unsigned long runs = 1000;
+    unsigned long total = 0;
+    for (int run = 0; run < runs; ++run) {
+        switch (algorithm) {
+            case DIJKSTRA:
+            {
+                startTimer();
+                graph->dijkstraShortestPath(start);
+                time = stopTimer();
+                total += time;
+                break;
+            }
+            case BELLMAN_FORD:
+            {
+                startTimer();
+                graph->bellmanFordShortestPath(start);
+                time = stopTimer();
+                total += time;
+                break;
+            }
+            case FLOYD_WARSHALL:
+            {
+                startTimer();
+                graph->floydWarshallShortestPath();
+                time = stopTimer();
+                total += time;
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    unsigned long average = total / runs;
+    return average;
 }

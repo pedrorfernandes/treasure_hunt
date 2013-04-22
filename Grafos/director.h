@@ -31,6 +31,10 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define DIJKSTRA 1
+#define BELLMAN_FORD 2
+#define FLOYD_WARSHALL 3
+
 /**
  * The director is the main engine class. It stores the graph holding all the cities and the treasure hunter.
  * It is responsible for figuring out which algorithms to apply in the graph and use the generated paths to move the treasure hunter in the best direction.
@@ -73,6 +77,8 @@ public:
     void startTimer();
     
     unsigned long stopTimer();
+    
+    unsigned long checkPerformance(City * start, int algorithm);
 
     
 };

@@ -46,8 +46,8 @@ bool City::addClue(City * clue){
     
     vector<City*>::iterator it = clues.begin();
     
-	for(; it != clues.end(); it++)
-		if((*it) == clue) {
+	for(; it != clues.end(); ++it)
+		if( (*(*it)) == clue) {
 			return false;
 		}
     
