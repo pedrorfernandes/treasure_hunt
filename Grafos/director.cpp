@@ -142,7 +142,7 @@ unsigned long Director::checkPerformance(City * start, int algorithm){
     unsigned long time = 0;
     unsigned long runs = 1000;
     unsigned long total = 0;
-    for (int run = 0; run < runs; ++run) {
+    for (unsigned int run = 0; run < runs; ++run) {
         switch (algorithm) {
             case DIJKSTRA:
             {

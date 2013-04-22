@@ -261,7 +261,7 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     }
     
     // now for creating roads
-    int createdRoads = 0;
+    unsigned int createdRoads = 0;
     vector<City *>::iterator cityItr;
     vector<City *>::iterator neighbourItr;
     int roadsPerCity = numberOfRoads/numberOfCities;
@@ -291,8 +291,8 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
         // sort the distances so we can get the closest cities first
         sort(distances.begin(), distances.end(), compare);
         
-        int i = 0;
-        int counter = roadsPerCity;
+        unsigned int i = 0;
+        unsigned int counter = roadsPerCity;
         if (roadsLeft > 0){
             counter++; roadsLeft--;
         }
@@ -324,13 +324,13 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     }
     
     // to generate the clues we must create a trail for the hunter
-    int cluesGenerated = 0;
+    unsigned int cluesGenerated = 0;
     // distances don't matter, the more the hunter moves, the better
     graph->unweightedShortestPath(hunter);
     vector<City*> trail = graph->getPath(hunter, treasure);
     int treasureLocation = treasure->getID();
 
-    for (int i = 1; i < trail.size(); ++i) {
+    for (unsigned int i = 1; i < trail.size(); ++i) {
         int random1 = rand() % max;
         int random2 = rand() % max;
         while (random2 == treasureLocation )
