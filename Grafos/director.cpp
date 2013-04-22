@@ -63,6 +63,7 @@ bool Director::calculateNextPath() {
     startTimer();
     graph->dijkstraShortestPath(currentCity);
     time = stopTimer();
+    /*
     stringstream performance;
     unsigned long average1 = checkPerformance(currentCity, DIJKSTRA);
     unsigned long average2 = checkPerformance(currentCity, BELLMAN_FORD);
@@ -72,7 +73,7 @@ bool Director::calculateNextPath() {
     performance << "Bellman performance: " << average2 << " microseconds." << endl;
     //performance << "Floyd performance: " << average3 << " microseconds.";
     events.push( performance.str() );
-
+*/
 	City* closestClue = currentCityClues[0];
 	double shortestDist = graph->getVertex(currentCityClues[0])->getDist();
 
@@ -112,7 +113,7 @@ bool Director::updatePath() {
 	if(treasureHunter->isBacktracking() && currentPath.empty())
 		treasureHunter->setBacktracking(false);
 
-	if(currentPath.empty() && !treasureHunter->getCurrentCity()->hasTreasure)
+	if(currentPath.empty() )
 		if(!calculateNextPath()) {
 			events.push(NO_PATH);
 			return false;

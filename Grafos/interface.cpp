@@ -35,20 +35,19 @@ void Interface::init(){
 	this->treasureHunter = builder->getTreasureHunter();
 
 	director = new Director(treasureHunter, builder->getGraph(), true);
-
-    cout << director->events.front() << endl;
-    director->events.pop();
-
     
     cout << "Press enter for each step of the journey!" << endl;
+    
+    cout << director->events.front() << endl;
+    director->events.pop();
 	cin.get();
 	mainLoop();
 }
 
 void Interface::mainLoop(){
 	while ( !treasureHunter->foundTreasure ) {
-		City * nextCity;
-		City * destination;
+		City * nextCity; City * destination; City * lastCity;
+
 		if ( director->nextStep() == NULL ){
             while ( !director->events.empty() ) {
                 cout << director->events.front() << endl;
@@ -56,14 +55,15 @@ void Interface::mainLoop(){
             }
             return;
         }
+        
+        lastCity = treasureHunter->getLastCity();
 		nextCity = treasureHunter->getCurrentCity();
+        repaintRoad(lastCity, nextCity);
 		destination = treasureHunter->getDestination();
-		view->setVertexColor(treasureHunter->getLastCity()->getID(), CITY_COLOR);
+		view->setVertexColor(treasureHunter->getLastCity()->getID(), treasureHunter->getLastCity()->getColor());
 		while(!director->events.empty()) {
-            while ( !director->events.empty() ) {
-                cout << director->events.front() << endl;
-                director->events.pop();
-            }
+            cout << director->events.front() << endl;
+            director->events.pop();
 		}
 		view->setVertexColor(nextCity->getID(), HUNTER_COLOR);
 		view->rearrange();
@@ -74,9 +74,20 @@ void Interface::mainLoop(){
             }
 			return;
 		}
-		cin.get();
+		if (!treasureHunter->foundTreasure) cin.get();
 	}
 
-	cout << "The hero found the treasure! Hurrah!" << endl;
+	cout << "\nThe hero found the treasure! Hurrah!" << endl;
 	return;
+}
+
+void Interface::repaintRoad(City * city1, City * city2){
+    vector<Road *>::iterator roadItr;
+    for (roadItr = roads.begin(); roadItr != roads.end(); ++roadItr) {
+        if ( ( (*roadItr)->getCity1()->getID() == city1->getID() && (*roadItr)->getCity2()->getID() == city2->getID() )
+            || ( (*roadItr)->getCity2()->getID() == city1->getID() && (*roadItr)->getCity1()->getID() == city2->getID() ) ){
+            (*roadItr)->visit();
+            view->setEdgeColor( (*roadItr)->getID(), (*roadItr)->getColor() );
+        }
+    }
 }

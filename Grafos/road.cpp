@@ -13,6 +13,7 @@
 #include "road.h"
 
 int Road::numberOfRoads = 0;
+vector<string> Road::roadColors;
 
 Road::Road(City * city1, City * city2, const double &distance, const bool &isDirected): isDirected(isDirected){
     this->city1 = city1;
@@ -20,6 +21,16 @@ Road::Road(City * city1, City * city2, const double &distance, const bool &isDir
     this->distance = distance;
     numberOfRoads++;
     identification = numberOfRoads;
+    this->visits = 0;
+    if (roadColors.empty() ){
+        roadColors.push_back(ROAD_COLOR);
+        roadColors.push_back(ROAD_1_VISIT);
+        roadColors.push_back(ROAD_2_VISIT);
+        roadColors.push_back(ROAD_3_VISIT);
+        roadColors.push_back(ROAD_4_VISIT);
+    }
+    this->color = roadColors.at(visits);
+
 }
 
 int Road::getID() const{
@@ -36,4 +47,14 @@ City * Road::getCity2() const{
 
 double Road::getDistance() const{
     return distance;
+}
+
+void Road::visit(){
+    visits++;
+    if (visits >= roadColors.size() ) return;
+    this->color = roadColors.at(visits);
+}
+
+string Road::getColor() const{
+    return color;
 }

@@ -16,6 +16,9 @@
 #include <vector>
 #include <string>
 
+#define CITY_COLOR "red"
+#define TREASURE_COLOR "green"
+
 using namespace std;
 
 /**
@@ -28,6 +31,7 @@ class City {
 	static int numberOfCities; /**< The total number of cities */
     int x; /**< The X coordinates of the city. */
     int y; /**< The Y coordinates of the city. */
+    string color; /**< The city color for display. */
 public:
 	/**
 	 * Creates a new city with no treasure.
@@ -74,6 +78,11 @@ public:
      * @return The Y coordinates of the city.
      */
     int getY() const;
+    
+    /**
+     * @return The color of the city.
+     */
+    string getColor() const;
 
 	const bool hasTreasure; /**< Determines if the city has the treasure or not */
 

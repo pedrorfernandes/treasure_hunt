@@ -205,8 +205,11 @@ bool GraphBuilder::spawnTreasureHunter(City * city){
 bool GraphBuilder::roadExists(City * city1, City* city2){
     vector<Road *>::iterator roadItr;
     for (roadItr = roads.begin(); roadItr != roads.end(); ++roadItr) {
-        if ( ( (*(*roadItr)->getCity1()) == city1 && (*(*roadItr)->getCity2()) == city2 )
-          || ( (*(*roadItr)->getCity2()) == city1 && (*(*roadItr)->getCity1()) == city2 ) ){
+        //if ( ( (*(*roadItr)->getCity1()) == city1 && (*(*roadItr)->getCity2()) == city2 )
+        //  || ( (*(*roadItr)->getCity2()) == city1 && (*(*roadItr)->getCity1()) == city2 ) ){
+        // comparing ints is obviously way better than comparing strings!
+        if ( ( (*roadItr)->getCity1()->getID() == city1->getID() && (*roadItr)->getCity2()->getID() == city2->getID() )
+          || ( (*roadItr)->getCity2()->getID() == city1->getID() && (*roadItr)->getCity1()->getID() == city2->getID() ) ){
             return true;
         }
     }

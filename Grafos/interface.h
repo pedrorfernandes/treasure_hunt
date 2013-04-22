@@ -50,6 +50,8 @@ public:
      */
     void mainLoop();
     
+    void repaintRoad(City * city1, City * city2);
+    
 };
 
 #endif

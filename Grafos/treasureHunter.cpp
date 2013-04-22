@@ -49,9 +49,6 @@ void TreasureHunter::moveTo(City* nextCity) {
     
     lastCity = currentCity;
 	currentCity = nextCity;
-
-	if(currentCity->hasTreasure)
-		foundTreasure = true;
 }
 
 void TreasureHunter::removeClue(City* cityClue) {
@@ -64,6 +61,9 @@ void TreasureHunter::stepBack() {
 }
 
 vector<City *> TreasureHunter::readClues() {
+    if(currentCity->hasTreasure)
+		foundTreasure = true;
+    
 	vector<City *> clues = getClues();
 
 	if(!clues.empty())

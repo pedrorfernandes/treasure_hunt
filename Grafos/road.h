@@ -13,7 +13,13 @@
 #ifndef _ROAD_H_
 #define _ROAD_H_
 
-class City;
+#define ROAD_COLOR "orange"
+#define ROAD_1_VISIT "blue"
+#define ROAD_2_VISIT "cyan"
+#define ROAD_3_VISIT "light_gray"
+#define ROAD_4_VISIT "gray"
+
+#include "city.h"
 
 class Road{
     City * city1;
@@ -21,6 +27,9 @@ class Road{
     double distance;
     int identification;
     static int numberOfRoads;
+    int visits;
+    string color;
+    static vector<string> roadColors;
 public:
     Road(City * city1, City * city2, const double & distance, const bool &isDirected);
     int getID() const;
@@ -28,6 +37,8 @@ public:
     City * getCity1() const;
     City * getCity2() const;
     double getDistance() const;
+    void visit();
+    string getColor() const;
 };
 
 #endif
