@@ -217,25 +217,25 @@ bool compare (pair<City*, double> i, pair<City*, double> j) {
     return (i.second < j.second);
 }
 
-#define INTERVAL 2
-
 void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &minNumberOfClues){
     // create a vector containing all possible x and y coordinates avaiable
     vector<int> x; vector<int> y;
-    for (int i = INTERVAL; i < WIDTH-INTERVAL; i+=INTERVAL) {
-        x.push_back(i);
+    while (x.size() < numberOfCities) {
+        for (int i = VERTEX_SIZE; i < WIDTH-VERTEX_SIZE; i+=INTERVAL) {
+            x.push_back(i);
+        }
+        for (int j = VERTEX_SIZE; j < WIDTH-VERTEX_SIZE; j+=INTERVAL) {
+            y.push_back(j);
+        }
     }
-    for (int i = INTERVAL; i < HEIGHT-INTERVAL; i+=INTERVAL) {
-        y.push_back(i);
-    }
-    
+
     // shuffle those coordinates
     srand((unsigned)time(0));
     random_shuffle(x.begin(), x.end());
     random_shuffle(y.begin(), y.end());
     
-    int maxInWidth = WIDTH/INTERVAL - 2;
-    int maxInHeight = HEIGHT/INTERVAL - 2;
+    int maxInWidth = (int) x.size();
+    int maxInHeight = (int) y.size();
     int max = numberOfCities;
     if (maxInHeight < max)
         max = maxInHeight;
@@ -328,10 +328,13 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     // distances don't matter, the more the hunter moves, the better
     graph->unweightedShortestPath(hunter);
     vector<City*> trail = graph->getPath(hunter, treasure);
-    
+    int treasureLocation = treasure->getID();
+
     for (int i = 1; i < trail.size(); ++i) {
         int random1 = rand() % max;
         int random2 = rand() % max;
+        while (random2 == treasureLocation )
+            random2 = rand() % max;
         // we put a clue from A to B and B to C and C to D
         // A and D belong to the trail, B and C are random
         trail.at(i-1)->addClue(cities.at(random1) );
@@ -342,13 +345,12 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     
     // the city containing the treasure must point clue to itself
     (* (trail.end()-1) )->addClue(* (trail.end()-1) );
-    int treasureLocation = treasure->getID();
     
     while (cluesGenerated < minNumberOfClues) {
         int random1 = rand() % max;
         int random2 = rand() % max;
         // there shall only be one clue pointing to the treasure
-        if (random2 == treasureLocation )
+        while (random2 == treasureLocation )
             random2 = rand() % max;
         if ( cities.at(random1)->addClue(cities.at(random2)) )
             cluesGenerated++;

@@ -23,7 +23,7 @@ void Interface::init(){
 	builder->loadFromFile(filename);
      */
     
-    builder->createGraph(10, 10, 10);
+    builder->createGraph(100, 100, 100);
     string save = "teste.txt";
 	builder->saveToFile(save);
 
@@ -36,7 +36,8 @@ void Interface::init(){
 
 	director = new Director(treasureHunter, builder->getGraph(), true);
 
-	getchar();
+    cout << "Press enter for each step of the journey!" << endl;
+	cin.get();
 	mainLoop();
 }
 
@@ -44,21 +45,32 @@ void Interface::mainLoop(){
 	while ( !treasureHunter->foundTreasure ) {
 		City * nextCity;
 		City * destination;
-		director->nextStep();
+		if ( director->nextStep() == NULL ){
+            while ( !director->outputs.empty() ) {
+                cout << director->outputs.front() << endl;
+                director->outputs.pop();
+            }
+            return;
+        }
 		nextCity = treasureHunter->getCurrentCity();
 		destination = treasureHunter->getDestination();
 		view->setVertexColor(treasureHunter->getLastCity()->getID(), CITY_COLOR);
 		while(!director->outputs.empty()) {
-			cout << director->outputs.front() << endl;
-			director->outputs.pop();
+            while ( !director->outputs.empty() ) {
+                cout << director->outputs.front() << endl;
+                director->outputs.pop();
+            }
 		}
 		view->setVertexColor(nextCity->getID(), HUNTER_COLOR);
 		view->rearrange();
 		if (!director->updatePath() ){
-			cout << "No path to take! Quest over." << endl;
+            while ( !director->outputs.empty() ) {
+                cout << director->outputs.front() << endl;
+                director->outputs.pop();
+            }
 			return;
 		}
-		getchar();
+		cin.get();
 	}
 
 	cout << "The hero found the treasure! Hurrah!" << endl;

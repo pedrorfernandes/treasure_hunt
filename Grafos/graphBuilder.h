@@ -32,8 +32,8 @@
 #include "edgetype.h"
 #include "road.h"
 
-#define WIDTH 1000
-#define HEIGHT 1000
+#define WIDTH 700
+#define HEIGHT 700
 #define BACKGROUND "map.png"
 #define ROAD_COLOR "orange"
 #define CITY_COLOR "red"
@@ -48,6 +48,12 @@
 #define CLUE "CLUE"
 #define HUNTER "HUNTER"
 #define PRECISION 3
+
+// constants for map generation
+// if the interval is big, the random map
+// will be in grid formation
+#define INTERVAL 5
+#define VERTEX_SIZE 15
 
 /**
  * The graph builder class reads the vertexes and edges from a file or generates it's own graph.
@@ -149,6 +155,12 @@ public:
      */
     void createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &minNumberOfClues);
     
+    /**
+     * Checks if a road exists between two cities, to avoid duplicating roads.
+     * @param city1 The first city.
+     * @param city2 The second city.
+     * @return True if there is a road connecting the two cities, false if not.
+     */
     bool roadExists(City * city1, City* city2);
 
 };

@@ -31,19 +31,19 @@ bool Director::calculateNextPath() {
 	//The hunter should just go back to the last city where he read clues and use a different clue
 	if(backtracking && currentCityClues.empty() && !currentCity->hasTreasure) {
 
-		outputs.push("No clues nor treasure here, maybe we should have picked a better clue... Let's go back!\n");
-
 		treasureHunter->setBacktracking(true);
 
 		City* returnCity = treasureHunter->getReturnCity();
 
 		if(returnCity == NULL) {
-			outputs.push("Guess we are back to the starting point and we have nowhere to go...\n");
+			outputs.push(STUCK_AT_START);
 			return false;
 		}
+        
+        outputs.push(NO_CLUES);
 
 		treasureHunter->setDestination(returnCity);
-		outputs.push("Heading towards " + returnCity->getName() + "!\n");
+		outputs.push(BACKTRACK_TO_DESTINATION);
 
 		stack<City*> buffer;
 		while( (*currentCity) != returnCity) {
@@ -73,7 +73,7 @@ bool Director::calculateNextPath() {
 
 	vector<City*> shortestPath = graph->getPath(currentCity, closestClue);
 	treasureHunter->setDestination(closestClue);
-	outputs.push("Heading towards " + closestClue->getName() + "!\n");
+	outputs.push(DESTINATION);
 	currentCity->removeClue(closestClue);
 
 	if(shortestPath.empty())
@@ -86,11 +86,13 @@ bool Director::calculateNextPath() {
 }
 
 City* Director::nextStep() {
-	City* nextCity = currentPath.top();
-	treasureHunter->moveTo(nextCity);
-	currentPath.pop();
-
-	outputs.push("We reached " + nextCity->getName() + "!\n");
+	City* nextCity = NULL;
+    if ( !currentPath.empty() ){
+        nextCity = currentPath.top();
+        currentPath.pop();
+        treasureHunter->moveTo(nextCity);
+        outputs.push(ARRIVED_AT_A_CITY);
+    }
 	return nextCity;
 }
 
@@ -100,7 +102,7 @@ bool Director::updatePath() {
 
 	if(currentPath.empty() && !treasureHunter->getCurrentCity()->hasTreasure)
 		if(!calculateNextPath()) {
-			outputs.push("No path to take! Quest over.\n");
+			outputs.push(NO_PATH);
 			return false;
 		}
 
