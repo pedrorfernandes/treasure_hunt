@@ -34,6 +34,7 @@
 #define DIJKSTRA 1
 #define BELLMAN_FORD 2
 #define FLOYD_WARSHALL 3
+#define OPTIMISED_DIJKSTRA 4
 
 /**
  * The director is the main engine class. It stores the graph holding all the cities and the treasure hunter.
