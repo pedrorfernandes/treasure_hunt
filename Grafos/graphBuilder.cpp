@@ -171,6 +171,11 @@ bool GraphBuilder::addCity(string cityName, bool hasTreasure, int x, int y){
     return true;
 }
 
+bool GraphBuilder::deleteCity(City* city) {
+	//TODO implement
+	return false;
+}
+
 bool GraphBuilder::connect(City * city1, City * city2, const bool &isDirected){
 
     double distance = getDistance(city1, city2);

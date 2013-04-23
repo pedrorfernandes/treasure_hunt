@@ -16,6 +16,7 @@
 #include "director.h"
 #include "graphviewer.h"
 #include "graphBuilder.h"
+#include "displayWithPages.h"
 
 /**
  * The interface must do all the output and input operations and also handle the graphviewer API so that it correctly displays the current state of the map and the treasure hunter's progress.
@@ -27,7 +28,10 @@ class Interface {
     vector<City *> cities;
     vector<Road *> roads;
     TreasureHunter * treasureHunter;
-    bool graphReady; /**< Tells if the graph is ready to be displayed */
+
+    bool hasCityWithTreasure; /**< Tells if the graph has a city with treasure on it */
+    int numberOfCities; /**< Number of cities created by user */
+
 public:
     /**
      * Initializes a new interface
@@ -40,6 +44,12 @@ public:
      */
     void init();
     
+    /**
+     * Checks if a functional map is ready to be played.
+     * @return True if there is at least two cities and one of them has the treasure, false otherwise.
+     */
+    bool graphIsReady();
+
     /**
      * The menu that displays options to the user. Options include building a new map and starting a journey.
      * @return True if the game should start, false if it should terminate.
@@ -58,9 +68,39 @@ public:
     bool randomGraphMenu();
 
     /**
-     * This menu provides the user with options to load a saved map
+     * This menu lets the user create or delete cities, or edit them.
+     */
+    void citiesMenu();
+
+    /**
+     * Lets the user add a new city.
+     */
+     void addNewCity();
+
+     /**
+      * Lets the user delete an existing city.
+      */
+     void deleteExistingCity();
+
+     /**
+      * Lets the user edit a city's name.
+      */
+     void editCityName();
+
+     /**
+      * Lets the user edit a city's position.
+      */
+     void editCityPosition();
+
+    /**
+     * This menu provides the user with options to load a saved map.
      */
     void loadMapMenu();
+
+    /**
+     * This menu lets the user save a created map.
+     */
+    void saveMapMenu();
 
     /**
      * Updates the game by receiving the next step from the director until the journey is done.

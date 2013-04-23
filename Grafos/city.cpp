@@ -18,19 +18,19 @@ City::City(string name, int x, int y): hasTreasure(false){
 	this->name = name;
 	numberOfCities++;
 	identifier = numberOfCities;
-    this->x = x;
-    this->y = y;
-    this->color = CITY_COLOR;
+	this->x = x;
+	this->y = y;
+	this->color = CITY_COLOR;
 }
 
 City::City(string name, const bool hasTreasure, int x, int y):hasTreasure(hasTreasure) {
 	this->name = name;
 	numberOfCities++;
 	identifier = numberOfCities;
-    this->x = x;
-    this->y = y;
-    if (!hasTreasure) this->color = CITY_COLOR;
-    else this->color = TREASURE_COLOR;
+	this->x = x;
+	this->y = y;
+	if (!hasTreasure) this->color = CITY_COLOR;
+	else this->color = TREASURE_COLOR;
 }
 
 City::City(string name, const bool hasTreasure, vector<City*> clues, int x, int y):hasTreasure(hasTreasure) {
@@ -38,10 +38,10 @@ City::City(string name, const bool hasTreasure, vector<City*> clues, int x, int 
 	this->clues = clues;
 	numberOfCities++;
 	identifier = numberOfCities;
-    this->x = x;
-    this->y = y;
-    if (!hasTreasure) this->color = CITY_COLOR;
-    else this->color = TREASURE_COLOR;
+	this->x = x;
+	this->y = y;
+	if (!hasTreasure) this->color = CITY_COLOR;
+	else this->color = TREASURE_COLOR;
 }
 
 string City::getName() const {
@@ -57,36 +57,36 @@ vector<City*> City::getClues() const {
 }
 
 void City::setClues(vector<City *> clues){
-    this->clues = clues;
+	this->clues = clues;
 }
 
 string City::getColor() const{
-    return color;
+	return color;
 }
 
 bool City::addClue(City * clue){
-    // there can only be clues to the same city
-    // if it has the treasure
-    if ( (*this) == clue && !this->hasTreasure )
-        return false;
-    
-    vector<City*>::iterator it = clues.begin();
-    
+	// there can only be clues to the same city
+	// if it has the treasure
+	if ( (*this) == clue && !this->hasTreasure )
+		return false;
+
+	vector<City*>::iterator it = clues.begin();
+
 	for(; it != clues.end(); ++it)
 		if( (*(*it)) == clue) {
 			return false;
 		}
-    
-    clues.push_back(clue);
+
+	clues.push_back(clue);
 	return true;
 }
 
 int City::getX() const{
-    return x;
+	return x;
 }
 
 int City::getY() const{
-    return y;
+	return y;
 }
 
 bool City::removeClue(City* city) {
@@ -113,4 +113,17 @@ bool City::operator != (const City *c2) const{
 		return true;
 	else
 		return false;
+}
+
+ostream& operator <<(ostream& out, City& c) {
+	out << c.getName() << endl;
+	out << "X Position: " << c.getX() << endl;
+	out << "Y Position: " << c.getY() << endl;
+	out << "Has treasure: ";
+	if(c.hasTreasure)
+		cout << "yes" << endl;
+	else
+		cout << "no" << endl;
+
+	return out;
 }

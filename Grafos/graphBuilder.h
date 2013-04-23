@@ -132,6 +132,13 @@ public:
     bool addCity(string cityName, bool hasTreasure, int x, int y);
 
     /**
+     * Deletes a city from the graph.
+     * @param city The city to be deleted.
+     * @return False if an error occurred, true if ok.
+     */
+    bool deleteCity(City* city);
+
+    /**
      * Adds an road (edge) between two cities.
      * @param city1 The first city.
      * @param city2 The second city.

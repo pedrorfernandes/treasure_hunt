@@ -15,6 +15,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 
 #define CITY_COLOR "red"
 #define TREASURE_COLOR "green"
@@ -127,12 +128,12 @@ public:
 	bool operator != (const City *c2) const;
 
 	/**
-	 * Outputs the city name
+	 * Outputs the city name, position and if it has treasure.
 	 * @param out Where the output goes
 	 * @param c The city to output
 	 * @return Modified out
 	 */
-	friend ostream & operator << (ostream &os, City &c);
+	friend ostream & operator << (ostream &out, City &c);
 
 };
 
