@@ -63,17 +63,16 @@ bool Director::calculateNextPath() {
     startTimer();
     graph->dijkstraShortestPath(currentCity);
     time = stopTimer();
-    /*
     stringstream performance;
-    unsigned long average1 = checkPerformance(currentCity, DIJKSTRA);
-    unsigned long average2 = checkPerformance(currentCity, BELLMAN_FORD);
-    //unsigned long average3 = checkPerformance(currentCity, FLOYD_WARSHALL);
+    //unsigned long average1 = checkPerformance(currentCity, DIJKSTRA);
+    unsigned long average2 = checkPerformance(currentCity, OPTIMISED_DIJKSTRA);
+    unsigned long average3 = checkPerformance(currentCity, BELLMAN_FORD);
 
-    performance << "Dijkstra performance: " << average1 << " microseconds." << endl;
-    performance << "Bellman performance: " << average2 << " microseconds." << endl;
-    //performance << "Floyd performance: " << average3 << " microseconds.";
+    //performance << "Dijkstra performance: " << average1 << " microseconds." << endl;
+    performance << "New Dijkstra performance: " << average2 << " microseconds." << endl;
+    performance << "Bellman-Ford performance: " << average3 << " microseconds.";
     events.push( performance.str() );
-*/
+    
 	City* closestClue = currentCityClues[0];
 	double shortestDist = graph->getVertex(currentCityClues[0])->getDist();
 
@@ -141,7 +140,7 @@ unsigned long Director::stopTimer(){
 
 unsigned long Director::checkPerformance(City * start, int algorithm){
     unsigned long time = 0;
-    unsigned long runs = 1000;
+    unsigned long runs = 5000;
     unsigned long total = 0;
     for (unsigned int run = 0; run < runs; ++run) {
         switch (algorithm) {
@@ -165,6 +164,14 @@ unsigned long Director::checkPerformance(City * start, int algorithm){
             {
                 startTimer();
                 graph->floydWarshallShortestPath();
+                time = stopTimer();
+                total += time;
+                break;
+            }
+            case OPTIMISED_DIJKSTRA:
+            {
+                startTimer();
+                graph->optimizedDijkstraShortestPath(start);
                 time = stopTimer();
                 total += time;
                 break;

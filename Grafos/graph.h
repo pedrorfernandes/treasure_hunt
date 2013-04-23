@@ -199,6 +199,7 @@ public:
 	void getfloydWarshallPathAux(int index1, int index2, vector<T> & res);
     
     vector<T> getUnconnectedEdges(const T &s);
+    void optimizedDijkstraShortestPath(const T &s);
 };
 
 template <class T>
@@ -644,8 +645,53 @@ void Graph<T>::bellmanFordShortestPath(const T &s) {
 	}
 }
 
+template<class T>
+struct CompareVertex : public std::binary_function<Vertex<T>*, Vertex<T>*, bool>
+{
+    bool operator()(const Vertex<T>* v1, const Vertex<T>* v2) const
+    {
+        return v1->getDist() > v2->getDist();
+    }
+};
 
-
+template<class T>
+void Graph<T>::optimizedDijkstraShortestPath(const T &s) {
+    
+	for(unsigned int i = 0; i < vertexSet.size(); i++) {
+		vertexSet[i]->path = NULL;
+		vertexSet[i]->dist = INT_INFINITY;
+		vertexSet[i]->processing = false;
+	}
+    
+	Vertex<T>* v = getVertex(s);
+	v->dist = 0;
+    
+    priority_queue<Vertex<T>*, vector<Vertex<T>*>, CompareVertex<T> > pq;
+	pq.push(v);
+    
+	while( !pq.empty() ) {
+        
+		v = pq.top();
+		pq.pop();
+        
+		for(unsigned int i = 0; i < v->adj.size(); i++) {
+			Vertex<T>* w = v->adj[i].dest;
+            
+			if(v->dist + v->adj[i].weight < w->dist ) {
+                
+				w->dist = v->dist + v->adj[i].weight;
+				w->path = v;
+                
+				//se já estiver na lista, apenas a actualiza
+				if(!w->processing)
+				{
+					w->processing = true;
+					pq.push(w);
+				}
+            }
+		}
+	}
+}
 
 
 template<class T>
@@ -702,7 +748,7 @@ int Graph<T>::edgeCost(int vOrigIndex, int vDestIndex)
 	for(unsigned int i = 0; i < vertexSet[vOrigIndex]->adj.size(); i++)
 	{
 		if(vertexSet[vOrigIndex]->adj[i].dest == vertexSet[vDestIndex])
-			return vertexSet[vOrigIndex]->adj[i].weight;
+			return (int)vertexSet[vOrigIndex]->adj[i].weight;
 	}
 
 	return INT_INFINITY;
