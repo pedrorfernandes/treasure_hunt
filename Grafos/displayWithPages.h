@@ -125,9 +125,9 @@ T* displayVector(vector<T*> &v1) {
 	int numPagina = 0;
 	int numPaginaMax;
 	if(v1.size()%5 == 0)
-		numPaginaMax = v1.size()/5-1;
+		numPaginaMax = (int)v1.size()/5-1;
 	else
-		numPaginaMax = v1.size()/5;
+		numPaginaMax = (int)v1.size()/5;
 	while(!escolhido)
 	{
 		typename vector<T*>::iterator it = v1.begin();
