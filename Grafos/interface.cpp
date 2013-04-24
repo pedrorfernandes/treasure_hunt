@@ -167,7 +167,7 @@ void Interface::newMapMenu() {
 			roadsMenu();
 			break;
 		case 3:
-			//cluesMenu();
+			cluesMenu();
 			break;
 		case 4:
 			if(randomGraphMenu())
@@ -437,7 +437,37 @@ void Interface::cluesMenu() {
 }
 
 void Interface::addNewClue() {
-	//TODO implement
+	cout << "- Add clue -" << endl;
+
+	vector<City*> cities = builder->getCities();
+
+	cout << "Choose the city to add the clue" << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
+	City* originCity = displayVector(cities);
+
+	cout << "This city has the following clues" << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
+	vector<City*> clues = originCity->getClues();
+	City* clue = displayVector(clues);
+
+	cout << "This clue indicates the following city:" << endl << clue << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
+
+	cout << "Choose the city the new clue will refer to" << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
+	City* destinationCity = displayVector(cities);
+
+	if(originCity->addClue(destinationCity))
+		cout << "Created clue!" << endl;
+	else
+		cout << "Failed to create clue, does it already exist? Are you perhaps indicating the same city?" << endl;
+
+	cout << "Press enter to continue..." << endl;
+	getchar();
 }
 
 void Interface::deleteExistingClue() {
