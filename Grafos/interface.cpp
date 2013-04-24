@@ -182,6 +182,7 @@ void Interface::newMapMenu() {
 
 bool Interface::randomGraphMenu() {
 	cout << "--- Random map generator ---" << endl;
+	cout << "WARNING: Generating a random map deletes your current one" << endl;
 	cout << "Number of cities? (At least two, 0 to cancel)" << endl;
 	int numberOfCitiesToCreate = getNumber(MINIMUM_NUMBER_OF_CITIES);
 
@@ -200,6 +201,7 @@ bool Interface::randomGraphMenu() {
 	if(numberOfClues == 0)
 		return false;
 
+	resetBuilder();
 	builder->createGraph(numberOfCitiesToCreate, numberOfRoads, numberOfClues);
 	numberOfCities =  builder->getCities().size();
 	hasCityWithTreasure = true;
@@ -351,6 +353,10 @@ void Interface::editCityPosition() {
 	//TODO implement
 }
 
+void Interface::roadsMenu() {
+
+}
+
 void Interface::loadMapMenu() {
 	//TODO implement
 }
@@ -408,6 +414,12 @@ void Interface::init(){
 	director->events.pop();
 	cin.get();
 	mainLoop();
+}
+
+void Interface::resetBuilder() {
+	delete builder;
+	numberOfCities = 0;
+	hasCityWithTreasure = false;
 }
 
 void Interface::mainLoop(){
