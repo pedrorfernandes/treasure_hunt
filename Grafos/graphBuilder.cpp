@@ -302,20 +302,28 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     City * hunter;
     // from the shuffled coordinates, pick the first options and create cities
     for (int i = 0; i < max; ++i) {
-        char numberStr[10];
+        char numberStr[100];
         sprintf(numberStr, "%d", i);
-        if (i == max-1){
-            addCity(string(numberStr), true, x.at(i), y.at(i));
+        if (i == 1){
+            while ( !addCity(string(numberStr), true, x.at(i), y.at(i)) ){
+                x.at(i) = rand() % (WIDTH-VERTEX_SIZE);
+                y.at(i) = rand() % (WIDTH-VERTEX_SIZE);
+            }
             treasure = getCity(string(numberStr));
         }
-        else
-            addCity(string(numberStr), false, x.at(i), y.at(i));
+        else {
+            while ( !addCity(string(numberStr), false, x.at(i), y.at(i)) ){
+                x.at(i) = rand() % (WIDTH-VERTEX_SIZE);
+                y.at(i) = rand() % (WIDTH-VERTEX_SIZE);
+            }
+        }
         if (i == 0){
             spawnTreasureHunter( getCity(string(numberStr)) );
             hunter = treasureHunter->getCurrentCity();
         }
     }
     
+    max = (int)cities.size();
     // now for creating roads
     unsigned int createdRoads = 0;
     vector<City *>::iterator cityItr;
@@ -371,6 +379,10 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     vector<City*> trail = graph->getPath(hunter, treasure);
     int treasureLocation = treasure->getID();
 
+    // add an extra random clue to the begining
+    int randomStart = rand() % max;
+    hunter->addClue(cities.at(randomStart) );
+    
     for (unsigned int i = 1; i < trail.size(); ++i) {
         int random1 = rand() % max;
         int random2 = rand() % max;

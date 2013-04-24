@@ -61,14 +61,15 @@ bool Director::calculateNextPath() {
     
 #ifdef USE_TIMER
     stringstream performance;
-    unsigned long average2 = checkPerformance(currentCity, OPTIMISED_DIJKSTRA);
-    unsigned long average3 = checkPerformance(currentCity, BELLMAN_FORD);
-    performance << "New Dijkstra performance: " << average2 << " microseconds." << endl;
-    performance << "Bellman-Ford performance: " << average3 << " microseconds.";
+    unsigned long average1 = checkPerformance(currentCity, OPTIMISED_DIJKSTRA);
+    unsigned long average2 = checkPerformance(currentCity, BELLMAN_FORD);
+    performance << "Optimised Dijkstra performance: " << average1 << " microseconds." << endl;
+    performance << "Bellman-Ford performance: " << average2 << " microseconds.";
     events.push( performance.str() );
 #endif
     
     graph->optimizedDijkstraShortestPath(currentCity);
+    if ( currentCityClues.empty() ) return false;
 	City* closestClue = currentCityClues[0];
 	double shortestDist = graph->getVertex(currentCityClues[0])->getDist();
 

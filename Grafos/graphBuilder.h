@@ -52,7 +52,7 @@
 // constants for map generation
 // if the interval is big, the random map
 // will be in grid formation
-#define INTERVAL 5
+#define INTERVAL 3
 #define VERTEX_SIZE 15
 
 /**
