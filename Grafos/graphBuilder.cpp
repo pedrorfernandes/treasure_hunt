@@ -23,8 +23,8 @@ GraphBuilder::GraphBuilder() {
 
 GraphBuilder::~GraphBuilder() {
     for (int i = 0; i < cities.size(); ++i) {
-        graph->removeVertex(cities.at(i));
-        view->removeNode(cities.at(i)->getID());
+        //graph->removeVertex(cities.at(i));
+        //view->removeNode(cities.at(i)->getID());
         delete cities.at(i);
     }
     view->closeWindow();

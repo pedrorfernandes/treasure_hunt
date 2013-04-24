@@ -418,6 +418,7 @@ void Interface::init(){
 
 void Interface::resetBuilder() {
 	delete builder;
+    builder = new GraphBuilder();
 	numberOfCities = 0;
 	hasCityWithTreasure = false;
 }
