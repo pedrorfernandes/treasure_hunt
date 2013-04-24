@@ -93,11 +93,6 @@ public:
      void editCityName();
 
      /**
-      * Lets the user edit a city's position.
-      */
-     void editCityPosition();
-
-     /**
       * Menu for adding or removing roads.
       */
      void roadsMenu();

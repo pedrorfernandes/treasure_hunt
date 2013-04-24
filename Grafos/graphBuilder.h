@@ -168,12 +168,12 @@ public:
     void createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &minNumberOfClues);
     
     /**
-     * Checks if a road exists between two cities, to avoid duplicating roads.
+     * Finds a road connecting two cities.
      * @param city1 The first city.
      * @param city2 The second city.
-     * @return True if there is a road connecting the two cities, false if not.
+     * @return The road that connects the two cities, null if doesn't exist.
      */
-    bool roadExists(City * city1, City* city2);
+    Road * roadExists(City * city1, City* city2);
     
     /**
      * Returns all the roads connected to a city.
@@ -181,6 +181,14 @@ public:
      * @return A vector containing all the city roads.
      */
     vector<Road *> getConnectedRoads(City * city1);
+    
+    /**
+     * Deletes a road between two cities.
+     * @param city1 The first city.
+     * @param city2 The second city.
+     * @return True if the road was deleted, false if not.
+     */
+    bool deleteRoad(City * city1, City * city2);
 
 };
 
