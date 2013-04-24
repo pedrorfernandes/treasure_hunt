@@ -169,6 +169,13 @@ public:
      * @return True if there is a road connecting the two cities, false if not.
      */
     bool roadExists(City * city1, City* city2);
+    
+    /**
+     * Returns all the roads connected to a city.
+     * @param city1 The city where the roads are connected.
+     * @return A vector containing all the city roads.
+     */
+    vector<Road *> getConnectedRoads(City * city1);
 
 };
 

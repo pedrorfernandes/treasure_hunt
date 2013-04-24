@@ -383,7 +383,9 @@ void Interface::init(){
 	/*
 	string filename = "map.txt";
 	builder->loadFromFile(filename);
-	 */
+    hasCityWithTreasure = true;
+    numberOfCities = (int)builder->getCities().size();
+     */
 
 	/* string save = "teste.txt";
 	builder->saveToFile(save);*/

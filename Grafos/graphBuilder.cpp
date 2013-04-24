@@ -172,8 +172,31 @@ bool GraphBuilder::addCity(string cityName, bool hasTreasure, int x, int y){
 }
 
 bool GraphBuilder::deleteCity(City* city) {
-	//TODO implement
-	return false;
+    vector<City *>::iterator it;
+    City * found = NULL;
+    for(it = cities.begin() ; it != cities.end(); ++it){
+        if ( (*(*it)) == city){
+            found = (*it);
+            cities.erase(it);
+            break;
+        }
+    }
+    
+    if (found == NULL) return false;
+    
+    if ( !graph->removeVertex(found) ) return false;
+    if ( !view->removeNode(found->getID()) ) return false;
+    vector<Road *> toDestroy = getConnectedRoads(found);
+    for (int i = 0; i < toDestroy.size(); ++i) {
+        delete toDestroy.at(i);
+    }
+
+    for(it = cities.begin() ; it != cities.end(); ++it){
+        (*it)->removeClue(found);
+    }
+    
+    delete found;
+    return true;
 }
 
 bool GraphBuilder::connect(City * city1, City * city2, const bool &isDirected){
@@ -366,3 +389,13 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     
 }
 
+vector<Road *> GraphBuilder::getConnectedRoads(City * city1){
+    vector<Road *> connected;
+    vector<Road *>::iterator roadItr;
+    for (roadItr = roads.begin(); roadItr != roads.end(); ++roadItr) {
+        if ( (*roadItr)->getCity1()->getID() == city1->getID() ||
+            (*roadItr)->getCity2()->getID() == city1->getID() )
+            connected.push_back(*roadItr);
+    }
+    return connected;
+}
