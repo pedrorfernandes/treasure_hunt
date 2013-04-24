@@ -102,6 +102,31 @@ public:
       */
      void roadsMenu();
 
+     /**
+      * Lets the user add a new road.
+      */
+     void addNewRoad();
+
+     /**
+      * Lets the user delete an existing road.
+      */
+     void deleteExistingRoad();
+
+     /**
+      * Menu for adding or removing clues.
+      */
+     void cluesMenu();
+
+     /**
+      * Lets the user add a new clue.
+      */
+     void addNewClue();
+
+     /**
+      * Lets the user remove an existing clue.
+      */
+     void deleteExistingClue();
+
     /**
      * This menu provides the user with options to load a saved map.
      */

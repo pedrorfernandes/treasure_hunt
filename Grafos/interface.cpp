@@ -164,7 +164,7 @@ void Interface::newMapMenu() {
 			citiesMenu();
 			break;
 		case 2:
-			//roadsMenu();
+			roadsMenu();
 			break;
 		case 3:
 			//cluesMenu();
@@ -222,7 +222,6 @@ void Interface::citiesMenu() {
 				"0 - Go back" << endl <<
 				"1 - Add a new city" << endl <<
 				"2 - Delete a city" << endl;
-
 		if(graphIsReady()) {
 			cout << "3 - Edit a city name" << endl <<
 					"4 - Edit a city position" << endl;
@@ -354,7 +353,95 @@ void Interface::editCityPosition() {
 }
 
 void Interface::roadsMenu() {
+	int numberOfOptions = 2;
+	bool exitMenu = false;
 
+	while(!exitMenu) {
+
+		cout << endl <<
+				"--- Roads Menu ---" << endl <<
+				"0 - Go back" << endl <<
+				"1 - Add a new road" << endl <<
+				"2 - Delete a road" << endl;
+
+		int option = getOption(numberOfOptions);
+
+		switch(option) {
+		case 1:
+			addNewRoad();
+			break;
+		case 2:
+			deleteExistingRoad();
+			break;
+		case 0:
+			exitMenu = true;
+			break;
+		}
+	}
+}
+
+void Interface::addNewRoad() {
+	cout << "- Add road -" << endl;
+
+	vector<City*> cities = builder->getCities();
+
+	cout << "Choose a city for the origin" << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
+	City* originCity = displayVector(cities);
+
+	cout << "Choose a city for the destination" << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
+	City* destinationCity = displayVector(cities);
+
+	if(builder->connect(originCity, destinationCity, false))
+		cout << "Created road!" << endl;
+	else
+		cout << "Failed to create road, does it already exist?" << endl;
+
+	cout << "Press enter to continue..." << endl;
+	getchar();
+}
+
+void Interface::deleteExistingRoad() {
+	//TODO implement
+}
+
+void Interface::cluesMenu() {
+	int numberOfOptions = 2;
+	bool exitMenu = false;
+
+	while(!exitMenu) {
+
+		cout << endl <<
+				"--- Clues Menu ---" << endl <<
+				"0 - Go back" << endl <<
+				"1 - Add a new clue" << endl <<
+				"2 - Delete a clue" << endl;
+
+		int option = getOption(numberOfOptions);
+
+		switch(option) {
+		case 1:
+			addNewClue();
+			break;
+		case 2:
+			deleteExistingClue();
+			break;
+		case 0:
+			exitMenu = true;
+			break;
+		}
+	}
+}
+
+void Interface::addNewClue() {
+	//TODO implement
+}
+
+void Interface::deleteExistingClue() {
+	//TODO implement
 }
 
 void Interface::loadMapMenu() {
@@ -391,7 +478,7 @@ void Interface::init(){
 	builder->loadFromFile(filename);
     hasCityWithTreasure = true;
     numberOfCities = (int)builder->getCities().size();
-     */
+	 */
 
 	/* string save = "teste.txt";
 	builder->saveToFile(save);*/
