@@ -48,6 +48,10 @@ string City::getName() const {
 	return name;
 }
 
+void City::setName(string name) {
+	this->name = name;
+}
+
 int City::getID() const{
 	return identifier;
 }

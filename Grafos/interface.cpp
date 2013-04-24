@@ -204,6 +204,7 @@ bool Interface::randomGraphMenu() {
 	numberOfCities =  builder->getCities().size();
 	hasCityWithTreasure = true;
 	cout << "Random map is ready!" << endl;
+	cout << "Press enter to continue..." << endl;
 	getchar();
 	return true;
 }
@@ -240,7 +241,7 @@ void Interface::citiesMenu() {
 			deleteExistingCity();
 			break;
 		case 3:
-			//editCityName();
+			editCityName();
 			break;
 		case 4:
 			//editCityPosition();
@@ -279,10 +280,12 @@ void Interface::addNewCity() {
 		numberOfCities++;
 		if(cityHasTreasure)
 			hasCityWithTreasure = true;
+		cout << "Press enter to continue..." << endl;
 		getchar();
 	}
 	else {
 		cout << "Couldn't create this city, does it already exist?" << endl;
+		cout << "Press enter to continue..." << endl;
 		getchar();
 	}
 }
@@ -293,9 +296,12 @@ void Interface::deleteExistingCity() {
 	vector<City*>cities = builder->getCities();
 	if(cities.empty()) {
 		cout << "You have no cities to delete!" << endl;
+		cout << "Press enter to continue..." << endl;
 		getchar();
 		return;
 	}
+
+	cout << endl << "Chose city to delete:" << endl;
 
 	City* cityToDelete = displayVector(cities);
 
@@ -307,12 +313,38 @@ void Interface::deleteExistingCity() {
 		else
 			cout << "Failed to delete that city!" << endl;
 
+		cout << "Press enter to continue..." << endl;
 		getchar();
 	}
 }
 
 void Interface::editCityName() {
-	//TODO implement
+	cout << endl << "- Change city name -" << endl;
+
+	cout << "Chose city to rename:" << endl;
+
+	vector<City*> cities = builder->getCities();
+	City* cityToRename = displayVector(cities);
+
+	while(true) {
+		string name;
+		cout << "New name (0 cancels):" << endl << PROMPT;
+		getline(cin, name);
+
+		if(name.compare("0") == 0)
+			break;
+
+		if(builder->getCity(name) == NULL) {
+			cityToRename->setName(name);
+			cout << "Renamed city to " << name << endl;
+			break;
+		}
+		else
+			cout << "That name already exists, pick a different one!" << endl;
+	}
+
+	cout << "Press enter to continue..." << endl;
+	getchar();
 }
 
 void Interface::editCityPosition() {

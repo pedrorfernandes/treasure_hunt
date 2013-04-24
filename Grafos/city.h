@@ -48,6 +48,12 @@ public:
 	string getName() const;
 
 	/**
+	 * Changes the city's name.
+	 * @param Name name to change to.
+	 */
+	void setName(string name);
+
+	/**
 	 * @return Returns the city's unused clues
 	 */
 	vector<City *> getClues() const;
