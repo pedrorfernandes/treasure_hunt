@@ -73,6 +73,11 @@ public:
     GraphBuilder();
     
     /**
+     * Deletes a graphbuilder
+     */
+    ~GraphBuilder();
+    
+    /**
      * @return The pointer to the graph viewer.
      */
     GraphViewer * getGraphViewer() const;
