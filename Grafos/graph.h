@@ -170,6 +170,7 @@ class Graph {
 	int ** P;   //path
 
 public:
+    ~Graph();
 	bool addVertex(const T &in);
 	bool addEdge(const T &sourc, const T &dest, double w);
 	bool removeVertex(const T &in);
@@ -201,6 +202,13 @@ public:
     vector<T> getUnconnectedEdges(const T &s);
     void optimizedDijkstraShortestPath(const T &s);
 };
+
+template <class T>
+Graph<T>::~Graph(){
+    for (unsigned int i = 0; i < vertexSet.size(); ++i) {
+        delete vertexSet.at(i);
+    }
+}
 
 template <class T>
 vector<T> Graph<T>::getUnconnectedEdges(const T &s){

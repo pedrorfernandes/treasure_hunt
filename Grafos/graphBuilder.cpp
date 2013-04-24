@@ -21,6 +21,20 @@ GraphBuilder::GraphBuilder() {
     view->defineVertexColor(CITY_COLOR);
 }
 
+GraphBuilder::~GraphBuilder() {
+    for (int i = 0; i < cities.size(); ++i) {
+        graph->removeVertex(cities.at(i));
+        view->removeNode(cities.at(i)->getID());
+        delete cities.at(i);
+    }
+    view->closeWindow();
+    delete graph; delete view; delete treasureHunter;
+    for (int i = 0; i < roads.size(); ++i) {
+        delete roads.at(i);
+    }
+    return;
+}
+
 GraphViewer * GraphBuilder::getGraphViewer() const{
     return view;
 }
@@ -162,8 +176,15 @@ bool GraphBuilder::saveToFile(const string &filename){
 
 bool GraphBuilder::addCity(string cityName, bool hasTreasure, int x, int y){
     City * city = new City(cityName, hasTreasure, x, y);
+    
+    // check if there is an existing name or x and y coords
+    vector<City *>::iterator cityItr;
+    for (cityItr = cities.begin(); cityItr != cities.end(); ++cityItr) {
+        if ( (*(*cityItr)) == city )
+            return false;
+    }
+    
     if ( !graph->addVertex(city) ) return false;
-    //if ( !view->addNode(city->getID()) ) return false;
     if ( !view->addNode(city->getID(), city->getX(), city->getY()) ) return false;
     cities.push_back(city);
     view->setVertexLabel( city->getID(), city->getName() );
