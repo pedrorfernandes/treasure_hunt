@@ -99,7 +99,7 @@ bool Interface::mainMenu() {
 	int numberOfOptions = 2;
 	bool exitMenu = false;
 
-	cout << "~* Treasure Hunter *~" << endl;
+	cout << "~* Treasure Hunt *~" << endl;
 
 	while(!exitMenu) {
 
@@ -126,7 +126,7 @@ bool Interface::mainMenu() {
 			newMapMenu();
 			break;
 		case 2:
-			//loadMapMenu();
+			loadMapMenu();
 			break;
 		case 3:
 			saveMapMenu();
@@ -203,7 +203,7 @@ bool Interface::randomGraphMenu() {
 
 	resetBuilder();
 	builder->createGraph(numberOfCitiesToCreate, numberOfRoads, numberOfClues);
-	numberOfCities =  builder->getCities().size();
+	numberOfCities =  (int)builder->getCities().size();
 	hasCityWithTreasure = true;
 	cout << "Random map is ready!" << endl;
 	cout << "Press enter to continue..." << endl;
@@ -223,8 +223,7 @@ void Interface::citiesMenu() {
 				"1 - Add a new city" << endl <<
 				"2 - Delete a city" << endl;
 		if(graphIsReady()) {
-			cout << "3 - Edit a city name" << endl <<
-					"4 - Edit a city position" << endl;
+			cout << "3 - Edit a city name" << endl;
 			numberOfOptions = 4;
 		}
 		else {
@@ -243,9 +242,6 @@ void Interface::citiesMenu() {
 			break;
 		case 3:
 			editCityName();
-			break;
-		case 4:
-			//editCityPosition();
 			break;
 		case 0:
 			exitMenu = true;
@@ -348,10 +344,6 @@ void Interface::editCityName() {
 	getchar();
 }
 
-void Interface::editCityPosition() {
-	//TODO implement
-}
-
 void Interface::roadsMenu() {
 	int numberOfOptions = 2;
 	bool exitMenu = false;
@@ -401,11 +393,33 @@ void Interface::addNewRoad() {
 		cout << "Failed to create road, does it already exist?" << endl;
 
 	cout << "Press enter to continue..." << endl;
+    builder->getGraphViewer()->rearrange();
 	getchar();
 }
 
 void Interface::deleteExistingRoad() {
-	//TODO implement
+    cout << "- Delete road -" << endl;
+    
+	vector<City*> cities = builder->getCities();
+    
+	cout << "Choose a city for the origin" << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
+	City* originCity = displayVector(cities);
+    
+	cout << "Choose a city for the destination" << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
+	City* destinationCity = displayVector(cities);
+    
+	if( builder->deleteRoad(originCity, destinationCity) )
+		cout << "Deleted road!" << endl;
+	else
+		cout << "There is no road between those cities!" << endl;
+    
+	cout << "Press enter to continue..." << endl;
+    builder->getGraphViewer()->rearrange();
+	getchar();
 }
 
 void Interface::cluesMenu() {
@@ -514,7 +528,32 @@ void Interface::deleteExistingClue() {
 }
 
 void Interface::loadMapMenu() {
-	//TODO implement
+	cout << "--- Load map ---" << endl;
+    
+	string filename;
+	cout << "Load a map from which file? (if not found, file must be in the same dir as the program)" << endl << PROMPT;
+	getline(cin, filename);
+    
+	if(filename.empty())
+		cout << "That's not a valid filename..." << endl;
+	else {
+        if ( !builder->loadFromFile(filename) ){
+            cout << "File not found! Press enter to continue.."<< endl;
+            getchar();
+            return;
+        }
+        vector<City *>::iterator it;
+        vector<City*> loadedCities = builder->getCities();
+        hasCityWithTreasure = false;
+        for (it = loadedCities.begin(); it != loadedCities.end(); ++it) {
+            if ( (*it)->hasTreasure ) hasCityWithTreasure = true;
+        }
+        numberOfCities = (int)builder->getCities().size();
+        builder->getGraphViewer()->rearrange();
+		cout << endl << "Loaded map!" << endl;
+		getchar();
+	}
+
 }
 
 void Interface::saveMapMenu() {
@@ -527,7 +566,7 @@ void Interface::saveMapMenu() {
 	if(filename.empty())
 		cout << "That's not a valid filename..." << endl;
 	else {
-		filename += ".txt";
+		//filename += ".txt";
 		builder->saveToFile(filename);
 		cout << endl << "Saved map!" << endl;
 		getchar();
@@ -547,7 +586,7 @@ void Interface::init(){
 	builder->loadFromFile(filename);
     hasCityWithTreasure = true;
     numberOfCities = (int)builder->getCities().size();
-	 */
+    */
 
 	/* string save = "teste.txt";
 	builder->saveToFile(save);*/

@@ -50,6 +50,7 @@
 		EB47FED3171B249C0052C62E /* interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = interface.cpp; sourceTree = "<group>"; };
 		EB47FED4171B249C0052C62E /* interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
 		EB47FED6171B5FF80052C62E /* graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
+		EB6C1C4A1728330400F034FB /* displayWithPages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = displayWithPages.h; sourceTree = "<group>"; };
 		EB70077E1704FAE50066E51C /* cute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute.h; sourceTree = "<group>"; };
 		EB70077F1704FAE50066E51C /* cute_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_base.h; sourceTree = "<group>"; };
 		EB7007801704FAE50066E51C /* cute_counting_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cute_counting_listener.h; sourceTree = "<group>"; };
@@ -128,6 +129,7 @@
 				EB47FED4171B249C0052C62E /* interface.h */,
 				EB8AE4EE171F0637006325BD /* road.cpp */,
 				EB8AE4EF171F0637006325BD /* road.h */,
+				EB6C1C4A1728330400F034FB /* displayWithPages.h */,
 			);
 			path = Grafos;
 			sourceTree = "<group>";

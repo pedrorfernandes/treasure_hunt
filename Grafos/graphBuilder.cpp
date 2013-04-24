@@ -73,6 +73,10 @@ inline double GraphBuilder::getDistance(City * city1, City * city2){
 bool GraphBuilder::loadFromFile(const string &filename){
     ifstream file;
     file.open(filename.c_str());
+    
+    if (!file.is_open())
+        return false;
+    
     string line;
     
     while( getline( file, line ) )
@@ -223,7 +227,7 @@ bool GraphBuilder::deleteCity(City* city) {
 bool GraphBuilder::connect(City * city1, City * city2, const bool &isDirected){
 
     double distance = getDistance(city1, city2);
-    if ( roadExists(city1, city2) ) {
+    if ( roadExists(city1, city2) != NULL ) {
         return false;
     }
     Road * road = new Road(city1, city2, distance, isDirected);
@@ -251,7 +255,7 @@ bool GraphBuilder::spawnTreasureHunter(City * city){
     return true;
 }
 
-bool GraphBuilder::roadExists(City * city1, City* city2){
+Road * GraphBuilder::roadExists(City * city1, City* city2){
     vector<Road *>::iterator roadItr;
     for (roadItr = roads.begin(); roadItr != roads.end(); ++roadItr) {
         //if ( ( (*(*roadItr)->getCity1()) == city1 && (*(*roadItr)->getCity2()) == city2 )
@@ -259,10 +263,10 @@ bool GraphBuilder::roadExists(City * city1, City* city2){
         // comparing ints is obviously way better than comparing strings!
         if ( ( (*roadItr)->getCity1()->getID() == city1->getID() && (*roadItr)->getCity2()->getID() == city2->getID() )
           || ( (*roadItr)->getCity2()->getID() == city1->getID() && (*roadItr)->getCity1()->getID() == city2->getID() ) ){
-            return true;
+            return (*roadItr);
         }
     }
-    return false;
+    return NULL;
 }
 
 bool compare (pair<City*, double> i, pair<City*, double> j) {
@@ -348,22 +352,7 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
         if (roadsLeft > 0){
             counter++; roadsLeft--;
         }
-        //vector<City *> connectedCities;
         while (counter > 0 && createdRoads < numberOfRoads) {
-            /*
-            // this will incentive the connection to more distant cities
-            if (roadsPerCity > 1){
-                vector<City *> connectedCities = graph->getVertex(*cityItr)->getEdges();
-                // only create a road to a new city if the current city roads
-                // aren't connected to a city that is connected to the new city
-                for (int j = 0; j < connectedCities.size(); ++j) {
-                    if ( roadExists(connectedCities.at(j), distances.at(i).first) ){
-                        i++;
-                        continue;
-                    }
-                }
-            }
-             */
             if (i >= distances.size() ){
                 break;
             }
@@ -420,3 +409,21 @@ vector<Road *> GraphBuilder::getConnectedRoads(City * city1){
     }
     return connected;
 }
+
+bool GraphBuilder::deleteRoad(City * city1, City * city2){
+    Road * road = roadExists(city1, city2);
+    if (road == NULL) return false;
+    graph->removeEdge(city1, city2);
+    graph->removeEdge(city2, city1);
+    view->removeEdge(road->getID());
+    vector<Road *>::iterator it;
+    for (it = roads.begin(); it != roads.end(); ++it) {
+        if (road->getID() == (*it)->getID()){
+            roads.erase(it);
+            break;
+        }
+    }
+    delete road;
+    return true;
+}
+
