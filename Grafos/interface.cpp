@@ -471,7 +471,46 @@ void Interface::addNewClue() {
 }
 
 void Interface::deleteExistingClue() {
-	//TODO implement
+	cout << "- Delete clue -" << endl;
+
+	vector<City*> cities = builder->getCities();
+
+	cout << "Choose the city to delete the clue from" << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
+	City* originCity = displayVector(cities);
+	if(originCity == NULL)
+		return;
+
+	cout << "This city has the following clues" << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
+	vector<City*> clues = originCity->getClues();
+	City* clue = displayVector(clues);
+	if(clue == NULL)
+		return;
+
+	while(true) {
+		cout << "This clue indicates the following city:" << endl << clue << endl;
+		cout << "Delete this clue? (Y/N)" << endl << PROMPT;
+		string answer = "";
+		getline(cin, answer);
+		if(answer.compare("Yes") == 0 || answer.compare("yes") == 0 || answer.compare("Y") == 0 || answer.compare("y") == 0) {
+			if(originCity->removeClue(clue))
+				cout << "Removed clue to " << clue->getName() << endl;
+			else
+				cout << "Failed to remove clue" << endl;
+
+			break;
+		}
+		else if (answer.compare("No") == 0 || answer.compare("no") == 0 || answer.compare("N") == 0 || answer.compare("n") == 0)
+			return;
+
+		cout << "Invalid input" << endl;
+	}
+
+	cout << "Press enter to continue..." << endl;
+	getchar();
 }
 
 void Interface::loadMapMenu() {
@@ -534,8 +573,9 @@ void Interface::init(){
 }
 
 void Interface::resetBuilder() {
-	delete builder;
-    builder = new GraphBuilder();
+	//TODO wat
+	//delete builder;
+	builder = new GraphBuilder();
 	numberOfCities = 0;
 	hasCityWithTreasure = false;
 }
