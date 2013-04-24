@@ -45,6 +45,11 @@ public:
     void init();
     
     /**
+     * Resets the graph builder (deletes the current map), resetting the necessary variables.
+     */
+    void resetBuilder();
+
+    /**
      * Checks if a functional map is ready to be played.
      * @return True if there is at least two cities and one of them has the treasure, false otherwise.
      */
@@ -91,6 +96,11 @@ public:
       * Lets the user edit a city's position.
       */
      void editCityPosition();
+
+     /**
+      * Menu for adding or removing roads.
+      */
+     void roadsMenu();
 
     /**
      * This menu provides the user with options to load a saved map.
