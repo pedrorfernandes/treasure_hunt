@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AAE0A47117286D580050CCBF /* GraphViewerController.jar in CopyFiles */ = {isa = PBXBuildFile; fileRef = EB310C1816FF8CFF002945EF /* GraphViewerController.jar */; };
+		AAE0A47417286D8F0050CCBF /* map.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAE0A47317286D8C0050CCBF /* map.txt */; };
 		EB310C1516FF87B4002945EF /* connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C0F16FF87B4002945EF /* connection.cpp */; };
 		EB310C1616FF87B4002945EF /* example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C1216FF87B4002945EF /* example.cpp */; };
 		EB310C1716FF87B4002945EF /* graphviewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C1316FF87B4002945EF /* graphviewer.cpp */; };
@@ -21,16 +23,19 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		EB310C0116FF874E002945EF /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 6;
 			files = (
+				AAE0A47117286D580050CCBF /* GraphViewerController.jar in CopyFiles */,
+				AAE0A47417286D8F0050CCBF /* map.txt in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AAE0A47317286D8C0050CCBF /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = SOURCE_ROOT; };
 		EB310C0316FF874E002945EF /* Grafos */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Grafos; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB310C0F16FF87B4002945EF /* connection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = connection.cpp; sourceTree = "<group>"; };
 		EB310C1016FF87B4002945EF /* connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connection.h; sourceTree = "<group>"; };
@@ -89,6 +94,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AAE0A47217286D840050CCBF /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				AAE0A47317286D8C0050CCBF /* map.txt */,
+			);
+			name = Fixtures;
+			sourceTree = "<group>";
+		};
 		EB310BFA16FF874E002945EF = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +122,7 @@
 		EB310C0516FF874E002945EF /* Grafos */ = {
 			isa = PBXGroup;
 			children = (
+				AAE0A47217286D840050CCBF /* Fixtures */,
 				EB310C1816FF8CFF002945EF /* GraphViewerController.jar */,
 				EB310C0F16FF87B4002945EF /* connection.cpp */,
 				EB310C1016FF87B4002945EF /* connection.h */,
