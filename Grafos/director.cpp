@@ -59,20 +59,16 @@ bool Director::calculateNextPath() {
 		return true;
 	}
     
-    unsigned long time = 0;
-    startTimer();
-    graph->dijkstraShortestPath(currentCity);
-    time = stopTimer();
+#ifdef USE_TIMER
     stringstream performance;
-    //unsigned long average1 = checkPerformance(currentCity, DIJKSTRA);
     unsigned long average2 = checkPerformance(currentCity, OPTIMISED_DIJKSTRA);
     unsigned long average3 = checkPerformance(currentCity, BELLMAN_FORD);
-
-    //performance << "Dijkstra performance: " << average1 << " microseconds." << endl;
     performance << "New Dijkstra performance: " << average2 << " microseconds." << endl;
     performance << "Bellman-Ford performance: " << average3 << " microseconds.";
     events.push( performance.str() );
+#endif
     
+    graph->optimizedDijkstraShortestPath(currentCity);
 	City* closestClue = currentCityClues[0];
 	double shortestDist = graph->getVertex(currentCityClues[0])->getDist();
 
@@ -121,6 +117,7 @@ bool Director::updatePath() {
 	return true;
 }
 
+#ifdef USE_TIMER
 void Director::startTimer() {    
     gettimeofday(&clockStart, NULL);
     return;
@@ -183,3 +180,4 @@ unsigned long Director::checkPerformance(City * start, int algorithm){
     unsigned long average = total / runs;
     return average;
 }
+#endif

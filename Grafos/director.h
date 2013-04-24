@@ -26,10 +26,14 @@
 #define NO_PATH "No path to take! Quest over.\n"
 #define ARRIVED_AT_A_CITY "Arrived at " + nextCity->getName() + "!"
 
-// TODO WINDOWS DEFINES!!!
+#if defined __APPLE__ || defined linux || defined __CYGWIN__
+#define USE_TIMER
+#endif
+
+#ifdef USE_TIMER
 #include <sys/time.h>
-#include <stdio.h>
 #include <unistd.h>
+#endif
 
 #define DIJKSTRA 1
 #define BELLMAN_FORD 2
@@ -46,7 +50,9 @@ class Director {
     stack<City *> currentPath; /**< The current path the hunter must take. If it's empty, the hero stops in the current city. */
     bool backtracking; /**< If true, when the hero reaches a dead end (city with no clues), he goes back to the latest visited city. If false, the journey ends in the dead end. */
     
+#ifdef USE_TIMER
     struct timeval clockStart, clockEnd;
+#endif
 public:
     queue<string> events;
     /**
@@ -75,12 +81,13 @@ public:
     
     bool updatePath();
     
+#ifdef USE_TIMER
     void startTimer();
     
     unsigned long stopTimer();
     
     unsigned long checkPerformance(City * start, int algorithm);
-
+#endif
     
 };
 
