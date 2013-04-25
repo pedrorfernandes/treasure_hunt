@@ -406,7 +406,7 @@ void Interface::editCityName() {
 
 		if(builder->getCity(name) == NULL) {
 			cityToRename->setName(name);
-            builder->getGraphViewer()->setEdgeLabel(cityToRename->getID(), name);
+            builder->getGraphViewer()->setVertexLabel(cityToRename->getID(), name);
             builder->getGraphViewer()->rearrange();
 			cout << "Renamed city to " << name << endl;
 			break;
