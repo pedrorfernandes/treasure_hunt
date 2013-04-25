@@ -18,6 +18,9 @@
 #include "graphBuilder.h"
 #include "displayWithPages.h"
 
+#define PROMPT "> "
+#define MINIMUM_NUMBER_OF_CITIES 2
+
 /**
  * The interface must do all the output and input operations and also handle the graphviewer API so that it correctly displays the current state of the map and the treasure hunter's progress.
  */

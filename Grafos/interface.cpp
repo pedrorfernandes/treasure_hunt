@@ -12,9 +12,6 @@
 
 #include "interface.h"
 
-#define PROMPT "> "
-#define MINIMUM_NUMBER_OF_CITIES 2
-
 int getOption(int maxOption) {
 	string input = "";
 	int option;
@@ -169,11 +166,9 @@ void Interface::optionsMenu() {
 
 		switch(option) {
 		case 1:
-			//TODO actually use the bools (implement the verifications) --- should be done now
 			performanceMode = !performanceMode;
 			break;
 		case 2:
-			//TODO actually use the bools --- should be done now
 			backtracking = !backtracking;
 			break;
 		case 0:
@@ -226,7 +221,6 @@ void Interface::editMapMenu() {
 }
 
 void Interface::hunterSpawnMenu() {
-	//TODO repaint the hunter to the right position
 	cout << "- Hunter spawn menu -" << endl;
 	cout << "Please pick a city to be the hunter's starting point" << endl;
 	vector<City*> cities = builder->getCities();
@@ -652,7 +646,6 @@ void Interface::saveMapMenu() {
 	if(filename.empty())
 		cout << "That's not a valid filename..." << endl;
 	else {
-		//filename += ".txt";
 		builder->saveToFile(filename);
 		cout << endl << "Saved map!" << endl;
 		getchar();
@@ -660,7 +653,6 @@ void Interface::saveMapMenu() {
 }
 
 Interface::Interface(){
-	//builder = new GraphBuilder();
 	numberOfCities = 0;
 	citiesWithTreasure = 0;
 	backtracking = true;
@@ -681,7 +673,7 @@ void Interface::init(){
 
 	director = new Director(treasureHunter, builder->getGraph(), backtracking, performanceMode,cities.size(), roads.size());
 
-	cout << "Press enter for each step of the journey!" << endl;
+	cout << "Press ENTER for each step of the journey!" << endl << endl;
 
 	cout << director->events.front() << endl;
 	director->events.pop();
