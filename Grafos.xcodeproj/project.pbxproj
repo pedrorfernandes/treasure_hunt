@@ -10,7 +10,7 @@
 		AAE0A47117286D580050CCBF /* GraphViewerController.jar in CopyFiles */ = {isa = PBXBuildFile; fileRef = EB310C1816FF8CFF002945EF /* GraphViewerController.jar */; };
 		AAE0A47417286D8F0050CCBF /* map.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAE0A47317286D8C0050CCBF /* map.txt */; };
 		EB310C1516FF87B4002945EF /* connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C0F16FF87B4002945EF /* connection.cpp */; };
-		EB310C1616FF87B4002945EF /* example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C1216FF87B4002945EF /* example.cpp */; };
+		EB310C1616FF87B4002945EF /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C1216FF87B4002945EF /* main.cpp */; };
 		EB310C1716FF87B4002945EF /* graphviewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB310C1316FF87B4002945EF /* graphviewer.cpp */; };
 		EB47FEC9171B20D20052C62E /* treasureHunter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB47FEC7171B20D10052C62E /* treasureHunter.cpp */; };
 		EB47FECC171B234C0052C62E /* city.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB47FECA171B234C0052C62E /* city.cpp */; };
@@ -40,7 +40,7 @@
 		EB310C0F16FF87B4002945EF /* connection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = connection.cpp; sourceTree = "<group>"; };
 		EB310C1016FF87B4002945EF /* connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connection.h; sourceTree = "<group>"; };
 		EB310C1116FF87B4002945EF /* edgetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edgetype.h; sourceTree = "<group>"; };
-		EB310C1216FF87B4002945EF /* example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = example.cpp; sourceTree = "<group>"; };
+		EB310C1216FF87B4002945EF /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		EB310C1316FF87B4002945EF /* graphviewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphviewer.cpp; sourceTree = "<group>"; };
 		EB310C1416FF87B4002945EF /* graphviewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphviewer.h; sourceTree = "<group>"; };
 		EB310C1816FF8CFF002945EF /* GraphViewerController.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; path = GraphViewerController.jar; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 				EB310C0F16FF87B4002945EF /* connection.cpp */,
 				EB310C1016FF87B4002945EF /* connection.h */,
 				EB310C1116FF87B4002945EF /* edgetype.h */,
-				EB310C1216FF87B4002945EF /* example.cpp */,
+				EB310C1216FF87B4002945EF /* main.cpp */,
 				EB310C1316FF87B4002945EF /* graphviewer.cpp */,
 				EB310C1416FF87B4002945EF /* graphviewer.h */,
 				EB47FED6171B5FF80052C62E /* graph.h */,
@@ -230,7 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB310C1516FF87B4002945EF /* connection.cpp in Sources */,
-				EB310C1616FF87B4002945EF /* example.cpp in Sources */,
+				EB310C1616FF87B4002945EF /* main.cpp in Sources */,
 				EB310C1716FF87B4002945EF /* graphviewer.cpp in Sources */,
 				EB47FEC9171B20D20052C62E /* treasureHunter.cpp in Sources */,
 				EB47FECC171B234C0052C62E /* city.cpp in Sources */,
