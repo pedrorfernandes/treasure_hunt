@@ -590,7 +590,7 @@ void Interface::deleteExistingClue() {
 		return;
 
 	while(true) {
-		cout << "This clue indicates the following city:" << endl << clue << endl;
+		cout << "This clue indicates the following city:" << endl << (*clue) << endl;
 		cout << "Delete this clue? (Y/N)" << endl << PROMPT;
 		string answer = "";
 		getline(cin, answer);
@@ -622,6 +622,7 @@ void Interface::loadMapMenu() {
 	if(filename.empty())
 		cout << "That's not a valid filename..." << endl;
 	else {
+        resetBuilder(0, 0);
 		if ( !builder->loadFromFile(filename) ){
 			cout << "File not found! Press enter to continue.."<< endl;
 			getchar();

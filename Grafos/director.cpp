@@ -34,7 +34,18 @@ Director::Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktr
 bool Director::calculateNextPath() {
 	City* currentCity = treasureHunter->getCurrentCity();
 	vector<City*> currentCityClues = treasureHunter->readClues();
-
+    
+    if (!currentCityClues.empty() ){
+        stringstream foundClues;
+        foundClues << "The treasure hunter found clues to: ";
+        for (unsigned int i = 0; i < currentCityClues.size(); ++i) {
+            foundClues << currentCityClues.at(i)->getName();
+            if (i != currentCityClues.size()-1)
+                foundClues << ", ";
+        }
+        events.push(foundClues.str());
+    }
+    
 	// if the hunter isn't backtracking, quest ends here.
 	if (currentCityClues.empty() && !backtracking )
 		return false;
@@ -107,8 +118,10 @@ bool Director::calculateNextPath() {
 	for(unsigned int i = 1; i < currentCityClues.size(); i++) {
 		double dist = graph->getVertex(currentCityClues[i])->getDist();
 
-		if(dist < shortestDist)
+		if(dist < shortestDist){
 			closestClue = currentCityClues[i];
+            shortestDist = dist;
+        }
 	}
 
 	vector<City*> shortestPath = graph->getPath(currentCity, closestClue);

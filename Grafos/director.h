@@ -21,7 +21,7 @@
 
 #define NO_CLUES "No clues nor treasure here, maybe we should have picked a better clue... Let's go back!\n"
 #define STUCK_AT_START "Guess we are back to the starting point and we have nowhere to go...\n"
-#define BACKTRACK_TO_DESTINATION "Heading back to " + returnCity->getName() + "!\n"
+#define BACKTRACK_TO_DESTINATION "Returning to " + returnCity->getName() + "!\n"
 #define DESTINATION "Heading towards " + closestClue->getName() + "!\n"
 #define NO_PATH "No path to take! Quest over.\n"
 #define ARRIVED_AT_A_CITY "Arrived at " + nextCity->getName() + "!"
