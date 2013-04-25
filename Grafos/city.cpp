@@ -112,14 +112,14 @@ bool City::removeClue(City* city) {
 }
 
 bool City::operator == (const City *c2) const{
-	if (this->name == c2->name || ( this->x == c2->getX() && this->y == c2->getY() ))
+	if (this->name == c2->name)
 		return true;
 	else
 		return false;
 }
 
 bool City::operator != (const City *c2) const{
-	if (this->name != c2->name && ( this->x != c2->getX() && this->y != c2->getY() ))
+	if (this->name != c2->name)
 		return true;
 	else
 		return false;

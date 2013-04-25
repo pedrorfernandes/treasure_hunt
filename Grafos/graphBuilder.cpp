@@ -184,10 +184,10 @@ bool GraphBuilder::saveToFile(const string &filename){
 bool GraphBuilder::addCity(string cityName, bool hasTreasure, int x, int y){
     City * city = new City(cityName, hasTreasure, x, y);
     
-    // check if there is an existing name or x and y coords
+    // check if there is an existing x and y coords
     vector<City *>::iterator cityItr;
     for (cityItr = cities.begin(); cityItr != cities.end(); ++cityItr) {
-        if ( (*(*cityItr)) == city )
+        if ( (*cityItr)->getX() == x && (*cityItr)->getY() == y )
             return false;
     }
     
