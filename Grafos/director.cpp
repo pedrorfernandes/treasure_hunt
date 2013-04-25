@@ -19,6 +19,14 @@ Director::Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktr
 	calculateNextPath();
 }
 
+Director::Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktracking, bool performanceMode){
+	this->treasureHunter = hunter;
+	this->graph = graph;
+	this->backtracking = isBacktracking;
+	this->performanceMode = performanceMode;
+	calculateNextPath();
+}
+
 bool Director::calculateNextPath() {
 	City* currentCity = treasureHunter->getCurrentCity();
 	vector<City*> currentCityClues = treasureHunter->readClues();
@@ -39,8 +47,8 @@ bool Director::calculateNextPath() {
 			events.push(STUCK_AT_START);
 			return false;
 		}
-        
-        events.push(NO_CLUES);
+
+		events.push(NO_CLUES);
 
 		treasureHunter->setDestination(returnCity);
 		events.push(BACKTRACK_TO_DESTINATION);
@@ -58,18 +66,20 @@ bool Director::calculateNextPath() {
 
 		return true;
 	}
-    
+
 #ifdef USE_TIMER
-    stringstream performance;
-    unsigned long average1 = checkPerformance(currentCity, OPTIMISED_DIJKSTRA);
-    unsigned long average2 = checkPerformance(currentCity, BELLMAN_FORD);
-    performance << "Optimised Dijkstra performance: " << average1 << " microseconds." << endl;
-    performance << "Bellman-Ford performance: " << average2 << " microseconds.";
-    events.push( performance.str() );
+	if(performanceMode) {
+		stringstream performance;
+		unsigned long average1 = checkPerformance(currentCity, OPTIMISED_DIJKSTRA);
+		unsigned long average2 = checkPerformance(currentCity, BELLMAN_FORD);
+		performance << "Optimised Dijkstra performance: " << average1 << " microseconds." << endl;
+		performance << "Bellman-Ford performance: " << average2 << " microseconds.";
+		events.push( performance.str() );
+	}
 #endif
-    
-    graph->optimizedDijkstraShortestPath(currentCity);
-    if ( currentCityClues.empty() ) return false;
+
+	graph->optimizedDijkstraShortestPath(currentCity);
+	if ( currentCityClues.empty() ) return false;
 	City* closestClue = currentCityClues[0];
 	double shortestDist = graph->getVertex(currentCityClues[0])->getDist();
 
@@ -96,12 +106,12 @@ bool Director::calculateNextPath() {
 
 City* Director::nextStep() {
 	City* nextCity = NULL;
-    if ( !currentPath.empty() ){
-        nextCity = currentPath.top();
-        currentPath.pop();
-        treasureHunter->moveTo(nextCity);
-        events.push(ARRIVED_AT_A_CITY);
-    }
+	if ( !currentPath.empty() ){
+		nextCity = currentPath.top();
+		currentPath.pop();
+		treasureHunter->moveTo(nextCity);
+		events.push(ARRIVED_AT_A_CITY);
+	}
 	return nextCity;
 }
 
@@ -120,65 +130,65 @@ bool Director::updatePath() {
 
 #ifdef USE_TIMER
 void Director::startTimer() {    
-    gettimeofday(&clockStart, NULL);
-    return;
+	gettimeofday(&clockStart, NULL);
+	return;
 }
 
 unsigned long Director::stopTimer(){
-    unsigned long mtime, seconds, useconds;
-    
-    gettimeofday(&clockEnd, NULL);
-    
-    seconds  = clockEnd.tv_sec  - clockStart.tv_sec;
-    useconds = clockEnd.tv_usec - clockStart.tv_usec;
-    
-    mtime = ((seconds) * 1000000 + useconds) + 0.5;
-    return mtime;
+	unsigned long mtime, seconds, useconds;
+
+	gettimeofday(&clockEnd, NULL);
+
+	seconds  = clockEnd.tv_sec  - clockStart.tv_sec;
+	useconds = clockEnd.tv_usec - clockStart.tv_usec;
+
+	mtime = ((seconds) * 1000000 + useconds) + 0.5;
+	return mtime;
 }
 
 unsigned long Director::checkPerformance(City * start, int algorithm){
-    unsigned long time = 0;
-    unsigned long runs = 5000;
-    unsigned long total = 0;
-    for (unsigned int run = 0; run < runs; ++run) {
-        switch (algorithm) {
-            case DIJKSTRA:
-            {
-                startTimer();
-                graph->dijkstraShortestPath(start);
-                time = stopTimer();
-                total += time;
-                break;
-            }
-            case BELLMAN_FORD:
-            {
-                startTimer();
-                graph->bellmanFordShortestPath(start);
-                time = stopTimer();
-                total += time;
-                break;
-            }
-            case FLOYD_WARSHALL:
-            {
-                startTimer();
-                graph->floydWarshallShortestPath();
-                time = stopTimer();
-                total += time;
-                break;
-            }
-            case OPTIMISED_DIJKSTRA:
-            {
-                startTimer();
-                graph->optimizedDijkstraShortestPath(start);
-                time = stopTimer();
-                total += time;
-                break;
-            }
-            default:
-                break;
-        }
-    }
-    unsigned long average = total / runs;
-    return average;
+	unsigned long time = 0;
+	unsigned long runs = 5000;
+	unsigned long total = 0;
+	for (unsigned int run = 0; run < runs; ++run) {
+		switch (algorithm) {
+		case DIJKSTRA:
+		{
+			startTimer();
+			graph->dijkstraShortestPath(start);
+			time = stopTimer();
+			total += time;
+			break;
+		}
+		case BELLMAN_FORD:
+		{
+			startTimer();
+			graph->bellmanFordShortestPath(start);
+			time = stopTimer();
+			total += time;
+			break;
+		}
+		case FLOYD_WARSHALL:
+		{
+			startTimer();
+			graph->floydWarshallShortestPath();
+			time = stopTimer();
+			total += time;
+			break;
+		}
+		case OPTIMISED_DIJKSTRA:
+		{
+			startTimer();
+			graph->optimizedDijkstraShortestPath(start);
+			time = stopTimer();
+			total += time;
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	unsigned long average = total / runs;
+	return average;
 }
 #endif

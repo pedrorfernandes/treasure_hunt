@@ -26,9 +26,9 @@
 #define NO_PATH "No path to take! Quest over.\n"
 #define ARRIVED_AT_A_CITY "Arrived at " + nextCity->getName() + "!"
 
-#if defined __APPLE__ || defined linux || defined __CYGWIN__
+//#if defined __APPLE__ || defined linux || defined (__CYGWIN32__)
 #define USE_TIMER
-#endif
+//#endif
 
 #ifdef USE_TIMER
 #include <sys/time.h>
@@ -45,50 +45,60 @@
  * It is responsible for figuring out which algorithms to apply in the graph and use the generated paths to move the treasure hunter in the best direction.
  */
 class Director {
-    TreasureHunter * treasureHunter; /**< The treasure hunter. */
-    Graph<City *> * graph; /**< The graph containing all the cities and roads. Can be interpreted as a map. */
-    stack<City *> currentPath; /**< The current path the hunter must take. If it's empty, the hero stops in the current city. */
-    bool backtracking; /**< If true, when the hero reaches a dead end (city with no clues), he goes back to the latest visited city. If false, the journey ends in the dead end. */
-    
+	TreasureHunter * treasureHunter; /**< The treasure hunter. */
+	Graph<City *> * graph; /**< The graph containing all the cities and roads. Can be interpreted as a map. */
+	stack<City *> currentPath; /**< The current path the hunter must take. If it's empty, the hero stops in the current city. */
+	bool backtracking; /**< If true, when the hero reaches a dead end (city with no clues), he goes back to the latest visited city. If false, the journey ends in the dead end. */
+	bool performanceMode; /***< If true, performance measuring is done during the program run. */
+
 #ifdef USE_TIMER
-    struct timeval clockStart, clockEnd;
+	struct timeval clockStart, clockEnd;
 #endif
 public:
-    queue<string> events;
-    /**
-     * Creates a new director.
-     * @param hunter The treasure hunter.
-     * @param graph The pre-made graph.
-     * @param isBacktracking If the algorithm uses backtracking.
-     */
-    Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktracking);
-    
-    /**
-     * This function must get the hunter's next location choices and determines which is the closest.
-     * It takes into account the type of the graph so that it can optimize and choose the best algorithm to do this task.
-     * The generated path is stacked into the currentPath variable.
-     * @return True if successful. If there is no path to take, false is returned.
-     */
-    bool calculateNextPath();
-    
-    /**
-     * The next step moves the hunter closer to his current destination.
-     * If the destination is reached and no treasure was found, a new path must be calculated.
-     * If a new path can't be calculated, the treasure hunter stops his journey.
-     * @return The city where the treasure hunter goes next. NULL if he stops.
-     */
-    City * nextStep();
-    
-    bool updatePath();
-    
+	queue<string> events;
+	/**
+	 * Creates a new director.
+	 * @param hunter The treasure hunter.
+	 * @param graph The pre-made graph.
+	 * @param isBacktracking If the algorithm uses backtracking.
+	 */
+	Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktracking);
+
+	/**
+	 * Creates a new director.
+	 * @param hunter The treasure hunter.
+	 * @param graph The pre-made graph.
+	 * @param isBacktracking If the algorithm uses backtracking.
+	 * @param performanceMode If the program is making performance measurements.
+	 */
+	Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktracking, bool performanceMode);
+
+	/**
+	 * This function must get the hunter's next location choices and determines which is the closest.
+	 * It takes into account the type of the graph so that it can optimize and choose the best algorithm to do this task.
+	 * The generated path is stacked into the currentPath variable.
+	 * @return True if successful. If there is no path to take, false is returned.
+	 */
+	bool calculateNextPath();
+
+	/**
+	 * The next step moves the hunter closer to his current destination.
+	 * If the destination is reached and no treasure was found, a new path must be calculated.
+	 * If a new path can't be calculated, the treasure hunter stops his journey.
+	 * @return The city where the treasure hunter goes next. NULL if he stops.
+	 */
+	City * nextStep();
+
+	bool updatePath();
+
 #ifdef USE_TIMER
-    void startTimer();
-    
-    unsigned long stopTimer();
-    
-    unsigned long checkPerformance(City * start, int algorithm);
+	void startTimer();
+
+	unsigned long stopTimer();
+
+	unsigned long checkPerformance(City * start, int algorithm);
 #endif
-    
+
 };
 
 #endif 

@@ -19,6 +19,17 @@ GraphBuilder::GraphBuilder() {
     view->createWindow(WIDTH, HEIGHT);
     view->defineEdgeColor(ROAD_COLOR);
     view->defineVertexColor(CITY_COLOR);
+    treasureHunter = NULL;
+}
+
+GraphBuilder::GraphBuilder(int width, int height) {
+    graph = new Graph<City *>();
+    view = new GraphViewer(width, height, false);
+    view->setBackground(BACKGROUND);
+    view->createWindow(width, height);
+    view->defineEdgeColor(ROAD_COLOR);
+    view->defineVertexColor(CITY_COLOR);
+    treasureHunter = NULL;
 }
 
 GraphBuilder::~GraphBuilder() {

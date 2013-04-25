@@ -96,26 +96,48 @@ bool Interface::graphIsReady() {
 }
 
 bool Interface::mainMenu() {
-	int numberOfOptions = 2;
+	int numberOfOptions = 3;
 	bool exitMenu = false;
 
 	cout << "~* Treasure Hunt *~" << endl;
+
+	cout << "Please set the desired height for the window (0 to default)" << endl;
+	int h;
+	h = getNumber();
+	if(h == 0)
+		windowHeight = HEIGHT;
+	else
+		windowHeight = h;
+
+	cout << "Please set the desired width for the window (0 to default)" << endl;
+	int w;
+	w = getNumber();
+	if(w == 0)
+		windowWidth = WIDTH;
+	else
+		windowWidth = w;
+
+	builder = new GraphBuilder(windowWidth, windowHeight);
+	cout << "Window size set!" << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
 
 	while(!exitMenu) {
 
 		cout << endl <<
 				"----- Main Menu -----" << endl <<
 				"0 - Exit" << endl <<
-				"1 - Create and edit a map" << endl <<
-				"2 - Load map from file" << endl;
+				"1 - Program options" << endl <<
+				"2 - Create and edit a map" << endl <<
+				"3 - Load map from file" << endl;
 
 		if(graphIsReady()) {
-			cout << "3 - Save map to file" << endl <<
-					"4 - Start journey" << endl;
-			numberOfOptions = 4;
+			cout << "4 - Save map to file" << endl <<
+					"5 - Start journey" << endl;
+			numberOfOptions = 5;
 		}
 		else {
-			numberOfOptions = 2;
+			numberOfOptions = 3;
 			cout << "Don't forget you need a treasure and at least two cities to play!" << endl;
 		}
 
@@ -123,15 +145,18 @@ bool Interface::mainMenu() {
 
 		switch(option) {
 		case 1:
-			newMapMenu();
+			optionsMenu();
 			break;
 		case 2:
-			loadMapMenu();
+			newMapMenu();
 			break;
 		case 3:
-			saveMapMenu();
+			loadMapMenu();
 			break;
 		case 4:
+			saveMapMenu();
+			break;
+		case 5:
 			return true;
 			break;
 		case 0:
@@ -143,8 +168,45 @@ bool Interface::mainMenu() {
 	return false;
 }
 
+void Interface::optionsMenu() {
+
+	int numberOfOptions = 2;
+	bool exitMenu = false;
+
+	while(!exitMenu) {
+
+		cout << endl <<
+				"--- Options Menu ---" << endl <<
+				"0 - Go back" << endl;
+		if(performanceMode)
+			cout << "1 - Deactivate performance test mode" << endl;
+		else
+			cout << "1 - Activate performance test mode" << endl;
+		if(backtracking)
+			cout << "2 - Deactivate backtracking" << endl;
+		else
+			cout << "2 - Activate backtracking" << endl;
+		int option = getOption(numberOfOptions);
+
+		switch(option) {
+		case 1:
+			//TODO actually use the bools (implement the verifications) --- should be done now
+			performanceMode = !performanceMode;
+			break;
+		case 2:
+			//TODO actually use the bools --- should be done now
+			backtracking = !backtracking;
+			break;
+		case 0:
+			exitMenu = true;
+			break;
+		}
+	}
+
+}
+
 void Interface::newMapMenu() {
-	int numberOfOptions = 5;
+	int numberOfOptions = 6;
 	bool exitMenu = false;
 
 	while(!exitMenu) {
@@ -152,24 +214,28 @@ void Interface::newMapMenu() {
 		cout << endl <<
 				"--- Map Creation Menu ---" << endl <<
 				"0 - Go back" << endl <<
-				"1 - Edit cities" << endl <<
-				"2 - Edit roads" << endl <<
-				"3 - Edit clues" << endl <<
-				"4 - Generate random map" << endl;
+				"1 - Edit treasure hunter spawn" << endl <<
+				"2 - Edit cities" << endl <<
+				"3 - Edit roads" << endl <<
+				"4 - Edit clues" << endl <<
+				"5 - Generate random map" << endl;
 
 		int option = getOption(numberOfOptions);
 
 		switch(option) {
 		case 1:
-			citiesMenu();
+			hunterSpawnMenu();
 			break;
 		case 2:
-			roadsMenu();
+			citiesMenu();
 			break;
 		case 3:
-			cluesMenu();
+			roadsMenu();
 			break;
 		case 4:
+			cluesMenu();
+			break;
+		case 5:
 			if(randomGraphMenu())
 				exitMenu = true;
 			break;
@@ -178,6 +244,23 @@ void Interface::newMapMenu() {
 			break;
 		}
 	}
+}
+
+void Interface::hunterSpawnMenu() {
+	//TODO repaint the hunter to the right position
+	cout << "- Hunter spawn menu -" << endl;
+	cout << "Please pick a city to be the hunter's starting point" << endl;
+	vector<City*> cities = builder->getCities();
+	City* spawnCity = displayVector(cities);
+	if(spawnCity == NULL)
+		return;
+
+	delete builder->getTreasureHunter();
+	builder->spawnTreasureHunter(spawnCity);
+
+	cout << "Treasure hunter set to spawn on " << spawnCity->getName() << endl;
+	cout << "Press enter to continue..." << endl;
+	getchar();
 }
 
 bool Interface::randomGraphMenu() {
@@ -393,32 +476,32 @@ void Interface::addNewRoad() {
 		cout << "Failed to create road, does it already exist?" << endl;
 
 	cout << "Press enter to continue..." << endl;
-    builder->getGraphViewer()->rearrange();
+	builder->getGraphViewer()->rearrange();
 	getchar();
 }
 
 void Interface::deleteExistingRoad() {
-    cout << "- Delete road -" << endl;
-    
+	cout << "- Delete road -" << endl;
+
 	vector<City*> cities = builder->getCities();
-    
+
 	cout << "Choose a city for the origin" << endl;
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* originCity = displayVector(cities);
-    
+
 	cout << "Choose a city for the destination" << endl;
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* destinationCity = displayVector(cities);
-    
+
 	if( builder->deleteRoad(originCity, destinationCity) )
 		cout << "Deleted road!" << endl;
 	else
 		cout << "There is no road between those cities!" << endl;
-    
+
 	cout << "Press enter to continue..." << endl;
-    builder->getGraphViewer()->rearrange();
+	builder->getGraphViewer()->rearrange();
 	getchar();
 }
 
@@ -529,27 +612,27 @@ void Interface::deleteExistingClue() {
 
 void Interface::loadMapMenu() {
 	cout << "--- Load map ---" << endl;
-    
+
 	string filename;
 	cout << "Load a map from which file? (if not found, file must be in the same dir as the program)" << endl << PROMPT;
 	getline(cin, filename);
-    
+
 	if(filename.empty())
 		cout << "That's not a valid filename..." << endl;
 	else {
-        if ( !builder->loadFromFile(filename) ){
-            cout << "File not found! Press enter to continue.."<< endl;
-            getchar();
-            return;
-        }
-        vector<City *>::iterator it;
-        vector<City*> loadedCities = builder->getCities();
-        hasCityWithTreasure = false;
-        for (it = loadedCities.begin(); it != loadedCities.end(); ++it) {
-            if ( (*it)->hasTreasure ) hasCityWithTreasure = true;
-        }
-        numberOfCities = (int)builder->getCities().size();
-        builder->getGraphViewer()->rearrange();
+		if ( !builder->loadFromFile(filename) ){
+			cout << "File not found! Press enter to continue.."<< endl;
+			getchar();
+			return;
+		}
+		vector<City *>::iterator it;
+		vector<City*> loadedCities = builder->getCities();
+		hasCityWithTreasure = false;
+		for (it = loadedCities.begin(); it != loadedCities.end(); ++it) {
+			if ( (*it)->hasTreasure ) hasCityWithTreasure = true;
+		}
+		numberOfCities = (int)builder->getCities().size();
+		builder->getGraphViewer()->rearrange();
 		cout << endl << "Loaded map!" << endl;
 		getchar();
 	}
@@ -574,9 +657,13 @@ void Interface::saveMapMenu() {
 }
 
 Interface::Interface(){
-	builder = new GraphBuilder();
+	//builder = new GraphBuilder();
 	numberOfCities = 0;
 	hasCityWithTreasure = false;
+	windowHeight = HEIGHT;
+	windowWidth = WIDTH;
+	backtracking = true;
+	performanceMode = false;
 }
 
 void Interface::init(){
@@ -586,7 +673,7 @@ void Interface::init(){
 	builder->loadFromFile(filename);
     hasCityWithTreasure = true;
     numberOfCities = (int)builder->getCities().size();
-    */
+	 */
 
 	/* string save = "teste.txt";
 	builder->saveToFile(save);*/
@@ -601,7 +688,7 @@ void Interface::init(){
 	this->roads = builder->getRoads();
 	this->treasureHunter = builder->getTreasureHunter();
 
-	director = new Director(treasureHunter, builder->getGraph(), true);
+	director = new Director(treasureHunter, builder->getGraph(), backtracking, performanceMode);
 
 	cout << "Press enter for each step of the journey!" << endl;
 
@@ -612,16 +699,15 @@ void Interface::init(){
 }
 
 void Interface::resetBuilder() {
-	//TODO wat
-	//delete builder;
-	builder = new GraphBuilder();
+	delete builder;
+	builder = new GraphBuilder(windowWidth, windowHeight);
 	numberOfCities = 0;
 	hasCityWithTreasure = false;
 }
 
 void Interface::mainLoop(){
 	while ( !treasureHunter->foundTreasure ) {
-		City * nextCity; City * destination; City * lastCity;
+		City * nextCity; City * lastCity;
 
 		if ( director->nextStep() == NULL ){
 			while ( !director->events.empty() ) {
@@ -634,7 +720,6 @@ void Interface::mainLoop(){
 		lastCity = treasureHunter->getLastCity();
 		nextCity = treasureHunter->getCurrentCity();
 		repaintRoad(lastCity, nextCity);
-		destination = treasureHunter->getDestination();
 		view->setVertexColor(treasureHunter->getLastCity()->getID(), treasureHunter->getLastCity()->getColor());
 		while(!director->events.empty()) {
 			cout << director->events.front() << endl;

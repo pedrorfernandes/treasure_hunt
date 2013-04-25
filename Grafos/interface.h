@@ -28,6 +28,10 @@ class Interface {
     vector<City *> cities;
     vector<Road *> roads;
     TreasureHunter * treasureHunter;
+    int windowHeight;
+    int windowWidth;
+    bool performanceMode;
+    bool backtracking;
 
     bool hasCityWithTreasure; /**< Tells if the graph has a city with treasure on it */
     int numberOfCities; /**< Number of cities created by user */
@@ -61,6 +65,16 @@ public:
      */
     bool mainMenu();
     
+    /**
+     * Provides settings about the program for the user to change.
+     */
+    void optionsMenu();
+
+    /**
+     * Lets the user spawn a treasure hunter.
+     */
+    void hunterSpawnMenu();
+
     /**
      * This menu displays options related to map creation and editing to the user.
      */
