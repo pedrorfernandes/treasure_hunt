@@ -179,7 +179,7 @@ public:
 	vector<T> bfs(Vertex<T> *v) const;
 	int maxNewChildren(Vertex<T> *v, T &inf) const;
 	vector<Vertex<T> * > getVertexSet() const;
-	int getNumVertex() const;
+	unsigned long getNumVertex() const;
 
 	//exercicio 5
 	Vertex<T>* getVertex(const T &v) const;
@@ -200,7 +200,7 @@ public:
 	void getfloydWarshallPathAux(int index1, int index2, vector<T> & res);
     
     vector<T> getUnconnectedEdges(const T &s);
-    void optimizedDijkstraShortestPath(const T &s);
+    void optimisedDijkstraShortestPath(const T &s);
 };
 
 template <class T>
@@ -222,7 +222,7 @@ vector<T> Graph<T>::getUnconnectedEdges(const T &s){
 }
 
 template <class T>
-int Graph<T>::getNumVertex() const {
+unsigned long Graph<T>::getNumVertex() const {
 	return vertexSet.size();
 }
 template <class T>
@@ -663,7 +663,7 @@ struct CompareVertex : public std::binary_function<Vertex<T>*, Vertex<T>*, bool>
 };
 
 template<class T>
-void Graph<T>::optimizedDijkstraShortestPath(const T &s) {
+void Graph<T>::optimisedDijkstraShortestPath(const T &s) {
     
 	for(unsigned int i = 0; i < vertexSet.size(); i++) {
 		vertexSet[i]->path = NULL;

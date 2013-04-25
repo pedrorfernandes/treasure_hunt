@@ -678,13 +678,12 @@ void Interface::init(){
 	this->roads = builder->getRoads();
 	this->treasureHunter = builder->getTreasureHunter();
 
-	director = new Director(treasureHunter, builder->getGraph(), backtracking, performanceMode);
+	director = new Director(treasureHunter, builder->getGraph(), backtracking, performanceMode,cities.size(), roads.size());
 
 	cout << "Press enter for each step of the journey!" << endl;
 
 	cout << director->events.front() << endl;
 	director->events.pop();
-	cin.get();
 	mainLoop();
 }
 

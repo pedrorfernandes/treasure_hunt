@@ -22,17 +22,16 @@
  * The interface must do all the output and input operations and also handle the graphviewer API so that it correctly displays the current state of the map and the treasure hunter's progress.
  */
 class Interface {
-    Director * director; /**< The director that controls the journey */
-    GraphViewer * view; /**< The graph that will be displayed */
-    GraphBuilder * builder; /**< The builder in charge of creating graphs */
-    vector<City *> cities;
-    vector<Road *> roads;
-    TreasureHunter * treasureHunter;
-    bool performanceMode;
-    bool backtracking;
-
-    int citiesWithTreasure; /**< Tells if the graph has a city with treasure on it */
-    int numberOfCities; /**< Number of cities created by user */
+    Director * director; /**< The director that controls the journey. */
+    GraphViewer * view; /**< The graph that will be displayed. */
+    GraphBuilder * builder; /**< The builder in charge of creating graphs. */
+    vector<City *> cities; /**< The cities created by the builder. */
+    vector<Road *> roads; /**< The roads created by the builder. */
+    TreasureHunter * treasureHunter; /**< The treasure hunter created by the builder. */
+    bool performanceMode; /**< Enables benchmarking mode in the director. */
+    bool backtracking; /**< Determines if the director allows the hero to backtrack his steps. */
+    int citiesWithTreasure; /**< Tells if the graph has a city with treasure on it. */
+    int numberOfCities; /**< Number of cities created by user. */
 
 public:
     /**
@@ -149,6 +148,11 @@ public:
      */
     void mainLoop();
     
+    /**
+     * Repaints a road between two cities.
+     * @param city1 The first city.
+     * @param city2 The second city.
+     */
     void repaintRoad(City * city1, City * city2);
     
 };

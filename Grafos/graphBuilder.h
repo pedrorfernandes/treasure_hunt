@@ -61,11 +61,11 @@
 class GraphBuilder {
 	Graph<City *> * graph; /**< The graph that's being built */
 	TreasureHunter * treasureHunter; /**< The hunter with it's starting point. */
-	GraphViewer * view; /**< The graph to be displayed */
-	vector<Road *> roads;
-	vector<City *> cities;
-    int height;
-    int width;
+	GraphViewer * view; /**< The graph to be displayed. */
+	vector<Road *> roads; /**< All the roads created by the builder. */
+	vector<City *> cities; /**< All the cities created by the builder */
+    int height; /**< The height of the graphViewer window. */
+    int width; /**< The width of the graphViewer window.  */
 
 public:
 	/**

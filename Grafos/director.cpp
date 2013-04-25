@@ -16,14 +16,18 @@ Director::Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktr
 	this->treasureHunter = hunter;
 	this->graph = graph;
 	this->backtracking = isBacktracking;
+    this->numberOfCities = graph->getNumVertex();
+    this->numberOfRoads = graph->getNumVertex();
 	calculateNextPath();
 }
 
-Director::Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktracking, bool performanceMode){
+Director::Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktracking, bool performanceMode, unsigned long numberOfCities, unsigned long numberOfRoads){
 	this->treasureHunter = hunter;
 	this->graph = graph;
 	this->backtracking = isBacktracking;
 	this->performanceMode = performanceMode;
+    this->numberOfCities = numberOfCities;
+    this->numberOfRoads = numberOfRoads;
 	calculateNextPath();
 }
 
@@ -69,6 +73,7 @@ bool Director::calculateNextPath() {
 
 #ifdef USE_TIMER
 	if(performanceMode) {
+        events.push(RUNNING_TESTS);
 		stringstream performance;
 		unsigned long average1 = checkPerformance(currentCity, OPTIMISED_DIJKSTRA);
 		unsigned long average2 = checkPerformance(currentCity, BELLMAN_FORD);
@@ -81,9 +86,21 @@ bool Director::calculateNextPath() {
 		events.push( performance.str() );
 	}
 #endif
-
-	graph->optimizedDijkstraShortestPath(currentCity);
-	if ( currentCityClues.empty() ) return false;
+    
+    if ( currentCityClues.empty() ) return false;
+    
+    /* 
+     Optimisation: if the number of roads is 10x bigger than the number of cities
+     our analysis tells us that our enhanced dijkstra will work better.
+     (example: 1 000 cities and 10 000 roads will work better with dijkstra)
+     For a lower number of roads, bellman-ford algorithm is faster.
+     */
+    if ( numberOfCities * 10 >= numberOfRoads ){
+        graph->optimisedDijkstraShortestPath(currentCity);
+    } else {
+        graph->bellmanFordShortestPath(currentCity);
+    }
+    
 	City* closestClue = currentCityClues[0];
 	double shortestDist = graph->getVertex(currentCityClues[0])->getDist();
 
@@ -189,7 +206,7 @@ unsigned long Director::checkPerformance(City * start, int algorithm){
             unsigned long runs = RUNS;
 			startTimer();
             for (unsigned long run = 0; run < runs; ++run) {
-                graph->optimizedDijkstraShortestPath(start);
+                graph->optimisedDijkstraShortestPath(start);
             }
 			time = stopTimer();
             time /= runs;

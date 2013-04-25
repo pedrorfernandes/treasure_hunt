@@ -25,6 +25,7 @@
 #define DESTINATION "Heading towards " + closestClue->getName() + "!\n"
 #define NO_PATH "No path to take! Quest over.\n"
 #define ARRIVED_AT_A_CITY "Arrived at " + nextCity->getName() + "!"
+#define RUNNING_TESTS "Running speed tests! Please wait\n"
 
 //#if defined __APPLE__ || defined linux || defined (__CYGWIN32__)
 #define USE_TIMER
@@ -50,13 +51,14 @@ class Director {
 	Graph<City *> * graph; /**< The graph containing all the cities and roads. Can be interpreted as a map. */
 	stack<City *> currentPath; /**< The current path the hunter must take. If it's empty, the hero stops in the current city. */
 	bool backtracking; /**< If true, when the hero reaches a dead end (city with no clues), he goes back to the latest visited city. If false, the journey ends in the dead end. */
-	bool performanceMode; /***< If true, performance measuring is done during the program run. */
+	bool performanceMode; /**< If true, performance measuring is done during the program run. */
+    unsigned long numberOfCities, numberOfRoads; /**< Variables for optimisation purposes. */
 
 #ifdef USE_TIMER
-	struct timeval clockStart, clockEnd;
+	struct timeval clockStart, clockEnd; /**< Values that are used for timing performance. */
 #endif
 public:
-	queue<string> events;
+	queue<string> events; /**< A queue of outputs that tell the interface what is happening in the journey */
 	/**
 	 * Creates a new director.
 	 * @param hunter The treasure hunter.
@@ -71,12 +73,14 @@ public:
 	 * @param graph The pre-made graph.
 	 * @param isBacktracking If the algorithm uses backtracking.
 	 * @param performanceMode If the program is making performance measurements.
+     * @param numberOfCities The number of cities inside the graph.
+     * @param numberOfRoads The number of roads inside the graph.
 	 */
-	Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktracking, bool performanceMode);
-
+	Director(TreasureHunter * hunter, Graph<City *> * graph, bool isBacktracking, bool performanceMode, unsigned long numberOfCities, unsigned long numberOfRoads);
+    
 	/**
 	 * This function must get the hunter's next location choices and determines which is the closest.
-	 * It takes into account the type of the graph so that it can optimize and choose the best algorithm to do this task.
+	 * It takes into account the type of the graph so that it can optimise and choose the best algorithm to do this task.
 	 * The generated path is stacked into the currentPath variable.
 	 * @return True if successful. If there is no path to take, false is returned.
 	 */
@@ -90,6 +94,9 @@ public:
 	 */
 	City * nextStep();
 
+    /**
+     * Checks if the treasure hunter reached his destination and orders him to 
+     */
 	bool updatePath();
 
 #ifdef USE_TIMER
