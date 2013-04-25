@@ -1,18 +1,22 @@
-/*
- * displayWithPages.h
- *
- *  Created on: 28 de Dez de 2012
- *  Modified on: 23 de Abr de 2013
- *
- */
+//  displayWithPages.h
+//
+//  Projeto CAL
+//  Parte 1
+//
+//  Turma 1 Grupo D
+//
+//  ei11089 - Diogo Santos
+//  ei11122 - Pedro Fernandes
+//  ei11132 - Daniel Pereira
+//
 
 
 /**
  * @file	displayWithPages.h
  * @defgroup displayWithPages
  * @{
- * Contem funcoes template display da informacao de vectores, divindo
- *  por paginas para facilidade de leitura, permitindo a escolha de um objecto
+ * Contains template functions to display information stored in vectors,
+ * dividing each page for easier reading.
  */
 #ifndef DISPLAY_PER_PAGE_H_
 #define DISPLAY_PER_PAGE_H_
@@ -45,64 +49,64 @@ inline int getVectorChoice() {
 }
 
 /**
- * Funcao template para display da informacao de um vector, dividindo-a por paginas.
- *  Permite a escolha de um dos objectos, retornando-o
+ * Template function to display the information inside a vector, dividing it by pages.
+ * Allows the choice of an object inside the vector and returns it.
  *
- * @param v1 referencia para o vector a apresentar
- * @return retorna um apontador para o objecto escolhido pelo utilizador, NULL caso nenhum seja escolhido
+ * @param v1 The vector the display
+ * @return Pointer to the object chosen, NULL if none was chosen.
  */
 template <class T>
 T* displayVector(vector<T> &v1) {
 	T* obj = NULL;
-	bool escolhido = false;
-	int numPagina = 0;
-	int numPaginaMax;
+	bool hasChosen = false;
+	int pageNumber = 0;
+	int maxPageNumber;
 	if(v1.size()%5 == 0)
-		numPaginaMax = v1.size()/5-1;
+		maxPageNumber = v1.size()/5-1;
 	else
-		numPaginaMax = v1.size()/5;
-	while(!escolhido)
+		maxPageNumber = v1.size()/5;
+	while(!hasChosen)
 	{
 		typename vector<T>::iterator it = v1.begin();
 		int counter;
-		for(counter = 0, it = (v1.begin()+(numPagina*5)); it != v1.end() && counter < 5; it++, counter++)
+		for(counter = 0, it = (v1.begin()+(pageNumber*5)); it != v1.end() && counter < 5; it++, counter++)
 		{
 			cout << (counter+1) << " - " << endl << (*it) << endl;
 		}
 		cout << "0 - Cancel\n[1,...,5] - Choose option" << endl;
-		if(numPagina > 0)
+		if(pageNumber > 0)
 		{
 			cout << "6 - Previous page" << endl;
 		}
-		if(numPagina < numPaginaMax)
+		if(pageNumber < maxPageNumber)
 		{
 			cout << "7 - Next page" << endl;
 		}
 
-		int escolha = getVectorChoice();
+		int choices = getVectorChoice();
 
-		switch(escolha) {
+		switch(choices) {
 		case 1: case 2: case 3: case 4: case 5:
-			if(v1.size() < (unsigned) numPagina*5 + escolha)
+			if(v1.size() < (unsigned) pageNumber*5 + choices)
 				return obj;
 
-			obj = &v1[numPagina*5 + (escolha-1)];
-			escolhido = true;
+			obj = &v1[pageNumber*5 + (choices-1)];
+			hasChosen = true;
 			break;
 		case 6:
-			if(numPagina > 0)
-				numPagina--;
+			if(pageNumber > 0)
+				pageNumber--;
 			else
-				escolhido = true;
+				hasChosen = true;
 			break;
 		case 7:
-			if(numPagina < numPaginaMax)
-				numPagina++;
+			if(pageNumber < maxPageNumber)
+				pageNumber++;
 			else
-				escolhido = true;
+				hasChosen = true;
 			break;
 		default:
-			escolhido = true;
+			hasChosen = true;
 			break;
 		}
 	}
@@ -112,64 +116,64 @@ T* displayVector(vector<T> &v1) {
 
 
 /**
- * Funcao template para display da informacao de um vector de apontadores, dividindo-a por paginas.
- *  Permite a escolha de um dos objectos, retornando-o
+ * Template function to display the information inside a vector, dividing it by pages.
+ * Allows the choice of an object inside the vector and returns it.
  *
- * @param v1 referencia para o vector de apontadores a apresentar
- * @return retorna o objecto do vector (apontador para outro objecto) escolhido pelo utilizador, NULL caso nenhum seja escolhido
+ * @param v1 The vector with pointers to the objects that will be displayed.
+ * @return Pointer to the object chosen, NULL if none was chosen.
  */
 template <class T>
 T* displayVector(vector<T*> &v1) {
 	T* obj = NULL;
-	bool escolhido = false;
-	int numPagina = 0;
-	int numPaginaMax;
+	bool hasChosen = false;
+	int pageNumber = 0;
+	int maxPageNumber;
 	if(v1.size()%5 == 0)
-		numPaginaMax = (int)v1.size()/5-1;
+		maxPageNumber = (int)v1.size()/5-1;
 	else
-		numPaginaMax = (int)v1.size()/5;
-	while(!escolhido)
+		maxPageNumber = (int)v1.size()/5;
+	while(!hasChosen)
 	{
 		typename vector<T*>::iterator it = v1.begin();
 		int counter;
-		for(counter = 0, it = (v1.begin()+(numPagina*5)); it != v1.end() && counter < 5; it++, counter++)
+		for(counter = 0, it = (v1.begin()+(pageNumber*5)); it != v1.end() && counter < 5; it++, counter++)
 		{
 			cout << (counter+1) << " - " << endl << (**it) << endl;
 		}
 		cout << "0 - Cancel\n[1,...,5] - Choose option" << endl;
-		if(numPagina > 0)
+		if(pageNumber > 0)
 		{
 			cout << "6 - Previous page" << endl;
 		}
-		if(numPagina < numPaginaMax)
+		if(pageNumber < maxPageNumber)
 		{
 			cout << "7 - Next page" << endl;
 		}
 
-		int escolha = getVectorChoice();
+		int choices = getVectorChoice();
 
-		switch(escolha) {
+		switch(choices) {
 		case 1: case 2: case 3: case 4: case 5:
-			if(v1.size() < (unsigned) numPagina*5 + escolha)
+			if(v1.size() < (unsigned) pageNumber*5 + choices)
 				return obj;
 
-			obj = v1[numPagina*5 + (escolha-1)];
-			escolhido = true;
+			obj = v1[pageNumber*5 + (choices-1)];
+			hasChosen = true;
 			break;
 		case 6:
-			if(numPagina > 0)
-				numPagina--;
+			if(pageNumber > 0)
+				pageNumber--;
 			else
-				escolhido = true;
+				hasChosen = true;
 			break;
 		case 7:
-			if(numPagina < numPaginaMax)
-				numPagina++;
+			if(pageNumber < maxPageNumber)
+				pageNumber++;
 			else
-				escolhido = true;
+				hasChosen = true;
 			break;
 		default:
-			escolhido = true;
+			hasChosen = true;
 			break;
 		}
 	}
@@ -180,4 +184,5 @@ T* displayVector(vector<T*> &v1) {
 /**
  * @}
  */
+
 #endif /* DISPLAYWITHPAGES_H_ */
