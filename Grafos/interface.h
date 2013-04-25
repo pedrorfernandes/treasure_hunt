@@ -28,12 +28,10 @@ class Interface {
     vector<City *> cities;
     vector<Road *> roads;
     TreasureHunter * treasureHunter;
-    int windowHeight;
-    int windowWidth;
     bool performanceMode;
     bool backtracking;
 
-    bool hasCityWithTreasure; /**< Tells if the graph has a city with treasure on it */
+    int citiesWithTreasure; /**< Tells if the graph has a city with treasure on it */
     int numberOfCities; /**< Number of cities created by user */
 
 public:
@@ -51,7 +49,7 @@ public:
     /**
      * Resets the graph builder (deletes the current map), resetting the necessary variables.
      */
-    void resetBuilder();
+    void resetBuilder(int width, int height);
 
     /**
      * Checks if a functional map is ready to be played.
@@ -78,7 +76,7 @@ public:
     /**
      * This menu displays options related to map creation and editing to the user.
      */
-    void newMapMenu();
+    void editMapMenu();
 
     /**
      * This menu prompts the user for options to create a random map.

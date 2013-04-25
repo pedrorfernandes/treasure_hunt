@@ -12,19 +12,11 @@
 
 #include "graphBuilder.h"
 
-GraphBuilder::GraphBuilder() {
-    graph = new Graph<City *>();
-    view = new GraphViewer(WIDTH, HEIGHT, false);
-    view->setBackground(BACKGROUND);
-    view->createWindow(WIDTH, HEIGHT);
-    view->defineEdgeColor(ROAD_COLOR);
-    view->defineVertexColor(CITY_COLOR);
-    treasureHunter = NULL;
-}
-
 GraphBuilder::GraphBuilder(int width, int height) {
     graph = new Graph<City *>();
     view = new GraphViewer(width, height, false);
+    this->width = width;
+    this->height = height;
     view->setBackground(BACKGROUND);
     view->createWindow(width, height);
     view->defineEdgeColor(ROAD_COLOR);
@@ -261,6 +253,10 @@ bool GraphBuilder::connect(City * city1, City * city2, const bool &isDirected){
 }
 
 bool GraphBuilder::spawnTreasureHunter(City * city){
+    if (treasureHunter != NULL){
+        view->setVertexColor(treasureHunter->getCurrentCity()->getID(), CITY_COLOR);
+        delete treasureHunter;
+    }
     treasureHunter = new TreasureHunter(city);
     view->setVertexColor(city->getID(), HUNTER_COLOR);
     return true;
@@ -288,10 +284,10 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
     // create a vector containing all possible x and y coordinates avaiable
     vector<int> x; vector<int> y;
     while (x.size() < numberOfCities) {
-        for (int i = VERTEX_SIZE; i < WIDTH-VERTEX_SIZE; i+=INTERVAL) {
+        for (int i = VERTEX_SIZE; i < width-VERTEX_SIZE; i+=INTERVAL) {
             x.push_back(i);
         }
-        for (int j = VERTEX_SIZE; j < WIDTH-VERTEX_SIZE; j+=INTERVAL) {
+        for (int j = VERTEX_SIZE; j < height-VERTEX_SIZE; j+=INTERVAL) {
             y.push_back(j);
         }
     }
@@ -317,15 +313,15 @@ void GraphBuilder::createGraph(const unsigned int &numberOfCities, const unsigne
         sprintf(numberStr, "%d", i);
         if (i == 1){
             while ( !addCity(string(numberStr), true, x.at(i), y.at(i)) ){
-                x.at(i) = rand() % (WIDTH-VERTEX_SIZE);
-                y.at(i) = rand() % (WIDTH-VERTEX_SIZE);
+                x.at(i) = rand() % (width-VERTEX_SIZE);
+                y.at(i) = rand() % (height-VERTEX_SIZE);
             }
             treasure = getCity(string(numberStr));
         }
         else {
             while ( !addCity(string(numberStr), false, x.at(i), y.at(i)) ){
-                x.at(i) = rand() % (WIDTH-VERTEX_SIZE);
-                y.at(i) = rand() % (WIDTH-VERTEX_SIZE);
+                x.at(i) = rand() % (width-VERTEX_SIZE);
+                y.at(i) = rand() % (height-VERTEX_SIZE);
             }
         }
         if (i == 0){

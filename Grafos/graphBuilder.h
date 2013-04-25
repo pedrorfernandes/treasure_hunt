@@ -32,8 +32,7 @@
 #include "edgetype.h"
 #include "road.h"
 
-#define WIDTH 700
-#define HEIGHT 700
+#define DEFAULT_SIZE 700
 #define BACKGROUND "map.png"
 #define ROAD_COLOR "orange"
 #define CITY_COLOR "red"
@@ -65,17 +64,14 @@ class GraphBuilder {
 	GraphViewer * view; /**< The graph to be displayed */
 	vector<Road *> roads;
 	vector<City *> cities;
+    int height;
+    int width;
 
 public:
 	/**
-	 * Initializes a new graph and graphView
-	 */
-	GraphBuilder();
-
-	/**
 	 * Initializes a new graph and graphView with given size
 	 */
-	GraphBuilder(int height, int width);
+	GraphBuilder(int height = DEFAULT_SIZE, int width = DEFAULT_SIZE);
 
 	/**
 	 * Deletes a graphbuilder

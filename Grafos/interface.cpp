@@ -92,7 +92,7 @@ bool getAnswer(string question) {
 }
 
 bool Interface::graphIsReady() {
-	return (hasCityWithTreasure && (numberOfCities >= 2));
+	return (citiesWithTreasure > 0 && (numberOfCities >= 2));
 }
 
 bool Interface::mainMenu() {
@@ -100,35 +100,14 @@ bool Interface::mainMenu() {
 	bool exitMenu = false;
 
 	cout << "~* Treasure Hunt *~" << endl;
-
-	cout << "Please set the desired height for the window (0 to default)" << endl;
-	int h;
-	h = getNumber();
-	if(h == 0)
-		windowHeight = HEIGHT;
-	else
-		windowHeight = h;
-
-	cout << "Please set the desired width for the window (0 to default)" << endl;
-	int w;
-	w = getNumber();
-	if(w == 0)
-		windowWidth = WIDTH;
-	else
-		windowWidth = w;
-
-	builder = new GraphBuilder(windowWidth, windowHeight);
-	cout << "Window size set!" << endl;
-	cout << "Press enter to continue..." << endl;
-	getchar();
-
+    builder = new GraphBuilder();
 	while(!exitMenu) {
 
 		cout << endl <<
 				"----- Main Menu -----" << endl <<
 				"0 - Exit" << endl <<
-				"1 - Program options" << endl <<
-				"2 - Create and edit a map" << endl <<
+				"1 - Options" << endl <<
+				"2 - Edit the map" << endl <<
 				"3 - Load map from file" << endl;
 
 		if(graphIsReady()) {
@@ -138,7 +117,7 @@ bool Interface::mainMenu() {
 		}
 		else {
 			numberOfOptions = 3;
-			cout << "Don't forget you need a treasure and at least two cities to play!" << endl;
+			cout << "Don't forget you need a treasure and at least two cities to start!" << endl;
 		}
 
 		int option = getOption(numberOfOptions);
@@ -148,7 +127,7 @@ bool Interface::mainMenu() {
 			optionsMenu();
 			break;
 		case 2:
-			newMapMenu();
+			editMapMenu();
 			break;
 		case 3:
 			loadMapMenu();
@@ -205,16 +184,16 @@ void Interface::optionsMenu() {
 
 }
 
-void Interface::newMapMenu() {
+void Interface::editMapMenu() {
 	int numberOfOptions = 6;
 	bool exitMenu = false;
 
 	while(!exitMenu) {
 
 		cout << endl <<
-				"--- Map Creation Menu ---" << endl <<
+				"--- Map Edition Menu ---" << endl <<
 				"0 - Go back" << endl <<
-				"1 - Edit treasure hunter spawn" << endl <<
+				"1 - Edit hunter location" << endl <<
 				"2 - Edit cities" << endl <<
 				"3 - Edit roads" << endl <<
 				"4 - Edit clues" << endl <<
@@ -255,9 +234,9 @@ void Interface::hunterSpawnMenu() {
 	if(spawnCity == NULL)
 		return;
 
-	delete builder->getTreasureHunter();
 	builder->spawnTreasureHunter(spawnCity);
-
+    
+    builder->getGraphViewer()->rearrange();
 	cout << "Treasure hunter set to spawn on " << spawnCity->getName() << endl;
 	cout << "Press enter to continue..." << endl;
 	getchar();
@@ -283,11 +262,18 @@ bool Interface::randomGraphMenu() {
 
 	if(numberOfClues == 0)
 		return false;
-
-	resetBuilder();
+    
+    cout << "Please set the desired map height (0 to default)" << endl;
+	int height;
+	height = getNumber();
+    
+	cout << "Please set the desired map width (0 to default)" << endl;
+	int width;
+	width = getNumber();
+	resetBuilder(width, height);
 	builder->createGraph(numberOfCitiesToCreate, numberOfRoads, numberOfClues);
 	numberOfCities =  (int)builder->getCities().size();
-	hasCityWithTreasure = true;
+	citiesWithTreasure = 1;
 	cout << "Random map is ready!" << endl;
 	cout << "Press enter to continue..." << endl;
 	getchar();
@@ -342,24 +328,24 @@ void Interface::addNewCity() {
 
 	cout << "x coordinate?" << endl;
 	int x = getNumber();
-
+    
 	cout << "y coordinate?" << endl;
 	int y = getNumber();
-
+    
 	bool cityHasTreasure = false;
-	if(!hasCityWithTreasure) {
-		bool accept = getAnswer("Would you like this city to hold the treasure? (Y/N)");
-		if(accept)
-			cityHasTreasure = true;
-		else
-			cityHasTreasure = false;
-	}
-
+    bool accept = getAnswer("Would you like this city to hold the treasure? (Y/N)");
+    if(accept)
+        cityHasTreasure = true;
+    else
+        cityHasTreasure = false;
+	
+    
 	if(builder->addCity(name, cityHasTreasure, x, y)) {
+        builder->getGraphViewer()->rearrange();
 		cout << "City created!" << endl;
 		numberOfCities++;
 		if(cityHasTreasure)
-			hasCityWithTreasure = true;
+			citiesWithTreasure++;
 		cout << "Press enter to continue..." << endl;
 		getchar();
 	}
@@ -388,9 +374,10 @@ void Interface::deleteExistingCity() {
 	if(cityToDelete == NULL)
 		return;
 	else {
-		if(builder->deleteCity(cityToDelete))
+		if(builder->deleteCity(cityToDelete)) {
+            builder->getGraphViewer()->rearrange();
 			cout << "City was deleted." << endl;
-		else
+        } else
 			cout << "Failed to delete that city!" << endl;
 
 		cout << "Press enter to continue..." << endl;
@@ -405,6 +392,9 @@ void Interface::editCityName() {
 
 	vector<City*> cities = builder->getCities();
 	City* cityToRename = displayVector(cities);
+    
+    if (cityToRename == NULL)
+        return;
 
 	while(true) {
 		string name;
@@ -416,6 +406,8 @@ void Interface::editCityName() {
 
 		if(builder->getCity(name) == NULL) {
 			cityToRename->setName(name);
+            builder->getGraphViewer()->setEdgeLabel(cityToRename->getID(), name);
+            builder->getGraphViewer()->rearrange();
 			cout << "Renamed city to " << name << endl;
 			break;
 		}
@@ -464,15 +456,22 @@ void Interface::addNewRoad() {
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* originCity = displayVector(cities);
+    
+    if (originCity == NULL)
+        return;
 
 	cout << "Choose a city for the destination" << endl;
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* destinationCity = displayVector(cities);
+    
+    if (destinationCity == NULL)
+        return;
 
-	if(builder->connect(originCity, destinationCity, false))
+	if(builder->connect(originCity, destinationCity, false)) {
+        builder->getGraphViewer()->rearrange();
 		cout << "Created road!" << endl;
-	else
+	} else
 		cout << "Failed to create road, does it already exist?" << endl;
 
 	cout << "Press enter to continue..." << endl;
@@ -489,15 +488,22 @@ void Interface::deleteExistingRoad() {
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* originCity = displayVector(cities);
+    
+    if (originCity == NULL)
+        return;
 
 	cout << "Choose a city for the destination" << endl;
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* destinationCity = displayVector(cities);
+    
+    if (destinationCity == NULL)
+        return;
 
-	if( builder->deleteRoad(originCity, destinationCity) )
+	if( builder->deleteRoad(originCity, destinationCity) ) {
+        builder->getGraphViewer()->rearrange();
 		cout << "Deleted road!" << endl;
-	else
+	} else
 		cout << "There is no road between those cities!" << endl;
 
 	cout << "Press enter to continue..." << endl;
@@ -542,21 +548,17 @@ void Interface::addNewClue() {
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* originCity = displayVector(cities);
-
-	cout << "This city has the following clues" << endl;
-	cout << "Press enter to continue..." << endl;
-	getchar();
-	vector<City*> clues = originCity->getClues();
-	City* clue = displayVector(clues);
-
-	cout << "This clue indicates the following city:" << endl << clue << endl;
-	cout << "Press enter to continue..." << endl;
-	getchar();
+    
+    if (originCity == NULL)
+        return;
 
 	cout << "Choose the city the new clue will refer to" << endl;
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* destinationCity = displayVector(cities);
+    
+    if (destinationCity == NULL)
+        return;
 
 	if(originCity->addClue(destinationCity))
 		cout << "Created clue!" << endl;
@@ -627,9 +629,9 @@ void Interface::loadMapMenu() {
 		}
 		vector<City *>::iterator it;
 		vector<City*> loadedCities = builder->getCities();
-		hasCityWithTreasure = false;
+		citiesWithTreasure = 0;
 		for (it = loadedCities.begin(); it != loadedCities.end(); ++it) {
-			if ( (*it)->hasTreasure ) hasCityWithTreasure = true;
+			if ( (*it)->hasTreasure ) citiesWithTreasure++;
 		}
 		numberOfCities = (int)builder->getCities().size();
 		builder->getGraphViewer()->rearrange();
@@ -659,24 +661,12 @@ void Interface::saveMapMenu() {
 Interface::Interface(){
 	//builder = new GraphBuilder();
 	numberOfCities = 0;
-	hasCityWithTreasure = false;
-	windowHeight = HEIGHT;
-	windowWidth = WIDTH;
+	citiesWithTreasure = 0;
 	backtracking = true;
 	performanceMode = false;
 }
 
 void Interface::init(){
-	// basic tests
-	/*
-	string filename = "map.txt";
-	builder->loadFromFile(filename);
-    hasCityWithTreasure = true;
-    numberOfCities = (int)builder->getCities().size();
-	 */
-
-	/* string save = "teste.txt";
-	builder->saveToFile(save);*/
 
 	if(!mainMenu())
 		return;
@@ -698,11 +688,14 @@ void Interface::init(){
 	mainLoop();
 }
 
-void Interface::resetBuilder() {
+void Interface::resetBuilder(int width, int height) {
 	delete builder;
-	builder = new GraphBuilder(windowWidth, windowHeight);
+    if (width != 0 && height != 0)
+        builder = new GraphBuilder(width, height);
+    else // default values
+        builder = new GraphBuilder();
 	numberOfCities = 0;
-	hasCityWithTreasure = false;
+	citiesWithTreasure = 0;
 }
 
 void Interface::mainLoop(){

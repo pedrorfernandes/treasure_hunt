@@ -32,7 +32,7 @@ inline int getVectorChoice() {
 		getline(cin, input);
 		stringstream stream(input);
 
-		if(input.compare("X") == 0 || input.compare("x") == 0)
+		if(input.compare("0") == 0)
 			return 0;
 
 		if (stream >> number && number >= 0 && number <= 7)
@@ -69,7 +69,7 @@ T* displayVector(vector<T> &v1) {
 		{
 			cout << (counter+1) << " - " << endl << (*it) << endl;
 		}
-		cout << "X - Exit\t[1,...,5] - Choose one" << endl;
+		cout << "0 - Cancel\n[1,...,5] - Choose option" << endl;
 		if(numPagina > 0)
 		{
 			cout << "6 - Previous page" << endl;
@@ -136,7 +136,7 @@ T* displayVector(vector<T*> &v1) {
 		{
 			cout << (counter+1) << " - " << endl << (**it) << endl;
 		}
-		cout << "X - Cancel\t[1,...,5] - Choose one" << endl;
+		cout << "0 - Cancel\n[1,...,5] - Choose option" << endl;
 		if(numPagina > 0)
 		{
 			cout << "6 - Previous page" << endl;

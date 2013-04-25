@@ -30,7 +30,10 @@ City::City(string name, const bool hasTreasure, int x, int y):hasTreasure(hasTre
 	this->x = x;
 	this->y = y;
 	if (!hasTreasure) this->color = CITY_COLOR;
-	else this->color = TREASURE_COLOR;
+	else {
+        this->color = TREASURE_COLOR;
+        this->addClue(this);
+    }
 }
 
 City::City(string name, const bool hasTreasure, vector<City*> clues, int x, int y):hasTreasure(hasTreasure) {
@@ -41,7 +44,10 @@ City::City(string name, const bool hasTreasure, vector<City*> clues, int x, int 
 	this->x = x;
 	this->y = y;
 	if (!hasTreasure) this->color = CITY_COLOR;
-	else this->color = TREASURE_COLOR;
+	else {
+        this->color = TREASURE_COLOR;
+        this->addClue(this);
+    }
 }
 
 string City::getName() const {
