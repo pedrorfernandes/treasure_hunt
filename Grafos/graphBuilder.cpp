@@ -58,7 +58,7 @@ vector<City *> GraphBuilder::getCities() const{
     return cities;
 }
 
-City * GraphBuilder::getCity(const string cityName) const{
+City * GraphBuilder::getCity(const string &cityName) const{
     vector<City *>::const_iterator it;
     for(it = cities.begin() ; it != cities.end(); ++it){
         if ( (*it)->getName() == cityName)
@@ -181,7 +181,7 @@ bool GraphBuilder::saveToFile(const string &filename){
     return true;
 }
 
-bool GraphBuilder::addCity(string cityName, bool hasTreasure, int x, int y){
+bool GraphBuilder::addCity(const string &cityName, const bool &hasTreasure, const int &x, const int &y){
     City * city = new City(cityName, hasTreasure, x, y);
     
     // check if there is an existing x and y coords

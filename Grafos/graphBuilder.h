@@ -113,7 +113,7 @@ public:
 	 * @param cityName The name of the city to find.
 	 * @return Pointer to a created city. Null if it doesn't exist.
 	 */
-	City * getCity(const string cityName) const;
+	City * getCity(const string &cityName) const;
 
 	/**
 	 * Generates a graph from a templated file with city names, clues and roads.
@@ -135,7 +135,7 @@ public:
 	 * @param y The Y coordinates of the new city.
 	 * @return False if an error occurred, true if ok.
 	 */
-	bool addCity(string cityName, bool hasTreasure, int x, int y);
+	bool addCity(const string &cityName, const bool &hasTreasure, const int &x, const int &y);
 
 	/**
 	 * Deletes a city from the graph.
