@@ -72,8 +72,12 @@ bool Director::calculateNextPath() {
 		stringstream performance;
 		unsigned long average1 = checkPerformance(currentCity, OPTIMISED_DIJKSTRA);
 		unsigned long average2 = checkPerformance(currentCity, BELLMAN_FORD);
+		unsigned long average3 = checkPerformance(currentCity, DIJKSTRA);
+        //unsigned long average4 = checkPerformance(currentCity, FLOYD_WARSHALL);
 		performance << "Optimised Dijkstra performance: " << average1 << " microseconds." << endl;
-		performance << "Bellman-Ford performance: " << average2 << " microseconds.";
+		performance << "Bellman-Ford performance: " << average2 << " microseconds." << endl;
+        performance << "Dijkstra performance: " << average3 << " microseconds." << endl;
+		//performance << "Floyd Warshall performance: " << average4 << " microseconds." << endl;
 		events.push( performance.str() );
 	}
 #endif
@@ -129,66 +133,71 @@ bool Director::updatePath() {
 }
 
 #ifdef USE_TIMER
-void Director::startTimer() {    
+inline void Director::startTimer() {
 	gettimeofday(&clockStart, NULL);
 	return;
 }
 
-unsigned long Director::stopTimer(){
-	unsigned long mtime, seconds, useconds;
-
+inline unsigned long Director::stopTimer(){
 	gettimeofday(&clockEnd, NULL);
-
+    unsigned long mtime, seconds, useconds;
 	seconds  = clockEnd.tv_sec  - clockStart.tv_sec;
 	useconds = clockEnd.tv_usec - clockStart.tv_usec;
 
-	mtime = ((seconds) * 1000000 + useconds) + 0.5;
+	mtime = ((seconds) * 1000000 + useconds);
 	return mtime;
 }
 
 unsigned long Director::checkPerformance(City * start, int algorithm){
 	unsigned long time = 0;
-	unsigned long runs = 5000;
-	unsigned long total = 0;
-	for (unsigned int run = 0; run < runs; ++run) {
-		switch (algorithm) {
+    switch (algorithm) {
 		case DIJKSTRA:
 		{
+            unsigned long runs = RUNS;
 			startTimer();
-			graph->dijkstraShortestPath(start);
+            for (unsigned long run = 0; run < runs; run++) {
+                graph->dijkstraShortestPath(start);
+            }
 			time = stopTimer();
-			total += time;
+            time /= runs;
 			break;
 		}
 		case BELLMAN_FORD:
 		{
+            unsigned long runs = RUNS;
 			startTimer();
-			graph->bellmanFordShortestPath(start);
+            for (unsigned long run = 0; run < runs; ++run) {
+                graph->bellmanFordShortestPath(start);
+            }
 			time = stopTimer();
-			total += time;
+            time /= runs;
 			break;
 		}
 		case FLOYD_WARSHALL:
 		{
+            unsigned long runs = 1;
 			startTimer();
-			graph->floydWarshallShortestPath();
+            for (unsigned long run = 0; run < runs; ++run) {
+                graph->floydWarshallShortestPath();
+            }
 			time = stopTimer();
-			total += time;
+            time /= runs;
 			break;
 		}
 		case OPTIMISED_DIJKSTRA:
 		{
+            unsigned long runs = RUNS;
 			startTimer();
-			graph->optimizedDijkstraShortestPath(start);
+            for (unsigned long run = 0; run < runs; ++run) {
+                graph->optimizedDijkstraShortestPath(start);
+            }
 			time = stopTimer();
-			total += time;
+            time /= runs;
 			break;
 		}
 		default:
 			break;
-		}
-	}
-	unsigned long average = total / runs;
-	return average;
+    }
+	return time;
 }
 #endif
