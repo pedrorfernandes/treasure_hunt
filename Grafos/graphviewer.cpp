@@ -3,7 +3,7 @@
 #include<sstream>
 
 #ifdef linux
-pid_t GraphViewer::procId = NULL;
+pid_t GraphViewer::procId = 0;
 #endif
 short GraphViewer::port = 7772;
 
