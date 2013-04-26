@@ -164,7 +164,7 @@ public:
 	 * Randomly generates a graph with cities and a hero following the specified conditions.
 	 * @param numberOfCities The number of created cities.
 	 * @param numberOfRoads The number of roads created.
-	 * @param numberOfClues The number of clues created.
+	 * @param minNumberOfClues The number of clues created.
 	 */
 	void createGraph(const unsigned int &numberOfCities, const unsigned int &numberOfRoads, const unsigned int &minNumberOfClues);
 

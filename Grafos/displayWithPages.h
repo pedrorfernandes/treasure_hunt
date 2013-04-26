@@ -13,7 +13,7 @@
 
 /**
  * @file	displayWithPages.h
- * @defgroup displayWithPages
+ * @defgroup displayWithPages Display with pages
  * @{
  * Contains template functions to display information stored in vectors,
  * dividing each page for easier reading.

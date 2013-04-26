@@ -49,7 +49,7 @@ public:
 
 	/**
 	 * Changes the city's name.
-	 * @param Name name to change to.
+	 * @param name name to change to.
 	 */
 	void setName(string name);
 
@@ -60,7 +60,7 @@ public:
 
 	/**
 	 * Sets clues to other cities.
-	 * @param The new set of clues.
+	 * @param clues The new set of clues.
 	 */
 	void setClues(vector<City *> clues);
     
