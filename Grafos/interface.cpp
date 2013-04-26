@@ -227,8 +227,10 @@ void Interface::hunterSpawnMenu() {
 	cout << "Please pick a city to be the hunter's starting point" << endl;
 	vector<City*> cities = builder->getCities();
 	City* spawnCity = displayVector(cities);
-	if(spawnCity == NULL)
+	if(spawnCity == NULL){
+        cout << "Operation canceled!" << endl;
 		return;
+    }
 
 	builder->spawnTreasureHunter(spawnCity);
     
@@ -369,9 +371,10 @@ void Interface::deleteExistingCity() {
 
 	City* cityToDelete = displayVector(cities);
 
-	if(cityToDelete == NULL)
+	if(cityToDelete == NULL){
+        cout << "Operation canceled!" << endl;
 		return;
-	else {
+    } else {
 		if(builder->deleteCity(cityToDelete)) {
             builder->getGraphViewer()->rearrange();
 			cout << "City was deleted." << endl;
@@ -391,8 +394,10 @@ void Interface::editCityName() {
 	vector<City*> cities = builder->getCities();
 	City* cityToRename = displayVector(cities);
     
-    if (cityToRename == NULL)
+    if (cityToRename == NULL){
+        cout << "Operation canceled!" << endl;
         return;
+    }
 
 	while(true) {
 		string name;
@@ -458,16 +463,20 @@ void Interface::addNewRoad() {
 	getchar();
 	City* originCity = displayVector(cities);
     
-    if (originCity == NULL)
+    if (originCity == NULL){
+        cout << "Operation canceled!" << endl;
         return;
+    }
 
 	cout << "Choose a city for the destination" << endl;
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* destinationCity = displayVector(cities);
     
-    if (destinationCity == NULL)
+    if (destinationCity == NULL){
+        cout << "Operation canceled!" << endl;
         return;
+    }
 
 	if(builder->connect(originCity, destinationCity, false)) {
         builder->getGraphViewer()->rearrange();
@@ -490,16 +499,20 @@ void Interface::deleteExistingRoad() {
 	getchar();
 	City* originCity = displayVector(cities);
     
-    if (originCity == NULL)
+    if (originCity == NULL){
+        cout << "Operation canceled!" << endl;
         return;
+    }
 
 	cout << "Choose a city for the destination" << endl;
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* destinationCity = displayVector(cities);
     
-    if (destinationCity == NULL)
+    if (destinationCity == NULL){
+        cout << "Operation canceled!" << endl;
         return;
+    }
 
 	if( builder->deleteRoad(originCity, destinationCity) ) {
         builder->getGraphViewer()->rearrange();
@@ -550,16 +563,20 @@ void Interface::addNewClue() {
 	getchar();
 	City* originCity = displayVector(cities);
     
-    if (originCity == NULL)
+    if (originCity == NULL){
+        cout << "Operation canceled!" << endl;
         return;
+    }
 
 	cout << "Choose the city the new clue will refer to" << endl;
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* destinationCity = displayVector(cities);
     
-    if (destinationCity == NULL)
+    if (destinationCity == NULL){
+        cout << "Operation canceled!" << endl;
         return;
+    }
 
 	if(originCity->addClue(destinationCity))
 		cout << "Created clue!" << endl;
@@ -579,16 +596,20 @@ void Interface::deleteExistingClue() {
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	City* originCity = displayVector(cities);
-	if(originCity == NULL)
+	if(originCity == NULL) {
+        cout << "Operation canceled!" << endl;
 		return;
+    }
 
 	cout << "This city has the following clues" << endl;
 	cout << "Press enter to continue..." << endl;
 	getchar();
 	vector<City*> clues = originCity->getClues();
 	City* clue = displayVector(clues);
-	if(clue == NULL)
+	if(clue == NULL) {
+        cout << "Operation canceled!" << endl;
 		return;
+    }
 
 	while(true) {
 		cout << "This clue indicates the following city:" << endl << (*clue) << endl;
