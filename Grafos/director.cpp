@@ -106,7 +106,7 @@ bool Director::calculateNextPath() {
      (example: 1 000 cities and 10 000 roads will work better with dijkstra)
      For a lower number of roads, bellman-ford algorithm is faster.
      */
-    if ( numberOfCities * 10 >= numberOfRoads ){
+    if ( numberOfRoads >= numberOfCities * 10 ){
         graph->optimisedDijkstraShortestPath(currentCity);
     } else {
         graph->bellmanFordShortestPath(currentCity);
@@ -146,7 +146,7 @@ City* Director::nextStep() {
 		treasureHunter->moveTo(nextCity);
 		events.push(ARRIVED_AT_A_CITY);
 	}
-	return nextCity;
+    return nextCity;
 }
 
 bool Director::updatePath() {
@@ -156,6 +156,7 @@ bool Director::updatePath() {
 	if(currentPath.empty() )
 		if(!calculateNextPath()) {
 			events.push(NO_PATH);
+            throw noPathToTake();
 			return false;
 		}
 

@@ -27,9 +27,9 @@
 #define ARRIVED_AT_A_CITY "Arrived at " + nextCity->getName() + "!"
 #define RUNNING_TESTS "Running speed tests! Please wait\n"
 
-//#if defined __APPLE__ || defined linux || defined (__CYGWIN32__)
+#if defined __APPLE__ || defined linux || defined (__CYGWIN32__)
 #define USE_TIMER
-//#endif
+#endif
 
 #ifdef USE_TIMER
 #include <sys/time.h>
@@ -88,25 +88,50 @@ public:
 
 	/**
 	 * The next step moves the hunter closer to his current destination.
-	 * If the destination is reached and no treasure was found, a new path must be calculated.
-	 * If a new path can't be calculated, the treasure hunter stops his journey.
 	 * @return The city where the treasure hunter goes next. NULL if he stops.
 	 */
 	City * nextStep();
 
     /**
-     * Checks if the treasure hunter reached his destination and orders him to 
+     * Checks if the treasure hunter reached his destination and if he arrived, orders him to calculate a new path according to the clues he find.
+     * If there is no path to take, an exception is thrown.
+     * @return True if the hunter hasn't arrived to his destination or if a new path is calculated. False if a new path is needed and can't be calculated.
      */
 	bool updatePath();
 
 #ifdef USE_TIMER
+    /**
+     * Starts a timer to measure performance time of a function.
+     */
 	void startTimer();
-
+    
+    /**
+     * Stops the timer started by startTimer() function.
+     * @return The elapsed time between the start and stop.
+     */
 	unsigned long stopTimer();
-
+    
+    /**
+     * Checks the performance of a shortest path algorithm.
+     * Does 1000 runs for each algorithm (except Floyd-Warshall's because it takes too long) and measures the average of those runs.
+     * @param start The starting city.
+     * @param algorithm The algorithm to test. ( (1)Optimised Dijkstra, (2)Bellman-Ford, (3)Dijkstra and (4)Floyd-Warshall).
+     * @return The average performance of the algorithm.
+     */
 	unsigned long checkPerformance(City * start, int algorithm);
 #endif
 
+};
+
+/**
+ * An exception to be thrown were no path is avaiable
+ */
+class noPathToTake {
+public:
+    /**
+     * Creates an exception
+     */
+    noPathToTake() {};
 };
 
 #endif 

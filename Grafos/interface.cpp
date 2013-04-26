@@ -675,8 +675,10 @@ void Interface::init(){
 
 	cout << "Press ENTER for each step of the journey!" << endl << endl;
 
-	cout << director->events.front() << endl;
-	director->events.pop();
+    while ( !director->events.empty() ) {
+        cout << director->events.front() << endl;
+        director->events.pop();
+    }
 	mainLoop();
 }
 
@@ -712,13 +714,17 @@ void Interface::mainLoop(){
 		}
 		view->setVertexColor(nextCity->getID(), HUNTER_COLOR);
 		view->rearrange();
-		if (!director->updatePath() ){
-			while ( !director->events.empty() ) {
+        
+        try {
+            director->updatePath();
+        } catch (noPathToTake &noPath) {
+            while ( !director->events.empty() ) {
 				cout << director->events.front() << endl;
 				director->events.pop();
 			}
 			return;
-		}
+        }
+        
 		if (!treasureHunter->foundTreasure) cin.get();
 	}
 
