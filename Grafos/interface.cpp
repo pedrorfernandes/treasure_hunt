@@ -89,7 +89,9 @@ bool getAnswer(string question) {
 }
 
 bool Interface::graphIsReady() {
-	return (citiesWithTreasure > 0 && (numberOfCities >= 2));
+	return (citiesWithTreasure > 0
+            && (numberOfCities >= 2)
+            && builder->getTreasureHunter() != NULL);
 }
 
 bool Interface::mainMenu() {
@@ -291,7 +293,7 @@ void Interface::citiesMenu() {
 		}
 		else {
 			numberOfOptions = 2;
-			cout << "Don't forget you need a treasure and at least two cities to play!" << endl;
+			cout << "Don't forget you need a treasure, a hunter and at least two cities to play!" << endl;
 		}
 
 		int option = getOption(numberOfOptions);
@@ -319,6 +321,8 @@ void Interface::addNewCity() {
 	cout << "City name?" << endl << PROMPT;
 	string name = "";
 	getline(cin, name);
+    if (name.size() == 0)
+        return;
 
 	cout << "x coordinate?" << endl;
 	int x = getNumber();
@@ -397,6 +401,9 @@ void Interface::editCityName() {
 
 		if(name.compare("0") == 0)
 			break;
+        
+        if (name.size() == 0)
+            return;
 
 		if(builder->getCity(name) == NULL) {
 			cityToRename->setName(name);
