@@ -630,7 +630,7 @@ void Interface::loadMapMenu() {
 		}
 		numberOfCities = (int)builder->getCities().size();
 		builder->getGraphViewer()->rearrange();
-		cout << endl << "Loaded map!" << endl;
+		cout << endl << "Loaded map! Press enter to continue" << endl;
 		getchar();
 	}
 
@@ -647,7 +647,7 @@ void Interface::saveMapMenu() {
 		cout << "That's not a valid filename..." << endl;
 	else {
 		builder->saveToFile(filename);
-		cout << endl << "Saved map!" << endl;
+		cout << endl << "Saved map! Press enter to continue" << endl;
 		getchar();
 	}
 }
