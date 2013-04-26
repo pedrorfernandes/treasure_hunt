@@ -215,7 +215,14 @@ bool GraphBuilder::deleteCity(City* city) {
     if ( !graph->removeVertex(found) ) return false;
     if ( !view->removeNode(found->getID()) ) return false;
     vector<Road *> toDestroy = getConnectedRoads(found);
+    vector<Road *>::iterator roadItr;
     for (int i = 0; i < toDestroy.size(); ++i) {
+        for(roadItr = roads.begin(); roadItr != roads.end(); ++roadItr){
+            if ( (*roadItr)->getID() == toDestroy.at(i)->getID()){
+                roads.erase(roadItr);
+                break;
+            }
+        }
         delete toDestroy.at(i);
     }
 
