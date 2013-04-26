@@ -224,8 +224,14 @@ void Interface::editMapMenu() {
 
 void Interface::hunterSpawnMenu() {
 	cout << "- Hunter spawn menu -" << endl;
+    vector<City*> cities = builder->getCities();
+    if (cities.empty() ){
+        cout << "The map must first have at least one city!" << endl;
+        cout << "Press enter to continue..." << endl;
+        getchar();
+        return;
+    }
 	cout << "Please pick a city to be the hunter's starting point" << endl;
-	vector<City*> cities = builder->getCities();
 	City* spawnCity = displayVector(cities);
 	if(spawnCity == NULL){
         cout << "Operation canceled!" << endl;

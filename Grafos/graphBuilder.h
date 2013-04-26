@@ -33,7 +33,7 @@
 #include "road.h"
 
 #define DEFAULT_SIZE 700
-#define BACKGROUND "map.png"
+#define BACKGROUND "map.jpg"
 #define ROAD_COLOR "orange"
 #define CITY_COLOR "red"
 #define HUNTER_COLOR "blue"
